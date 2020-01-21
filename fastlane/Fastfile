@@ -1,0 +1,43 @@
+fastlane_require './constants.rb'
+
+default_platform(:ios)
+
+def install_provisioning
+  profiles = Dir.glob(Constants.provisioning_location)
+
+  UI.user_error! 'Missing provisioning profiles' if profiles.empty?
+
+  profiles.reject { |path| File.directory?(path) }.each do |profile|
+    FastlaneCore::ProvisioningProfile.install(profile)
+  end
+end
+
+platform :ios do
+
+  before_all do
+    xcversion(version: '~> 11')
+    install_provisioning
+  end
+
+  after_all do
+    clean_build_artifacts
+  end
+
+  desc "Submits a new build to AppCenter"
+  lane :build_appcenter do |options|
+    increment_build_number(build_number: "#{options[:build_number]}")
+    gym(scheme: Constants.example_build_info.scheme, archive_path: Constants.archive_path, export_method: "enterprise")
+    appcenter_upload(
+      api_token: options[:appcenter_api_token],
+      app_name: Constants.appcenter_stage_app_name,
+      owner_name: Constants.appcenter_owner_name,
+      ipa: "#{lane_context[SharedValues::IPA_OUTPUT_PATH]}",
+      dsym: "#{lane_context[SharedValues::DSYM_OUTPUT_PATH]}"
+    )
+  end
+
+  desc "Runs tests"
+  lane :test do
+    scan(scheme: Constants.sdk_build_info.scheme)
+  end
+end
