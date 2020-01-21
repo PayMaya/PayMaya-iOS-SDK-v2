@@ -1,15 +1,15 @@
 //
-//  paymaya_sdkTests.swift
-//  paymaya-sdkTests
+//  PaymayaSDKTests.swift
+//  PaymayaSDKTests
 //
 //  Created by Maciej Górecki on 21/01/2020.
 //  Copyright © 2020 Maciej Górecki. All rights reserved.
 //
 
 import XCTest
-@testable import paymaya_sdk
+@testable import PaymayaSDK
 
-class paymaya_sdkTests: XCTestCase {
+class PaymayaSDKTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
