@@ -3,11 +3,11 @@ BuildInfo = Struct.new(:scheme)
 class Constants
 
   def self.sdk_build_info
-    BuildInfo.new('PaymayaSDK')
+    BuildInfo.new('PayMayaSDK')
   end
 
   def self.example_build_info
-    BuildInfo.new('PaymayaExample')
+    BuildInfo.new('PayMayaExample')
   end
 
   def self.appcenter_stage_app_name

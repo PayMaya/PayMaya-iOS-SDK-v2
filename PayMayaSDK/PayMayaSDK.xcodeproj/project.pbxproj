@@ -1,0 +1,636 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF1205F623DF0F530097693A /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1205F523DF0F530097693A /* Networking.framework */; };
+		BF1205F723DF0F530097693A /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF1205F523DF0F530097693A /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BF29AB5023DB472D00212ADE /* RedirectURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */; };
+		BF8DCE6123DF420200BD875F /* PayMayaEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DCE6023DF420200BD875F /* PayMayaEnvironment.swift */; };
+		BF98116E23E1CC9E005E0765 /* PayMayaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98116D23E1CC9E005E0765 /* PayMayaError.swift */; };
+		BFA9090423D9EF81001A277F /* PayMayaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA908FA23D9EF81001A277F /* PayMayaSDK.framework */; };
+		BFA9093523D9F10E001A277F /* PayMayaSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093423D9F10E001A277F /* PayMayaSDK.swift */; };
+		BFA9093F23D9F122001A277F /* AmountDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093623D9F122001A277F /* AmountDetails.swift */; };
+		BFA9094023D9F122001A277F /* CheckoutBuyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093723D9F122001A277F /* CheckoutBuyer.swift */; };
+		BFA9094123D9F122001A277F /* ShippingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093823D9F122001A277F /* ShippingAddress.swift */; };
+		BFA9094223D9F122001A277F /* CheckoutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093923D9F122001A277F /* CheckoutItem.swift */; };
+		BFA9094323D9F122001A277F /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093A23D9F122001A277F /* Contact.swift */; };
+		BFA9094423D9F122001A277F /* CheckoutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093B23D9F122001A277F /* CheckoutInfo.swift */; };
+		BFA9094523D9F122001A277F /* BillingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093C23D9F122001A277F /* BillingAddress.swift */; };
+		BFA9094623D9F122001A277F /* CheckoutTotalAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9093D23D9F122001A277F /* CheckoutTotalAmount.swift */; };
+		BFA9094923D9F130001A277F /* CheckoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9094823D9F130001A277F /* CheckoutRequest.swift */; };
+		BFA9094B23D9F13A001A277F /* CheckoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9094A23D9F13A001A277F /* CheckoutResponse.swift */; };
+		BFA9095123D9F228001A277F /* PayMayaSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9095023D9F228001A277F /* PayMayaSDKTests.swift */; };
+		BFA9095323D9F230001A277F /* CheckoutMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9095223D9F230001A277F /* CheckoutMock.swift */; };
+		BFA9095523DAE877001A277F /* PMWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9095423DAE877001A277F /* PMWebViewController.swift */; };
+		BFA9096023DAFBE3001A277F /* String+Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9095F23DAFBE3001A277F /* String+Encoding.swift */; };
+		BFA9096323DB04F0001A277F /* PMWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA9096223DB04F0001A277F /* PMWebView.swift */; };
+		BFD5326823DB1B4C00DBCC6F /* RedirectURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5326723DB1B4C00DBCC6F /* RedirectURL.swift */; };
+		BFD5327023DB3B6700DBCC6F /* PMWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5326F23DB3B6700DBCC6F /* PMWebViewControllerTests.swift */; };
+		BFD800CC23DB091C00B81471 /* CreateCheckoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD800CB23DB091C00B81471 /* CreateCheckoutUseCase.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BFA9090523D9EF81001A277F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFA908F123D9EF81001A277F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BFA908F923D9EF81001A277F;
+			remoteInfo = PayMayaSDK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BF1205F823DF0F530097693A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BF1205F723DF0F530097693A /* Networking.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BF1205F523DF0F530097693A /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectURLTests.swift; sourceTree = "<group>"; };
+		BF8DCE6023DF420200BD875F /* PayMayaEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayMayaEnvironment.swift; sourceTree = "<group>"; };
+		BF98116D23E1CC9E005E0765 /* PayMayaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayMayaError.swift; sourceTree = "<group>"; };
+		BFA908FA23D9EF81001A277F /* PayMayaSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PayMayaSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFA908FE23D9EF81001A277F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFA9090323D9EF81001A277F /* PayMayaSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PayMayaSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFA9090A23D9EF81001A277F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFA9093423D9F10E001A277F /* PayMayaSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayMayaSDK.swift; sourceTree = "<group>"; };
+		BFA9093623D9F122001A277F /* AmountDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AmountDetails.swift; path = PayMayaSDK/Models/AmountDetails.swift; sourceTree = SOURCE_ROOT; };
+		BFA9093723D9F122001A277F /* CheckoutBuyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutBuyer.swift; path = PayMayaSDK/Models/CheckoutBuyer.swift; sourceTree = SOURCE_ROOT; };
+		BFA9093823D9F122001A277F /* ShippingAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShippingAddress.swift; path = PayMayaSDK/Models/ShippingAddress.swift; sourceTree = SOURCE_ROOT; };
+		BFA9093923D9F122001A277F /* CheckoutItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutItem.swift; path = PayMayaSDK/Models/CheckoutItem.swift; sourceTree = SOURCE_ROOT; };
+		BFA9093A23D9F122001A277F /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = PayMayaSDK/Models/Contact.swift; sourceTree = SOURCE_ROOT; };
+		BFA9093B23D9F122001A277F /* CheckoutInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutInfo.swift; path = PayMayaSDK/Models/CheckoutInfo.swift; sourceTree = SOURCE_ROOT; };
+		BFA9093C23D9F122001A277F /* BillingAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BillingAddress.swift; path = PayMayaSDK/Models/BillingAddress.swift; sourceTree = SOURCE_ROOT; };
+		BFA9093D23D9F122001A277F /* CheckoutTotalAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutTotalAmount.swift; path = PayMayaSDK/Models/CheckoutTotalAmount.swift; sourceTree = SOURCE_ROOT; };
+		BFA9094823D9F130001A277F /* CheckoutRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutRequest.swift; path = PayMayaSDK/Requests/CheckoutRequest.swift; sourceTree = SOURCE_ROOT; };
+		BFA9094A23D9F13A001A277F /* CheckoutResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutResponse.swift; path = PayMayaSDK/Responses/CheckoutResponse.swift; sourceTree = SOURCE_ROOT; };
+		BFA9095023D9F228001A277F /* PayMayaSDKTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PayMayaSDKTests.swift; path = PayMayaSDKTests/PayMayaSDKTests.swift; sourceTree = SOURCE_ROOT; };
+		BFA9095223D9F230001A277F /* CheckoutMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutMock.swift; path = PayMayaSDKTests/Mocks/CheckoutMock.swift; sourceTree = SOURCE_ROOT; };
+		BFA9095423DAE877001A277F /* PMWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWebViewController.swift; sourceTree = "<group>"; };
+		BFA9095F23DAFBE3001A277F /* String+Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Encoding.swift"; sourceTree = "<group>"; };
+		BFA9096223DB04F0001A277F /* PMWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWebView.swift; sourceTree = "<group>"; };
+		BFD5326723DB1B4C00DBCC6F /* RedirectURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RedirectURL.swift; path = PayMayaSDK/RedirectURL.swift; sourceTree = SOURCE_ROOT; };
+		BFD5326F23DB3B6700DBCC6F /* PMWebViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWebViewControllerTests.swift; sourceTree = "<group>"; };
+		BFD800CB23DB091C00B81471 /* CreateCheckoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCheckoutUseCase.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BFA908F723D9EF81001A277F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF1205F623DF0F530097693A /* Networking.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFA9090023D9EF81001A277F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFA9090423D9EF81001A277F /* PayMayaSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BF1205F423DF0F530097693A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF1205F523DF0F530097693A /* Networking.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BFA908F023D9EF81001A277F = {
+			isa = PBXGroup;
+			children = (
+				BFA908FC23D9EF81001A277F /* PayMayaSDK */,
+				BFA9090723D9EF81001A277F /* PayMayaSDKTests */,
+				BFA908FB23D9EF81001A277F /* Products */,
+				BF1205F423DF0F530097693A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BFA908FB23D9EF81001A277F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BFA908FA23D9EF81001A277F /* PayMayaSDK.framework */,
+				BFA9090323D9EF81001A277F /* PayMayaSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BFA908FC23D9EF81001A277F /* PayMayaSDK */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9091623D9EFD0001A277F /* Models */,
+				BFA9092923D9EFDB001A277F /* Requests */,
+				BFA9092C23D9EFE0001A277F /* Responses */,
+				BFA9096123DB04CF001A277F /* Controllers */,
+				BFA9095E23DAFBD4001A277F /* Extensions */,
+				BFA9093423D9F10E001A277F /* PayMayaSDK.swift */,
+				BF98116D23E1CC9E005E0765 /* PayMayaError.swift */,
+				BF8DCE6023DF420200BD875F /* PayMayaEnvironment.swift */,
+				BFD800CB23DB091C00B81471 /* CreateCheckoutUseCase.swift */,
+				BFA908FE23D9EF81001A277F /* Info.plist */,
+			);
+			path = PayMayaSDK;
+			sourceTree = "<group>";
+		};
+		BFA9090723D9EF81001A277F /* PayMayaSDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9093023D9F005001A277F /* Mocks */,
+				BFA9095023D9F228001A277F /* PayMayaSDKTests.swift */,
+				BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */,
+				BFD5326F23DB3B6700DBCC6F /* PMWebViewControllerTests.swift */,
+				BFA9090A23D9EF81001A277F /* Info.plist */,
+			);
+			path = PayMayaSDKTests;
+			sourceTree = "<group>";
+		};
+		BFA9091623D9EFD0001A277F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9093623D9F122001A277F /* AmountDetails.swift */,
+				BFA9093C23D9F122001A277F /* BillingAddress.swift */,
+				BFA9093B23D9F122001A277F /* CheckoutInfo.swift */,
+				BFD5326723DB1B4C00DBCC6F /* RedirectURL.swift */,
+				BFA9093723D9F122001A277F /* CheckoutBuyer.swift */,
+				BFA9093923D9F122001A277F /* CheckoutItem.swift */,
+				BFA9093D23D9F122001A277F /* CheckoutTotalAmount.swift */,
+				BFA9093A23D9F122001A277F /* Contact.swift */,
+				BFA9093823D9F122001A277F /* ShippingAddress.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BFA9092923D9EFDB001A277F /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9094823D9F130001A277F /* CheckoutRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		BFA9092C23D9EFE0001A277F /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9094A23D9F13A001A277F /* CheckoutResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		BFA9093023D9F005001A277F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9095223D9F230001A277F /* CheckoutMock.swift */,
+			);
+			name = Mocks;
+			path = ../../PayMayaSDKTests/Mocks;
+			sourceTree = "<group>";
+		};
+		BFA9095E23DAFBD4001A277F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9095F23DAFBE3001A277F /* String+Encoding.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BFA9096123DB04CF001A277F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BFA9095423DAE877001A277F /* PMWebViewController.swift */,
+				BFA9096223DB04F0001A277F /* PMWebView.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BFA908F523D9EF81001A277F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		BFA908F923D9EF81001A277F /* PayMayaSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFA9090E23D9EF81001A277F /* Build configuration list for PBXNativeTarget "PayMayaSDK" */;
+			buildPhases = (
+				BFA908F523D9EF81001A277F /* Headers */,
+				BFA908F623D9EF81001A277F /* Sources */,
+				BFA908F723D9EF81001A277F /* Frameworks */,
+				BFA908F823D9EF81001A277F /* Resources */,
+				BF1205F823DF0F530097693A /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PayMayaSDK;
+			productName = PayMayaSDK;
+			productReference = BFA908FA23D9EF81001A277F /* PayMayaSDK.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BFA9090223D9EF81001A277F /* PayMayaSDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFA9091123D9EF81001A277F /* Build configuration list for PBXNativeTarget "PayMayaSDKTests" */;
+			buildPhases = (
+				BFA908FF23D9EF81001A277F /* Sources */,
+				BFA9090023D9EF81001A277F /* Frameworks */,
+				BFA9090123D9EF81001A277F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFA9090623D9EF81001A277F /* PBXTargetDependency */,
+			);
+			name = PayMayaSDKTests;
+			productName = PayMayaSDKTests;
+			productReference = BFA9090323D9EF81001A277F /* PayMayaSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFA908F123D9EF81001A277F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = Miquido;
+				TargetAttributes = {
+					BFA908F923D9EF81001A277F = {
+						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
+					};
+					BFA9090223D9EF81001A277F = {
+						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
+					};
+				};
+			};
+			buildConfigurationList = BFA908F423D9EF81001A277F /* Build configuration list for PBXProject "PayMayaSDK" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BFA908F023D9EF81001A277F;
+			productRefGroup = BFA908FB23D9EF81001A277F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BFA908F923D9EF81001A277F /* PayMayaSDK */,
+				BFA9090223D9EF81001A277F /* PayMayaSDKTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BFA908F823D9EF81001A277F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFA9090123D9EF81001A277F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BFA908F623D9EF81001A277F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFA9094623D9F122001A277F /* CheckoutTotalAmount.swift in Sources */,
+				BFA9096023DAFBE3001A277F /* String+Encoding.swift in Sources */,
+				BFA9096323DB04F0001A277F /* PMWebView.swift in Sources */,
+				BFA9095523DAE877001A277F /* PMWebViewController.swift in Sources */,
+				BFA9094123D9F122001A277F /* ShippingAddress.swift in Sources */,
+				BF98116E23E1CC9E005E0765 /* PayMayaError.swift in Sources */,
+				BFD5326823DB1B4C00DBCC6F /* RedirectURL.swift in Sources */,
+				BF8DCE6123DF420200BD875F /* PayMayaEnvironment.swift in Sources */,
+				BFA9093F23D9F122001A277F /* AmountDetails.swift in Sources */,
+				BFA9094423D9F122001A277F /* CheckoutInfo.swift in Sources */,
+				BFA9093523D9F10E001A277F /* PayMayaSDK.swift in Sources */,
+				BFA9094323D9F122001A277F /* Contact.swift in Sources */,
+				BFA9094523D9F122001A277F /* BillingAddress.swift in Sources */,
+				BFA9094923D9F130001A277F /* CheckoutRequest.swift in Sources */,
+				BFA9094023D9F122001A277F /* CheckoutBuyer.swift in Sources */,
+				BFA9094223D9F122001A277F /* CheckoutItem.swift in Sources */,
+				BFA9094B23D9F13A001A277F /* CheckoutResponse.swift in Sources */,
+				BFD800CC23DB091C00B81471 /* CreateCheckoutUseCase.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFA908FF23D9EF81001A277F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFA9095123D9F228001A277F /* PayMayaSDKTests.swift in Sources */,
+				BF29AB5023DB472D00212ADE /* RedirectURLTests.swift in Sources */,
+				BFA9095323D9F230001A277F /* CheckoutMock.swift in Sources */,
+				BFD5327023DB3B6700DBCC6F /* PMWebViewControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BFA9090623D9EF81001A277F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BFA908F923D9EF81001A277F /* PayMayaSDK */;
+			targetProxy = BFA9090523D9EF81001A277F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BFA9090C23D9EF81001A277F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BFA9090D23D9EF81001A277F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BFA9090F23D9EF81001A277F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PayMayaSDK/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miquido.PayMayaSDK;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		BFA9091023D9EF81001A277F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PayMayaSDK/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miquido.PayMayaSDK;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		BFA9091223D9EF81001A277F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = PayMayaSDKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miquido.PayMayaSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BFA9091323D9EF81001A277F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = PayMayaSDKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miquido.PayMayaSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BFA908F423D9EF81001A277F /* Build configuration list for PBXProject "PayMayaSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFA9090C23D9EF81001A277F /* Debug */,
+				BFA9090D23D9EF81001A277F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFA9090E23D9EF81001A277F /* Build configuration list for PBXNativeTarget "PayMayaSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFA9090F23D9EF81001A277F /* Debug */,
+				BFA9091023D9EF81001A277F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFA9091123D9EF81001A277F /* Build configuration list for PBXNativeTarget "PayMayaSDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFA9091223D9EF81001A277F /* Debug */,
+				BFA9091323D9EF81001A277F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFA908F123D9EF81001A277F /* Project object */;
+}
