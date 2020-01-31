@@ -1,4 +1,4 @@
-//
+////
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,25 +18,9 @@
 //
 
 import UIKit
-import PayMayaSDK
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    var window: UIWindow?
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        PayMayaSDK.setup(publicKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", environment: .sandbox)
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.tintColor = .init(hexString: "#fc4a1a")
-        window?.rootViewController = ViewControllerFactory.rootController
-        window?.makeKeyAndVisible()
-        
-        return true
-    }
-    
-    
-}
-
+let gradients: [[UIColor]] = [
+    [.init(hexString: "#4e54c8"), .init(hexString: "#8f94fb") ],
+    [.init(hexString: "#fc4a1a"), .init(hexString: "#f7b733")],
+    [.init(hexString: "#36D1DC"), .init(hexString: "#5B86E5")]
+]

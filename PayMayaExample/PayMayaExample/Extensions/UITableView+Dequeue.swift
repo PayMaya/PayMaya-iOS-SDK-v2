@@ -1,4 +1,4 @@
-//
+////
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,25 +18,13 @@
 //
 
 import UIKit
-import PayMayaSDK
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    var window: UIWindow?
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        PayMayaSDK.setup(publicKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", environment: .sandbox)
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.tintColor = .init(hexString: "#fc4a1a")
-        window?.rootViewController = ViewControllerFactory.rootController
-        window?.makeKeyAndVisible()
-        
-        return true
+extension UITableView {
+    func registerCell<T: UITableViewCell>(ofType: T.Type) {
+        register(T.self, forCellReuseIdentifier: String(describing: T.self))
     }
     
-    
+    public func dequeueCell<T: UITableViewCell>(_: T.Type, for indexPath: IndexPath) -> T? {
+        return dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as? T
+    }
 }
-

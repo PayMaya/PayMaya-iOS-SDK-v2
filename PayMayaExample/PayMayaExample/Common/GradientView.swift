@@ -1,4 +1,4 @@
-//
+////
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,25 +18,28 @@
 //
 
 import UIKit
-import PayMayaSDK
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class GradientView: UIView {
+    private let gradientLayer = CAGradientLayer()
     
-    var window: UIWindow?
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        PayMayaSDK.setup(publicKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", environment: .sandbox)
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.tintColor = .init(hexString: "#fc4a1a")
-        window?.rootViewController = ViewControllerFactory.rootController
-        window?.makeKeyAndVisible()
-        
-        return true
+    convenience init() {
+        self.init(frame: .zero)
+        gradientLayer.locations = [0, 1]
+        gradientLayer.startPoint = .init(x: 0, y: 1)
+        gradientLayer.endPoint = .init(x: 1, y: 1)
+        layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    func setColors(_ colors: [UIColor]) {
+        gradientLayer.colors = colors.map { $0.cgColor }
+    }
     
+    func setGradientFrame() {
+        gradientLayer.frame = self.bounds
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = self.bounds
+    }
 }
-

@@ -24,7 +24,7 @@ import UIKit
 public class PayMayaSDK {
     
     private static var authenticationKey: String = ""
-    private(set) static var environment: PayMayaEnvironment = .sandbox
+    private(set) static var environment: PayMayaEnvironment = .production
     
     static var session: Networking = URLSession.shared
     
