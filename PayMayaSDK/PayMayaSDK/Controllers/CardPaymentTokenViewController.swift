@@ -18,17 +18,39 @@
 //
 
 import Foundation
+import UIKit
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
+class CardPaymentTokenViewController: UIViewController {
+    
+    private let buttonAction: (CardDetailsInfo) -> Void
+    
+    init(buttonAction: @escaping (CardDetailsInfo) -> Void) {
+        self.buttonAction = buttonAction
+        super.init(nibName: nil, bundle: nil)
     }
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        view = CardPaymentTokenView(buttonAction: buttonAction)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavigationBar()
+    }
+    
+}
+
+private extension CardPaymentTokenViewController {
+    func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
+    }
+    
+    @objc func cancel() {
+        dismiss(animated: true)
     }
 }

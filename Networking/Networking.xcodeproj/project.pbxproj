@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF5217F223DF3326009ED861 /* PayMayaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5217F123DF3326009ED861 /* PayMayaError.swift */; };
 		BF98117023E1D4B0005E0765 /* MockFoundationNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98116F23E1D4B0005E0765 /* MockFoundationNetworking.swift */; };
 		BFD5326C23DB35AB00DBCC6F /* NetworkErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5326B23DB35AB00DBCC6F /* NetworkErrorTests.swift */; };
 		BFD5326E23DB3A0600DBCC6F /* IncorrectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5326D23DB3A0600DBCC6F /* IncorrectRequest.swift */; };
@@ -37,7 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BF5217F123DF3326009ED861 /* PayMayaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PayMayaError.swift; path = ../../PayMayaSDK/PayMayaSDK/PayMayaError.swift; sourceTree = "<group>"; };
 		BF98116F23E1D4B0005E0765 /* MockFoundationNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFoundationNetworking.swift; sourceTree = "<group>"; };
 		BFD5326B23DB35AB00DBCC6F /* NetworkErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorTests.swift; sourceTree = "<group>"; };
 		BFD5326D23DB3A0600DBCC6F /* IncorrectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncorrectRequest.swift; sourceTree = "<group>"; };
@@ -105,7 +103,6 @@
 				BFEA767723D9EB0300834F4F /* VoidResponse.swift */,
 				BFEA765823D9E60B00834F4F /* Networking.swift */,
 				BFEA765923D9E60B00834F4F /* NetworkError.swift */,
-				BF5217F123DF3326009ED861 /* PayMayaError.swift */,
 				BFEA763523D9E5E000834F4F /* Info.plist */,
 			);
 			path = Networking;
@@ -261,7 +258,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFEA766323D9E72600834F4F /* HTTPMethod.swift in Sources */,
-				BF5217F223DF3326009ED861 /* PayMayaError.swift in Sources */,
 				BFEA766923D9E8D700834F4F /* Data+JSON.swift in Sources */,
 				BFEA765A23D9E60B00834F4F /* Networking.swift in Sources */,
 				BFEA766D23D9E8EE00834F4F /* URLRequest+Request.swift in Sources */,

@@ -21,39 +21,44 @@ import Foundation
 import Networking
 import UIKit
 
-public enum CheckoutResult {
-    case prepared(checkoutId: String)
-    case success(status: RedirectStatus)
+public enum PaymentResult {
+    case prepared(id: String)
+    case processed(status: RedirectStatus)
     case error(Error)
 }
 
-public typealias CreateCheckoutCallback = (CheckoutResult) -> Void
+public typealias PaymentCallback = (PaymentResult) -> Void
 
-class CreateCheckoutUseCase {
-    
-    private let authenticationKey: String
+class WebViewPaymentUseCase<NetworkRequest: Request> {
     private let session: Networking
-    
-    init(authenticationKey: String, session: Networking) {
-        self.authenticationKey = authenticationKey
+    private let request: NetworkRequest
+    private let redirectURL: RedirectURL
+    private let navigationTitle: String
+
+    init(session: Networking, request: NetworkRequest, redirectURL: RedirectURL, navigationTitle: String) {
         self.session = session
+        self.request = request
+        self.redirectURL = redirectURL
+        self.navigationTitle = navigationTitle
     }
-    
-    func create(_ checkoutInfo: CheckoutInfo, context: UIViewController, callback: @escaping CreateCheckoutCallback) {
+}
+
+extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectResponse {
+    func showWebView(context: UIViewController, callback: @escaping PaymentCallback) {
         
-        let webViewController = PMWebViewController(title: "PayMaya Checkout")
+        let webViewController = PMWebViewController(title: navigationTitle)
         let navVC = UINavigationController(rootViewController: webViewController)
         
         DispatchQueue.main.async {
             context.present(navVC, animated: true)
         }
-        
-        let request = CheckoutRequest(checkoutInfo: checkoutInfo, authenticationKey: authenticationKey)
+
+        let redirectURL = self.redirectURL
         
         webViewController.onChangedURL = { [weak webViewController] url in
-            if let status = checkoutInfo.redirectUrl.status(for: url) {
+            if let status = redirectURL.status(for: url) {
                 webViewController?.dismiss(animated: true)
-                callback(.success(status: status))
+                callback(.processed(status: status))
             }
         }
         
@@ -65,7 +70,7 @@ class CreateCheckoutUseCase {
         session.make(request) { result in
             switch result {
             case .success(let response):
-                callback(.prepared(checkoutId: response.checkoutId))
+                callback(.prepared(id: response.id))
                 DispatchQueue.main.async {
                     webViewController.loadURL(response.redirectUrl)
                 }
@@ -74,12 +79,11 @@ class CreateCheckoutUseCase {
                 DispatchQueue.main.async {
                     webViewController.dismiss(animated: true)
                 }
-                if let error: PayMayaError = data.parseJSON() {
-                    callback(.error(error))
-                } else {
-                    callback(.error(NetworkError.unknown))
+                guard let error: PayMayaError = data.parseJSON() else {
+                    callback(.error(NetworkError.incorrectData))
+                    return
                 }
-                
+                callback(.error(error))
             case .error(let error):
                 DispatchQueue.main.async {
                     webViewController.dismiss(animated: true)
@@ -88,4 +92,5 @@ class CreateCheckoutUseCase {
             }
         }
     }
+
 }

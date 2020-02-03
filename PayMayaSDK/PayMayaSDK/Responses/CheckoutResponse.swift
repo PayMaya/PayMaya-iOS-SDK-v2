@@ -19,7 +19,13 @@
 
 import Foundation
 
-struct CheckoutResponse: Codable {
+struct CheckoutResponse: Decodable {
     let checkoutId: String
     let redirectUrl: String
+}
+
+extension CheckoutResponse: RedirectResponse {
+    var id: String {
+        return checkoutId
+    }
 }

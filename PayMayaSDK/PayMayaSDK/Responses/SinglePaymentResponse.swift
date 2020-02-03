@@ -19,16 +19,13 @@
 
 import Foundation
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
-    }
-    
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+struct SinglePaymentResponse: Decodable {
+    let paymentId: String
+    let redirectUrl: String
+}
+
+extension SinglePaymentResponse: RedirectResponse {
+    var id: String {
+        return paymentId
     }
 }

@@ -1,4 +1,4 @@
-//
+////
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,16 +19,26 @@
 
 import Foundation
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
-    }
+public enum PaymentTokenStatus: String, Decodable {
+    case available = "AVAILABLE"
+    case currentlyInUse = "CURRENTLY_IN_USE"
+    case used = "USED"
+    case expired = "EXPIRED"
+    case preverification = "PREVERIFICATION"
+    case veryfing = "VERYFING"
+    case verificationFailed = "VERIFICATION_FAILED"
+}
+
+public struct CardPaymentTokenResponse: Decodable {
+    public let paymentTokenId: String
+    public let state: PaymentTokenStatus
+    public let createdAt: Date
+    public let updatedAt: Date
+    public let issuer: String
     
-    private var customDateFormatter: DateFormatter {
+    public var createdAtDate: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+        formatter.dateFormat = "HH:ss"
+        return formatter.string(from: createdAt)
     }
 }

@@ -19,16 +19,16 @@
 
 import Foundation
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
-    }
+public enum AuthenticationError: LocalizedError {
+    case missingCheckoutKey
+    case missingPaymentsKey
+    case missingCardTokenKey
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+    public var errorDescription: String? {
+        switch self {
+        case .missingCheckoutKey: return "Missing public key for Checkout. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .checkout)"
+        case .missingPaymentsKey: return "Missing public key for Pay with PayMaya. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .payments)"
+        case .missingCardTokenKey: return "Missing public key for Card Token Payment. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .vault)"
+        }
     }
 }

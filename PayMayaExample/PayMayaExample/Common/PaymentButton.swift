@@ -17,18 +17,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
+class PaymentButton: ExampleButton {
+    
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: 50).isActive = true
+        setTitleColor(.white, for: .normal)
+        titleLabel?.font = .boldSystemFont(ofSize: 16)
+        backgroundColor = .black
+        layer.cornerRadius = 10
     }
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
-    }
 }

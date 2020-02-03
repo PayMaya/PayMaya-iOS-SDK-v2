@@ -18,17 +18,25 @@
 //
 
 import Foundation
+import Networking
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
+struct CardPaymentTokenRequest: Request {
+    typealias Response = CardPaymentTokenResponse
+    
+    var method: HTTPMethod {
+        return .post
     }
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+    var url: String {
+        return PayMayaSDK.environment.baseURL + "/payments/v1/payment-tokens"
+    }
+    
+    let body: Data?
+    var headers: HTTPHeaders = [:]
+    
+    init(cardDetails: CardDetailsInfo, authenticationKey: String) {
+        body = try? JSONEncoder().encode(CardObject(card: cardDetails))
+        headers.addContentType(.json)
+        headers.addHTTPBasicAuthentication(credentials: authenticationKey)
     }
 }

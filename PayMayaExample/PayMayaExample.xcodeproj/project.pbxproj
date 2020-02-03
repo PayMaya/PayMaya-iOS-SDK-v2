@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF05FAA123E45F4E00D43D24 /* PaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF05FAA023E45F4E00D43D24 /* PaymentsViewController.swift */; };
+		BF05FAA323E45F7C00D43D24 /* PaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF05FAA223E45F7C00D43D24 /* PaymentsView.swift */; };
 		BF1205EA23DF0CAA0097693A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF1205E923DF0CAA0097693A /* Assets.xcassets */; };
 		BF1205EE23DF0CDB0097693A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1205EB23DF0CDB0097693A /* AppDelegate.swift */; };
 		BF1205F323DF0D1D0097693A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF1205F123DF0D1D0097693A /* LaunchScreen.storyboard */; };
@@ -24,6 +26,9 @@
 		BFA9095823DAF552001A277F /* PayMayaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095623DAF552001A277F /* PayMayaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BFA9095A23DAF55E001A277F /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095923DAF55E001A277F /* Networking.framework */; };
 		BFA9095B23DAF55E001A277F /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095923DAF55E001A277F /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFC6F5EE23E4740A00DD18B2 /* PaymentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F5ED23E4740A00DD18B2 /* PaymentButton.swift */; };
+		BFC6F5F023E47DC300DD18B2 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F5EF23E47DC300DD18B2 /* PaymentsViewModel.swift */; };
+		EB7B49D323E9A14C00090EC7 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7B49D223E9A14C00090EC7 /* CardsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +47,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BF05FAA023E45F4E00D43D24 /* PaymentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewController.swift; sourceTree = "<group>"; };
+		BF05FAA223E45F7C00D43D24 /* PaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsView.swift; sourceTree = "<group>"; };
 		BF1205E923DF0CAA0097693A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		BF1205EB23DF0CDB0097693A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		BF1205EC23DF0CDB0097693A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = PayMayaExample/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -59,6 +66,9 @@
 		BFA9095623DAF552001A277F /* PayMayaSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PayMayaSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFA9095923DAF55E001A277F /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC6583423D7032D000F5B52 /* PayMayaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayMayaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFC6F5ED23E4740A00DD18B2 /* PaymentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentButton.swift; sourceTree = "<group>"; };
+		BFC6F5EF23E47DC300DD18B2 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
+		EB7B49D223E9A14C00090EC7 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +84,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF05FA9F23E45F3900D43D24 /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				BF05FAA023E45F4E00D43D24 /* PaymentsViewController.swift */,
+				BFC6F5EF23E47DC300DD18B2 /* PaymentsViewModel.swift */,
+				BF05FAA223E45F7C00D43D24 /* PaymentsView.swift */,
+			);
+			path = Payments;
+			sourceTree = "<group>";
+		};
 		BF1954B323D87B7300E9572F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				BF89AFFF23E2F74D008D9AD5 /* GradientView.swift */,
+				BFC6F5ED23E4740A00DD18B2 /* PaymentButton.swift */,
 				BF89B00523E308E6008D9AD5 /* ExampleButton.swift */,
 				BF89B00323E2F7F0008D9AD5 /* Gradients.swift */,
 			);
@@ -136,6 +157,8 @@
 				BF89AFF723E2F1AC008D9AD5 /* Extensions */,
 				BF89AFFE23E2F742008D9AD5 /* Common */,
 				BF2A081223E2EF9F009C87DC /* Shop */,
+				BF05FA9F23E45F3900D43D24 /* Payments */,
+				EB7B49D123E9A10C00090EC7 /* Vault */,
 				BF1205F123DF0D1D0097693A /* LaunchScreen.storyboard */,
 				BF1205EB23DF0CDB0097693A /* AppDelegate.swift */,
 				BF89B00723E33328008D9AD5 /* ViewControllerFactory.swift */,
@@ -143,6 +166,14 @@
 				BF1205E923DF0CAA0097693A /* Assets.xcassets */,
 			);
 			path = PayMayaExample;
+			sourceTree = "<group>";
+		};
+		EB7B49D123E9A10C00090EC7 /* Vault */ = {
+			isa = PBXGroup;
+			children = (
+				EB7B49D223E9A14C00090EC7 /* CardsViewController.swift */,
+			);
+			path = Vault;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,14 +248,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB7B49D323E9A14C00090EC7 /* CardsViewController.swift in Sources */,
 				BF89B00623E308E6008D9AD5 /* ExampleButton.swift in Sources */,
 				BF89B00423E2F7F0008D9AD5 /* Gradients.swift in Sources */,
+				BF05FAA323E45F7C00D43D24 /* PaymentsView.swift in Sources */,
 				BF1205EE23DF0CDB0097693A /* AppDelegate.swift in Sources */,
 				BF89AFFB23E2F2C6008D9AD5 /* ShopViewModel.swift in Sources */,
 				BF89B00223E2F7B5008D9AD5 /* UIColor+Hex.swift in Sources */,
+				BF05FAA123E45F4E00D43D24 /* PaymentsViewController.swift in Sources */,
 				BF89AFFD23E2F337008D9AD5 /* ShopItemCell.swift in Sources */,
 				BF2A081423E2F036009C87DC /* ShopView.swift in Sources */,
+				BFC6F5F023E47DC300DD18B2 /* PaymentsViewModel.swift in Sources */,
 				BF89AFF923E2F1CA008D9AD5 /* UITableView+Dequeue.swift in Sources */,
+				BFC6F5EE23E4740A00DD18B2 /* PaymentButton.swift in Sources */,
 				BF89B00023E2F74D008D9AD5 /* GradientView.swift in Sources */,
 				BF2A081123E2EF9B009C87DC /* ShopViewController.swift in Sources */,
 				BF89B00823E33328008D9AD5 /* ViewControllerFactory.swift in Sources */,

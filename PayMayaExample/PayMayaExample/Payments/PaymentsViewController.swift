@@ -20,34 +20,40 @@
 import UIKit
 import PayMayaSDK
 
-class ShopViewController: UIViewController {
+class PaymentsViewController: UIViewController {
     
-    private let viewModel = ShopViewModel()
+    private let viewModel = PaymentsViewModel()
     
     override func loadView() {
-        view = ShopView()
+        view = PaymentsView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Shop"
+        guard let view = view as? PaymentsView else { return }
         
-        setupNavigationBar()
-        setupViewModel()
+        let paymentInfo = viewModel.getSinglePaymentInfo()
+        view.setAmount(paymentInfo.totalAmount.value, currencyCode: paymentInfo.totalAmount.currency)
+        
+        view.payWithPayMayaAction = { [weak self] in
+            self?.createSinglePayment()
+        }
+        
+        view.createWalletAction = { [weak self] in
+            self?.createWallet()
+        }
     }
     
 }
 
-// MARK: - Checkout
-
-private extension ShopViewController {
-    func checkout() {
-        let checkoutInfo = viewModel.getCheckoutInfo()
-        
-        PayMayaSDK.checkout(checkoutInfo, context: self) { result in
+private extension PaymentsViewController {
+    
+    func createSinglePayment() {
+        let paymentInfo = viewModel.getSinglePaymentInfo()
+        PayMayaSDK.singlePayment(paymentInfo, context: self) { result in
             switch result {
-            case .prepared(let checkoutId):
-                print("### \(checkoutId)")
+            case .prepared(let paymentId):
+                print("### \(paymentId)")
                 
             case .processed(let status):
                 switch status {
@@ -65,9 +71,27 @@ private extension ShopViewController {
         }
     }
     
-    @objc func cleanCart() {
-        viewModel.cleanCart()
-        (view as? ShopView)?.tableView.reloadData()
+    func createWallet() {
+        let walletLink = viewModel.getWalletLinkInfo()
+        PayMayaSDK.createWallet(walletLink, context: self) { result in
+            switch result {
+            case .prepared(let linkId):
+                print("### \(linkId)")
+                
+            case .processed(let status):
+                switch status {
+                case .success(let url):
+                    self.showAlert("Wallet created:\n \(url)")
+                case .failure(let url):
+                    self.showAlert("FAILED: \(url)")
+                case .cancel(let url):
+                    self.showAlert("CANCELLED: \(url)")
+                }
+                
+            case .error(let error):
+                self.showAlert("ERROR: \(error.localizedDescription)")
+            }
+        }
     }
     
     func showAlert(_ message: String) {
@@ -75,27 +99,5 @@ private extension ShopViewController {
         alert.addAction(.init(title: "OK", style: .default))
         present(alert, animated: true)
     }
-}
-
-// MARK: - Setup
-
-private extension ShopViewController {
-    func setupViewModel() {
-        guard let view = view as? ShopView else { return }
-        view.tableView.delegate = viewModel
-        view.tableView.dataSource = viewModel
-        
-        view.checkoutAction = { [weak self] in
-            self?.checkout()
-        }
-        
-        viewModel.onCartChange = { [weak self] cart in
-            let totalAmount = cart.map { $0.totalAmount.value }.reduce(0, +)
-            self?.navigationItem.title = totalAmount > 0 ? "Total: \(totalAmount)" : "Shop"
-        }
-    }
     
-    func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(cleanCart))
-    }
 }

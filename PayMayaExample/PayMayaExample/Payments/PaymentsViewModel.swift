@@ -18,17 +18,21 @@
 //
 
 import Foundation
+import PayMayaSDK
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
+class PaymentsViewModel {
+    
+    private let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success",
+                                         failure: "https://www.merchantsite.com/failure",
+                                         cancel: "https://www.merchantsite.com/cancel")!
+
+    func getSinglePaymentInfo() -> SinglePaymentInfo {
+        let totalAmount = SinglePaymentTotalAmount(currency: "PHP", value: 199)
+
+        return SinglePaymentInfo(totalAmount: totalAmount, redirectUrl: redirectUrl, requestReferenceNumber: "6319921")
     }
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+    func getWalletLinkInfo() -> WalletLinkInfo {
+        return WalletLinkInfo(redirectUrl: redirectUrl, requestReferenceNumber: "123456")
     }
 }

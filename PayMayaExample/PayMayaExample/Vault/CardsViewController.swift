@@ -18,17 +18,36 @@
 //
 
 import Foundation
+import UIKit
+import PayMayaSDK
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
+class CardsViewController: UIViewController {
+    
+    override func loadView() {
+        #warning("make this generic")
+        view = ShopView()
     }
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
     }
+}
+
+private extension CardsViewController {
+    
+    func setup() {
+        guard let shopView = view as? ShopView else {return}
+        shopView.checkoutAction = { [weak self] in
+            self?.addCard()
+        }
+    }
+    
+    func addCard() {
+        #warning("move it into viewmodel")
+        PayMayaSDK.addCard(self) { result in
+            print(result)
+        }
+    }
+    
 }

@@ -24,11 +24,14 @@ import Networking
 
 class PayMayaSDKTests: XCTestCase {
     
+    override class func setUp() {
+        PayMayaSDK.environment = .sandbox
+        PayMayaSDK.set(checkoutPublicKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah")
+    }
+
     func test_givenPublicKey_whenCreatesCheckoutPayment_thenSessionGetsEncodedKey() {
-        let publicKey = "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah"
         let session = NetworkingSpy()
         PayMayaSDK.session = session
-        PayMayaSDK.setup(publicKey: publicKey, environment: .sandbox)
         PayMayaSDK.checkout(CheckoutInfo.mock, context: MockViewController()) { result in }
         
         XCTAssertEqual(session.makeRequestCalled, 1)
@@ -36,10 +39,8 @@ class PayMayaSDKTests: XCTestCase {
     }
     
     func test_whenCheckoutCalled_opensWebView() {
-        let publicKey = "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah"
         let session = NetworkingSpy()
         PayMayaSDK.session = session
-        PayMayaSDK.setup(publicKey: publicKey, environment: .sandbox)
         let vc = MockViewController()
         vc.presentationExp = expectation(description: "the context should be PMWebViewController")
         PayMayaSDK.checkout(CheckoutInfo.mock, context: vc) { result in }

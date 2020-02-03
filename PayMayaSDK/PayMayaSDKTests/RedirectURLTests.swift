@@ -22,28 +22,51 @@ import XCTest
 
 class RedirectURLTests: XCTestCase {
 
-    func test_givenRedirectURL_whenCalledContains_returnProperValue() {
-        let redirectURL = RedirectURL(success: "1", failure: "2", cancel: "3")
+    func test_givenRedirectURL_whenCalledStatus_returnProperValue() {
+        let success = "https://www.success.com"
+        let failure = "https://www.failure.com"
+        let cancel = "https://www.cancel.com"
+        let redirectURL = RedirectURL(success: success, failure: failure, cancel: cancel)
         
-        switch redirectURL.status(for: "1") {
-        case .success(let url): XCTAssertEqual(url, "1")
+        XCTAssertNotNil(redirectURL)
+        
+        switch redirectURL?.status(for: success) {
+        case .success(let url): XCTAssertEqual(url, success)
         default: XCTFail("wrong case")
         }
         
-        switch redirectURL.status(for: "2") {
-        case .failure(let url): XCTAssertEqual(url, "2")
+        switch redirectURL?.status(for: failure) {
+        case .failure(let url): XCTAssertEqual(url, failure)
         default: XCTFail("wrong case")
         }
         
-        switch redirectURL.status(for: "3") {
-        case .cancel(let url): XCTAssertEqual(url, "3")
+        switch redirectURL?.status(for: cancel) {
+        case .cancel(let url): XCTAssertEqual(url, cancel)
         default: XCTFail("wrong case")
         }
         
-        switch redirectURL.status(for: "4") {
+        switch redirectURL?.status(for: "some other url") {
         case .success, .cancel, .failure: XCTFail("wrong case")
         default: break
         }
+    }
+    
+    func test_givenIncorrectRedirectURLWithoutHTTPS_whenCalledStatus_returnsNil() {
+        let insecureURL = "http://www.wrongUrl.com"
+        let failure = "https://www.failure.com"
+        let cancel = "https://www.cancel.com"
+        let redirectURL = RedirectURL(success: insecureURL, failure: failure, cancel: cancel)
+        
+        XCTAssertNil(redirectURL)
+    }
+    
+    func test_givenIncorrectRedirectURLWithFile_whenCalledStatus_returnsNil() {
+        let success = "https://www.wrongUrl.com"
+        let fileURL = "file://www.failure.com"
+        let cancel = "https://www.cancel.com"
+        let redirectURL = RedirectURL(success: success, failure: fileURL, cancel: cancel)
+        
+        XCTAssertNil(redirectURL)
     }
 
 }

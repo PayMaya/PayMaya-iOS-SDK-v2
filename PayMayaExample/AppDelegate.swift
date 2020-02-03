@@ -24,14 +24,20 @@ import PayMayaSDK
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var factory: ViewControllerFactory?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        PayMayaSDK.setup(environment: .sandbox)
         
-        PayMayaSDK.setup(publicKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", environment: .sandbox)
-        
+        PayMayaSDK.add(authenticationKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", for: .checkout)
+        PayMayaSDK.add(authenticationKey: "pk-MOfNKu3FmHMVHtjyjG7vhr7vFevRkWxmxYL1Yq6iFk5", for: .payments)
+        PayMayaSDK.add(authenticationKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", for: .cardToken)
+
+        factory = ViewControllerFactory()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.tintColor = .init(hexString: "#fc4a1a")
-        window?.rootViewController = ViewControllerFactory.rootController
+        window?.rootViewController = factory?.makeRootViewController()
         window?.makeKeyAndVisible()
         
         return true

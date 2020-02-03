@@ -21,20 +21,73 @@ import Foundation
 import Networking
 import UIKit
 
+public enum AuthenticationMethod {
+    case checkout
+    case payments
+    case cardToken
+}
+
 public class PayMayaSDK {
-    
-    private static var authenticationKey: String = ""
-    private(set) static var environment: PayMayaEnvironment = .production
+    private static var authKeys = [AuthenticationMethod: String]()
+    internal static var environment: PayMayaEnvironment = .production
     
     static var session: Networking = URLSession.shared
     
-    public static func setup(publicKey: String, environment: PayMayaEnvironment) {
-        self.authenticationKey = publicKey.convertToAuthenticationKey()
+    public static func add(authenticationKey: String, for method: AuthenticationMethod) {
+        authKeys[method] = authenticationKey.convertToAuthenticationKey()
+    }
+    
+    public static func setup(environment: PayMayaEnvironment) {
         self.environment = environment
     }
-    
-    public static func checkout(_ checkoutInfo: CheckoutInfo, context: UIViewController, callback: @escaping CreateCheckoutCallback) {
-        CreateCheckoutUseCase(authenticationKey: authenticationKey, session: session).create(checkoutInfo, context: context, callback: callback)
+
+    public static func checkout(_ checkoutInfo: CheckoutInfo, context: UIViewController, callback: @escaping PaymentCallback) {
+        guard let authKey = authKeys[.checkout] else {
+            callback(.error(AuthenticationError.missingCheckoutKey))
+            return
+        }
+
+        let request = CheckoutRequest(checkoutInfo: checkoutInfo, authenticationKey: authKey)
+        WebViewPaymentUseCase(session: session,
+                              request: request,
+                              redirectURL: checkoutInfo.redirectUrl,
+                              navigationTitle: "PayMaya Checkout")
+            .showWebView(context: context, callback: callback)
     }
-    
+
+    public static func singlePayment(_ singlePaymentInfo: SinglePaymentInfo, context: UIViewController, callback: @escaping PaymentCallback) {
+        guard let authKey = authKeys[.payments] else {
+            callback(.error(AuthenticationError.missingPaymentsKey))
+            return
+        }
+
+        let request = SinglePaymentRequest(singlePaymentInfo: singlePaymentInfo, authenticationKey: authKey)
+        WebViewPaymentUseCase(session: session,
+                              request: request,
+                              redirectURL: singlePaymentInfo.redirectUrl,
+                              navigationTitle: "Pay with Paymaya")
+            .showWebView(context: context, callback: callback)
+    }
+
+    public static func createWallet(_ walletLinkInfo: WalletLinkInfo, context: UIViewController, callback: @escaping PaymentCallback) {
+        guard let authKey = authKeys[.payments] else {
+            callback(.error(AuthenticationError.missingPaymentsKey))
+            return
+        }
+
+        let request = CreateWalletLinkRequest(walletLinkInfo: walletLinkInfo, authenticationKey: authKey)
+        WebViewPaymentUseCase(session: session,
+                request: request,
+                redirectURL: walletLinkInfo.redirectUrl,
+                navigationTitle: "Create Wallet")
+                .showWebView(context: context, callback: callback)
+    }
+
+    public static func addCard(_ context: UIViewController, callback: @escaping (CreateCardResult) -> Void) {
+        guard let authKey = authKeys[.cardToken] else {
+            callback(.error(AuthenticationError.missingCardTokenKey))
+            return
+        }
+        CardPaymentTokenUseCase(session: session, authenticationKey: authKey).start(context: context, callback: callback)
+    }
 }

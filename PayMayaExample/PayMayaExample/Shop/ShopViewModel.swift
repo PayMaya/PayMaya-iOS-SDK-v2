@@ -1,4 +1,4 @@
-////
+//
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -66,7 +66,7 @@ class ShopViewModel: NSObject {
         let totalValue = cart.map { $0.totalAmount.value }.reduce(0, +)
         let amountDetails = AmountDetails(discount: 0, serviceCharge: 0, shippingFee: 0, tax: 0, subtotal: totalValue)
         let totalAmount = CheckoutTotalAmount(value: totalValue, currency: "PHP", details: amountDetails)
-        let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success", failure: "https://www.merchantsite.com/failure", cancel: "https://www.merchantsite.com/cancel")
+        let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success", failure: "https://www.merchantsite.com/failure", cancel: "https://www.merchantsite.com/cancel")!
         return CheckoutInfo(totalAmount: totalAmount, buyer: buyer, items: cart, redirectUrl: redirectUrl, requestReferenceNumber: "1551191039")
     }
 }

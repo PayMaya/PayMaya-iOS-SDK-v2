@@ -1,4 +1,4 @@
-////
+//
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -22,5 +22,6 @@ import UIKit
 let gradients: [[UIColor]] = [
     [.init(hexString: "#4e54c8"), .init(hexString: "#8f94fb") ],
     [.init(hexString: "#fc4a1a"), .init(hexString: "#f7b733")],
-    [.init(hexString: "#36D1DC"), .init(hexString: "#5B86E5")]
+    [.init(hexString: "#36D1DC"), .init(hexString: "#5B86E5")],
+    [.init(hexString: "#cb2d3e"), .init(hexString: "#ef473a")]
 ]

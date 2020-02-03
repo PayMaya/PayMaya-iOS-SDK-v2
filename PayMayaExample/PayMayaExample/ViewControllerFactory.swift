@@ -1,4 +1,4 @@
-////
+//
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -20,19 +20,36 @@
 import UIKit
 
 class ViewControllerFactory {
-    static var rootController: UIViewController = {
+    func makeRootViewController() -> UIViewController {
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [shopViewController]
+        tabBarController.viewControllers = [makeShopViewController(), makeSinglePaymentViewController(), makeCardsViewController()]
         return tabBarController
-    }()
+    }
 }
 
 private extension ViewControllerFactory {
-    static var shopViewController: UIViewController = {
+    func makeShopViewController() -> UIViewController {
         let shopViewController = ShopViewController()
-        let navigationController = UINavigationController(rootViewController: shopViewController)
+        shopViewController.title = "Shop"
+        return makeNavigationController(with: shopViewController)
+    }
+    
+    func makeSinglePaymentViewController() -> UIViewController {
+        let viewController = PaymentsViewController()
+        viewController.title = "Payments"
+        return makeNavigationController(with: viewController)
+    }
+    
+    func makeCardsViewController() -> UIViewController {
+        let viewController = CardsViewController()
+        viewController.title = "Cards"
+        return makeNavigationController(with: viewController)
+    }
+    
+    func makeNavigationController(with root: UIViewController) -> UIViewController {
+        let navigationController = UINavigationController(rootViewController: root)
         navigationController.tabBarItem.image = UIImage(named: "shop")
         navigationController.navigationBar.prefersLargeTitles = true
         return navigationController
-    }()
+    }
 }

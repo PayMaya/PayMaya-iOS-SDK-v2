@@ -18,17 +18,25 @@
 //
 
 import Foundation
+import Networking
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
+struct CreateWalletLinkRequest: Request {
+    typealias Response = CreateWalletLinkResponse
+    
+    var method: HTTPMethod {
+        return .post
     }
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+    var url: String {
+        return PayMayaSDK.environment.baseURL + "/payby/v2/paymaya/link"
+    }
+    
+    let body: Data?
+    var headers: HTTPHeaders = [:]
+    
+    init(walletLinkInfo: WalletLinkInfo, authenticationKey: String) {
+        body = try? JSONEncoder().encode(walletLinkInfo)
+        headers.addContentType(.json)
+        headers.addHTTPBasicAuthentication(credentials: authenticationKey)
     }
 }

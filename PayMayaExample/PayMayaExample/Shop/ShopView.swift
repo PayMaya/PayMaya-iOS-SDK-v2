@@ -1,4 +1,4 @@
-////
+//
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -22,7 +22,7 @@ import UIKit
 class ShopView: UIView {
     
     let tableView = UITableView()
-    private let checkoutButton = ExampleButton(type: .system)
+    private let checkoutButton = PaymentButton(type: .system)
     
     private lazy var buttonStack = UIStackView(arrangedSubviews: [checkoutButton])
     
@@ -74,12 +74,7 @@ private extension ShopView {
     
     func setupCheckoutButton() {
         checkoutButton.setTitle("Pay via Checkout", for: .normal)
-        checkoutButton.setTitleColor(.white, for: .normal)
-        checkoutButton.titleLabel?.font = .boldSystemFont(ofSize: 16)
         checkoutButton.addTarget(self, action: #selector(checkoutButtonTapped), for: .touchUpInside)
-        checkoutButton.backgroundColor = .black
-        checkoutButton.layer.cornerRadius = 10
-        checkoutButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     @objc func checkoutButtonTapped() {

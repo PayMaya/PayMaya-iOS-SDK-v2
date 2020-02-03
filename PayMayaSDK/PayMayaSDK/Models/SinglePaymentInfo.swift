@@ -19,16 +19,26 @@
 
 import Foundation
 
-public extension Data {
-    func parseJSON<T: Decodable>() -> T? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
-        return try? decoder.decode(T.self, from: self)
-    }
+public struct SinglePaymentInfo: Encodable {
+    public let totalAmount: SinglePaymentTotalAmount
+    public let redirectUrl: RedirectURL
+    public let requestReferenceNumber: String
+    public let metadata: [String: String]
     
-    private var customDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
-        return formatter
+    public init(totalAmount: SinglePaymentTotalAmount, redirectUrl: RedirectURL, requestReferenceNumber: String, metadata: [String : String] = [:]) {
+        self.totalAmount = totalAmount
+        self.redirectUrl = redirectUrl
+        self.requestReferenceNumber = requestReferenceNumber
+        self.metadata = metadata
+    }
+}
+
+public struct SinglePaymentTotalAmount: Encodable {
+    public let currency: String
+    public let value: Double
+    
+    public init(currency: String, value: Double) {
+        self.currency = currency
+        self.value = value
     }
 }

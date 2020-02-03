@@ -24,10 +24,14 @@ public struct RedirectURL: Encodable {
     public let failure: String
     public let cancel: String
     
-    public init(success: String, failure: String, cancel: String) {
+    public init?(success: String, failure: String, cancel: String) {
         self.success = success
         self.failure = failure
         self.cancel = cancel
+        
+        if !validateURLs() {
+            return nil
+        }
     }
 }
 
@@ -47,5 +51,10 @@ extension RedirectURL {
         default:
             return nil
         }
+    }
+    
+    func validateURLs() -> Bool {
+        let result = [success, failure, cancel].map { $0.starts(with: "https://") }
+        return !result.contains(false)
     }
 }
