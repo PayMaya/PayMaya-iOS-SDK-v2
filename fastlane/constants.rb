@@ -7,7 +7,7 @@ class Constants
   end
 
   def self.example_build_info
-    BuildInfo.new('PayMayaExample')
+    BuildInfo.new('PaymayaExample')
   end
 
   def self.appcenter_stage_app_name

@@ -26,7 +26,9 @@ platform :ios do
 
   desc "Submits a new build to AppCenter"
   lane :build_appcenter do |options|
-    increment_build_number(build_number: "#{options[:build_number]}")
+    increment_build_number(
+      build_number: "#{options[:build_number]}",
+      xcodeproj: "./PayMayaExample/PayMayaExample.xcodeproj")
     gym(scheme: Constants.example_build_info.scheme, archive_path: Constants.archive_path, export_method: "enterprise")
     appcenter_upload(
       api_token: options[:appcenter_api_token],
