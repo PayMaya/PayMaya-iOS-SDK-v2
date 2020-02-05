@@ -31,8 +31,8 @@ public class PayMayaSDK {
     private static var authKeys = [AuthenticationMethod: String]()
     internal static var environment: PayMayaEnvironment = .production
     
-    static var session: Networking = URLSession.shared
-    
+    internal static var session: Networking = URLSession.shared
+
     public static func add(authenticationKey: String, for method: AuthenticationMethod) {
         authKeys[method] = authenticationKey.convertToAuthenticationKey()
         Log.info("Adding authentication key: \(authenticationKey) for method: \(method)")
@@ -51,13 +51,15 @@ public class PayMayaSDK {
             Log.error(error.localizedDescription)
             return
         }
-
+        
         let request = CheckoutRequest(checkoutInfo: checkoutInfo, authenticationKey: authKey)
         WebViewPaymentUseCase(session: session,
+                              authenticationKey: authKey,
                               request: request,
                               redirectURL: checkoutInfo.redirectUrl,
-                              navigationTitle: "PayMaya Checkout")
-            .showWebView(context: context, callback: callback)
+                              navigationTitle: "PayMaya Checkout",
+                              callback: callback)
+            .showWebView(context: context)
     }
 
     public static func singlePayment(_ singlePaymentInfo: SinglePaymentInfo, context: UIViewController, callback: @escaping PaymentCallback) {
@@ -67,13 +69,15 @@ public class PayMayaSDK {
             Log.error(error.localizedDescription)
             return
         }
-
+        
         let request = SinglePaymentRequest(singlePaymentInfo: singlePaymentInfo, authenticationKey: authKey)
         WebViewPaymentUseCase(session: session,
+                              authenticationKey: authKey,
                               request: request,
                               redirectURL: singlePaymentInfo.redirectUrl,
-                              navigationTitle: "Pay with Paymaya")
-            .showWebView(context: context, callback: callback)
+                              navigationTitle: "Pay with Paymaya",
+                              callback: callback)
+            .showWebView(context: context)
     }
 
     public static func createWallet(_ walletLinkInfo: WalletLinkInfo, context: UIViewController, callback: @escaping PaymentCallback) {
@@ -83,13 +87,15 @@ public class PayMayaSDK {
             Log.error(error.localizedDescription)
             return
         }
-
+        
         let request = CreateWalletLinkRequest(walletLinkInfo: walletLinkInfo, authenticationKey: authKey)
         WebViewPaymentUseCase(session: session,
-                request: request,
-                redirectURL: walletLinkInfo.redirectUrl,
-                navigationTitle: "Create Wallet")
-                .showWebView(context: context, callback: callback)
+                              authenticationKey: authKey,
+                              request: request,
+                              redirectURL: walletLinkInfo.redirectUrl,
+                              navigationTitle: "Create Wallet",
+                              callback: callback)
+            .showWebView(context: context)
     }
 
     public static func cardPayment(_ context: UIViewController,
@@ -101,4 +107,21 @@ public class PayMayaSDK {
         }
         CardPaymentTokenUseCase(session: session, authenticationKey: authKey).start(context: context, styling: styling, callback: callback)
     }
+
+    public static func getCheckoutStatus(id: String, callback: @escaping StatusCallback) {
+        guard let authKey = authKeys[.checkout] else {
+            callback(.failure(AuthenticationError.missingCheckoutKey))
+            return
+        }
+        GetStatusUseCase(session: session).getStatus(for: id, authenticationKey: authKey, callback: callback)
+    }
+
+    public static func getPaymentStatus(id: String, callback: @escaping StatusCallback) {
+        guard let authKey = authKeys[.payments] else {
+            callback(.failure(AuthenticationError.missingPaymentsKey))
+            return
+        }
+        GetStatusUseCase(session: session).getStatus(for: id, authenticationKey: authKey, callback: callback)
+    }
+    
 }

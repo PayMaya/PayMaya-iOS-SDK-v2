@@ -65,6 +65,9 @@ private extension PaymentsViewController {
                     self.showAlert("CANCELLED: \(url)")
                 }
                 
+            case .interrupted(let paymentStatus):
+                self.showAlert("INTERRUPTED: \(paymentStatus.rawValue)")
+                
             case .error(let error):
                 self.showAlert("ERROR: \(error.localizedDescription)")
             }
@@ -88,6 +91,9 @@ private extension PaymentsViewController {
                     self.showAlert("CANCELLED: \(url)")
                 }
                 
+            case .interrupted(let paymentStatus):
+                self.showAlert("INTERRUPTED: \(paymentStatus.rawValue)")
+                
             case .error(let error):
                 self.showAlert("ERROR: \(error.localizedDescription)")
             }
@@ -95,9 +101,11 @@ private extension PaymentsViewController {
     }
     
     func showAlert(_ message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(.init(title: "OK", style: .default))
-        present(alert, animated: true)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .default))
+            self.present(alert, animated: true)
+        }
     }
     
 }

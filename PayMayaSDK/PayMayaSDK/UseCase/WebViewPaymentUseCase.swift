@@ -24,6 +24,7 @@ import UIKit
 public enum PaymentResult {
     case prepared(id: String)
     case processed(status: RedirectStatus)
+    case interrupted(paymentStatus: PaymentStatus)
     case error(Error)
 }
 
@@ -31,71 +32,118 @@ public typealias PaymentCallback = (PaymentResult) -> Void
 
 class WebViewPaymentUseCase<NetworkRequest: Request> {
     private let session: Networking
+    private let authenticationKey: String
     private let request: NetworkRequest
     private let redirectURL: RedirectURL
     private let navigationTitle: String
+    private let callback: PaymentCallback
 
-    init(session: Networking, request: NetworkRequest, redirectURL: RedirectURL, navigationTitle: String) {
+    private var id: String?
+    private var dismissAction: (() -> Void)?
+
+    init(session: Networking,
+         authenticationKey: String,
+         request: NetworkRequest,
+         redirectURL: RedirectURL,
+         navigationTitle: String,
+         callback: @escaping PaymentCallback) {
         self.session = session
+        self.authenticationKey = authenticationKey
         self.request = request
         self.redirectURL = redirectURL
         self.navigationTitle = navigationTitle
+        self.callback = callback
     }
 }
 
 extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectResponse {
-    func showWebView(context: UIViewController, callback: @escaping PaymentCallback) {
-        
-        let webViewController = PMWebViewController(title: navigationTitle)
+    func showWebView(context: UIViewController) {
+        let webViewController = makeWebViewController()
         let navVC = UINavigationController(rootViewController: webViewController)
         
         DispatchQueue.main.async {
             context.present(navVC, animated: true)
         }
 
-        let redirectURL = self.redirectURL
-        
-        webViewController.onChangedURL = { [weak webViewController] url in
-            if let status = redirectURL.status(for: url) {
-                webViewController?.dismiss(animated: true)
-                callback(.processed(status: status))
-                Log.info("Finished process: redirecting to \(url) with \(status)")
-            }
-        }
-        
-        webViewController.onError = { [weak webViewController] error in
+        dismissAction = { [weak webViewController] in
             webViewController?.dismiss(animated: true)
-            callback(.error(error))
         }
-        
+
+        makeRequest(andLoad: webViewController)
+    }
+
+}
+
+private extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectResponse {
+    func makeWebViewController() -> PMWebViewController {
+        let webViewController = PMWebViewController(title: navigationTitle)
+        webViewController.onChangedURL = onChangedUrl
+        webViewController.onError = onError
+        webViewController.onDismiss = getStatus
+        return webViewController
+    }
+
+    func makeRequest(andLoad webViewController: PMWebViewController) {
         session.make(request) { result in
             switch result {
             case .success(let response):
+                self.id = response.id
+                self.callback(.prepared(id: response.id))
                 Log.info("Got response with id \(response.id)")
-                callback(.prepared(id: response.id))
                 DispatchQueue.main.async {
                     webViewController.loadURL(response.redirectUrl)
                 }
                 
             case .failure(let data):
                 DispatchQueue.main.async {
-                    webViewController.dismiss(animated: true)
+                    self.dismissAction?()
                 }
-                guard let error: PayMayaError = data.parseJSON() else {
-                    callback(.error(NetworkError.incorrectData))
-                    Log.error(NetworkError.incorrectData.localizedDescription)
-                    return
-                }
-                callback(.error(error))
+                let error = data.parseError()
+                self.callback(.error(error))
                 Log.error(error.localizedDescription)
+
             case .error(let error):
                 DispatchQueue.main.async {
-                    webViewController.dismiss(animated: true)
+                    self.dismissAction?()
                 }
-                callback(.error(error))
+                self.callback(.error(error))
                 Log.error(error.localizedDescription)
             }
         }
     }
 
+    func getStatus() {
+        guard let id = self.id else { return }
+        let redirectURL = self.redirectURL
+
+        GetStatusUseCase(session: session).getStatus(for: id, authenticationKey: authenticationKey) { result in
+            switch result {
+            case .success(let status):
+                switch status {
+                case .paymentSuccess:
+                    self.callback(.processed(status: .success(redirectURL.success)))
+                case .authFailed, .paymentFailed, .paymentExpired:
+                    self.callback(.processed(status: .failure(redirectURL.failure)))
+                default:
+                    self.callback(.interrupted(paymentStatus: status))
+                }
+            case .failure(let error):
+                self.callback(.error(error))
+            }
+        }
+    }
+
+    func onChangedUrl(_ url: String) {
+        if let status = redirectURL.status(for: url) {
+            dismissAction?()
+            callback(.processed(status: status))
+            Log.info("Finished process: redirecting to \(url) with \(status)")
+        }
+    }
+
+    func onError(_ error: Error) {
+        dismissAction?()
+        callback(.error(error))
+        Log.error(error.localizedDescription)
+    }
 }

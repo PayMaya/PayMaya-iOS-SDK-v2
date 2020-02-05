@@ -37,7 +37,10 @@ class CardPaymentTokenViewController: UIViewController {
     }
     
     override func loadView() {
-        view = CardPaymentTokenView(styling: styling, buttonAction: buttonAction)
+        let view = CardPaymentTokenView()
+        let modelData = CardPaymentTokenInitialData(action: buttonAction, buttonTitle: "Pay with card", styling: styling)
+        view.model = CardPaymentTokenViewModel(data: modelData)
+        self.view = view
     }
     
     override func viewDidLoad() {

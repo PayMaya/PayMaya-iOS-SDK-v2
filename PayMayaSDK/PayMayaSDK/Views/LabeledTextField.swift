@@ -20,85 +20,61 @@
 import Foundation
 import UIKit
 
-protocol LabeledTextFieldValidityDelegate: class {
-    func editingDidChange()
+protocol LabeledTextFieldContract: class {
+    func changeValidationState(valid: Bool, defaultColor: UIColor)
+    func initialSetup(data: LabeledTextFieldInitData)
 }
 
 class LabeledTextField: UIStackView {
     private var label = UILabel()
     private var textField = UITextField()
    
-    private weak var validityDelegate: LabeledTextFieldValidityDelegate?
-    private var delegate: UITextFieldDelegate?
-    private var validator: FieldValidator?
-    
-    private let defaultColor: UIColor
-    
-    var text: String {
-        return (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+    #warning("make it private?")
+    var model: LabeledTextFieldViewModel? {
+        didSet {
+            model?.setContract(self)
+        }
     }
     
-    var isValid: Bool {
-        guard let text = textField.text else {return false}
-        return validator?.validate(string: text) ?? false
-    }
-    
-    init(labelText: String, hint: String? = nil, tintColor: UIColor) {
-        self.defaultColor = tintColor
+    init() {
         super.init(frame: .zero)
         self.axis = .vertical
         self.distribution = .equalSpacing
         self.alignment = .leading
         self.spacing = 4.0
-        setupViews(labelText: labelText, hint: hint)
     }
     
     @available(*, unavailable)
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func setCustomDelegate(_ delegate: UITextFieldDelegate) {
-        self.delegate = delegate
-    }
-    
-    func setValidityDelegate(_ delegate: LabeledTextFieldValidityDelegate) {
-        self.validityDelegate = delegate
-    }
-    
-    func setValidator(_ validator: FieldValidator) {
-        self.validator = validator
-    }
 }
 
-extension LabeledTextField: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        guard let text = textField.text, let valid = validator?.validate(string: text) else {return}
-        changeValidationState(valid: valid)
+extension LabeledTextField: LabeledTextFieldContract {
+    
+    func changeValidationState(valid: Bool, defaultColor: UIColor) {
+        UIView.transition(with: label, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.label.textColor = valid ? defaultColor : .red
+        })
+        UIView.transition(with: textField, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.textField.textColor = valid ? defaultColor : .red
+            self?.textField.layer.borderColor = valid ? defaultColor.cgColor : UIColor.red.cgColor
+            self?.textField.tintColor = valid ? defaultColor : .red
+        })
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard !string.isEmpty else { return true }
-        return validator?.isCharAcceptable(char: Character(string)) ?? false &&
-            delegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true        
-    }
-
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        changeValidationState(valid: true)
+    func initialSetup(data: LabeledTextFieldInitData) {
+        setupViews(labelText: data.labelText, hint: data.hintText, color: data.tintColor)
     }
     
-    @objc func editingDidChange() {
-        validityDelegate?.editingDidChange()
-    }
 }
 
 private extension LabeledTextField {
     
-    func setupViews(labelText: String, hint: String?) {
+    func setupViews(labelText: String, hint: String?, color: UIColor) {
         addSubviews()
-        setupLabel(text: labelText)
-        setupTextField(text: labelText, hint: hint)
+        setupLabel(text: labelText, color: color)
+        setupTextField(text: labelText, hint: hint, color: color)
     }
     
     func addSubviews() {
@@ -106,9 +82,9 @@ private extension LabeledTextField {
         self.addArrangedSubview(textField)
     }
     
-    func setupLabel(text: String) {
+    func setupLabel(text: String, color: UIColor) {
         label.text = text
-        label.textColor = defaultColor
+        label.textColor = color
         label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -117,32 +93,23 @@ private extension LabeledTextField {
         ])
     }
     
-    func setupTextField(text: String, hint: String?) {
-        textField.textColor = defaultColor
+    func setupTextField(text: String, hint: String?, color: UIColor) {
+        textField.textColor = color
         textField.placeholder = hint ?? text
         textField.borderStyle = .roundedRect
-        textField.layer.borderColor = defaultColor.cgColor
+        textField.layer.borderColor = color.cgColor
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 4.0
-        textField.tintColor = defaultColor
+        textField.tintColor = color
         textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.delegate = self
+        textField.delegate = model
         NSLayoutConstraint.activate([
             textField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             textField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
-        textField.addTarget(self, action: #selector(editingDidChange), for: UIControl.Event.editingChanged)
+        guard let model = model else {return}
+        textField.addTarget(model, action: #selector(LabeledTextFieldViewModel.editingDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
-    func changeValidationState(valid: Bool) {
-        UIView.transition(with: label, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
-            self?.label.textColor = valid ? self?.defaultColor : .red
-        })
-        UIView.transition(with: textField, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
-            self?.textField.textColor = valid ? self?.defaultColor : .red
-            self?.textField.layer.borderColor = valid ? self?.defaultColor.cgColor : UIColor.red.cgColor
-            self?.textField.tintColor = valid ? self?.defaultColor : .red
-        })
-    }
 }

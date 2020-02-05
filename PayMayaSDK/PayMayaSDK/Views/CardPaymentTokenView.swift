@@ -36,38 +36,33 @@ private struct Constants {
     static let buttonDefaultConstraint: CGFloat = -16
 }
 
+protocol CardPaymentTokenViewContract: class {
+    func initialSetup(data: CardPaymentTokenInitialData)
+}
+
 class CardPaymentTokenView: UIView {
-    private let cardNumber: LabeledTextField
-    private let cvv: LabeledTextField
-    private let validityDate: LabeledTextField
-    private let imageView: UIImageView
+    private let cardNumber = LabeledTextField()
+    private let cvv = LabeledTextField()
+    private let validityDate = LabeledTextField()
+    private let imageView = UIImageView()
     private let indicatorView = UIActivityIndicatorView(style: .gray)
     
     private let mainStack = UIStackView()
     private let minorStack = UIStackView()
     private let actionButton = UIButton(type: .system)
     
-    private let action: (CardDetailsInfo) -> Void
-    
-    private var buttonConstraint: NSLayoutConstraint?
-    
-    private var inputData: CardDetailsInfo {
-        let monthAndYear = validityDate.text.split(separator: "/")
-        return CardDetailsInfo(number: cardNumber.text,
-                               expMonth: String(monthAndYear[0]),
-                               expYear: String(monthAndYear[1]),
-                               cvc: cvv.text.trimmingCharacters(in: .whitespacesAndNewlines))
+    #warning("make it private?")
+    var model: CardPaymentTokenViewModel? {
+        didSet {
+            model?.setContract(self)
+        }
     }
     
-    init(styling: CardPaymentTokenViewStyling, buttonAction: @escaping (CardDetailsInfo) -> Void) {
-        cardNumber = LabeledTextField(labelText: "Card Number", tintColor: styling.tintColor)
-        cvv = LabeledTextField(labelText: "CVV", tintColor: styling.tintColor)
-        validityDate = LabeledTextField(labelText: "Validity", hint: "MM/YYYY", tintColor: styling.tintColor)
-        imageView = UIImageView(image: styling.image)
-        action = buttonAction
+    private var buttonConstraint: NSLayoutConstraint?
+        
+    init() {
         super.init(frame: .zero)
         setupNotifications()
-        setupViews()
     }
     
     deinit {
@@ -85,20 +80,26 @@ class CardPaymentTokenView: UIView {
         
 }
 
+extension CardPaymentTokenView: CardPaymentTokenViewContract {
+    func initialSetup(data: CardPaymentTokenInitialData) {
+        setupViews(with: data)
+    }
+}
+
 private extension CardPaymentTokenView {
     func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func setupViews() {
+    func setupViews(with data: CardPaymentTokenInitialData) {
+        setupModels()
         addSubviews()
         setupSelf()
-        setupLogo()
+        setupLogo(with: data.styling.image)
         setupMainStack()
         setupMinorStack()
-        setupValidators()
-        setupButton()
+        setupButton(with: data.buttonTitle)
         setupActivityIndicator()
     }
     
@@ -116,7 +117,8 @@ private extension CardPaymentTokenView {
         self.backgroundColor = .white
     }
     
-    func setupLogo() {
+    func setupLogo(with image: UIImage) {
+        imageView.image = image
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -146,19 +148,9 @@ private extension CardPaymentTokenView {
         
     }
     
-    func setupValidators() {
-        cardNumber.setValidator(CardNumberValidator())
-        cardNumber.setValidityDelegate(self)
-        validityDate.setValidator(ExpirationDateValidator())
-        validityDate.setCustomDelegate(ExpirationDateFieldDelegate())
-        validityDate.setValidityDelegate(self)
-        cvv.setValidator(CVCValidator())
-        cvv.setValidityDelegate(self)
-    }
-    
-    func setupButton() {
+    func setupButton(with title: String) {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.setTitle("Add Card", for: .normal)
+        actionButton.setTitle(title, for: .normal)
         addSubview(actionButton)
         self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: Constants.buttonDefaultConstraint)
         NSLayoutConstraint.activate([
@@ -180,11 +172,18 @@ private extension CardPaymentTokenView {
         ])
     }
     
+    func setupModels() {
+        model?.setEditingDelegate(self)
+        cardNumber.model = model?.cardNumberModel
+        cvv.model = model?.cvvModel
+        validityDate.model = model?.expirationDateModel
+    }
+    
     @objc func buttonAction() {
         self.endEditing(true)
         indicatorView.isHidden = false
         indicatorView.startAnimating()
-        action(inputData)
+        model?.buttonPressed()
     }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
@@ -203,8 +202,8 @@ private extension CardPaymentTokenView {
     }
 }
 
-extension CardPaymentTokenView: LabeledTextFieldValidityDelegate {
-    func editingDidChange() {
-        actionButton.isEnabled = cardNumber.isValid && cvv.isValid && validityDate.isValid
+extension CardPaymentTokenView: LabeledTextFieldEditingDelegate {
+    func editingDidChange(valid: Bool) {
+        actionButton.isEnabled = valid
     }
 }

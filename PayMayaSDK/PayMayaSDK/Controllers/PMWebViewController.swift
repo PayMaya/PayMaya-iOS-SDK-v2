@@ -25,7 +25,8 @@ class PMWebViewController: UIViewController {
     
     var onChangedURL: ((String) -> Void)?
     var onError: ((Error) -> Void)?
-    
+    var onDismiss: (() -> Void)?
+
     init(title: String) {
         super.init(nibName: nil, bundle: nil)
         self.title = title
@@ -71,7 +72,8 @@ private extension PMWebViewController {
     }
     
     @objc func dismissControlller() {
-        dismiss(animated: true) {
+        dismiss(animated: true) { [weak self] in
+            self?.onDismiss?()
             Log.verbose("Controller dismissed by user")
         }
     }
