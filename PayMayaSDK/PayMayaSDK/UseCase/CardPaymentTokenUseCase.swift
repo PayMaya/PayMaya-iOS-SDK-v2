@@ -31,23 +31,21 @@ class CardPaymentTokenUseCase {
     private let session: Networking
     
     private var callback: ((CreateCardResult) -> Void)?
-    private var dismissAction: (() -> Void)?
+    private weak var executionContext: UIViewController?
     
     init(session: Networking, authenticationKey: String) {
         self.authenticationKey = authenticationKey
         self.session = session
     }
     
-    func start(context: UIViewController, callback: @escaping (CreateCardResult) -> Void) {
-        let addCardVC = CardPaymentTokenViewController(buttonAction: cardDataReceived)
+    func start(context: UIViewController,
+               styling: CardPaymentTokenViewStyling,
+               callback: @escaping (CreateCardResult) -> Void) {
+        let addCardVC = CardPaymentTokenViewController(buttonAction: cardDataReceived, styling: styling)
         let navVC = UINavigationController(rootViewController: addCardVC)
         
         self.callback = callback
-        self.dismissAction = { [weak context] in
-            DispatchQueue.main.async {
-                context?.dismiss(animated: true)
-            }
-        }
+        self.executionContext = addCardVC
             
         DispatchQueue.main.async {
             context.present(navVC, animated: true)
@@ -61,17 +59,30 @@ private extension CardPaymentTokenUseCase {
         session.make(request) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.callback?(.success(response))
-                self?.dismissAction?()
+                self?.dismiss(with: .success(response))
             case .failure(let data):
                 guard let error: PayMayaError = data.parseJSON() else {
-                    self?.callback?(.error(NetworkError.incorrectData))
+                    self?.dismiss(with: .error(NetworkError.incorrectData))
                     return
                 }
-                self?.callback?(.error(error))
+                self?.dismiss(with: .error(error))
             case .error(let error):
-                self?.callback?(.error(error))
+                self?.dismiss(with: .error(error))
             }
+        }
+    }
+    
+    func dismiss(with result: CreateCardResult) {
+        DispatchQueue.main.async { [weak self] in
+            self?.executionContext?.dismiss(animated: true) {
+                self?.callback?(result)
+            }
+        }
+    }
+    
+    func handleRequestFinished() {
+        DispatchQueue.main.async { [weak self] in
+            (self?.executionContext as? CardPaymentTokenViewController)?.hideActivityIndicator()
         }
     }
 }

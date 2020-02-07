@@ -37,6 +37,7 @@ class CardPaymentTokenView: UIView {
     private let cvv: LabeledTextField
     private let validityDate: LabeledTextField
     private let imageView: UIImageView
+    private let indicatorView = UIActivityIndicatorView(style: .gray)
     
     private let mainStack = UIStackView()
     private let minorStack = UIStackView()
@@ -44,32 +45,48 @@ class CardPaymentTokenView: UIView {
     
     private let action: (CardDetailsInfo) -> Void
     
+    private var buttonConstraint: NSLayoutConstraint?
+    
     private var inputData: CardDetailsInfo {
         let monthAndYear = validityDate.text.split(separator: "/")
-        return CardDetailsInfo(number: cardNumber.text.trimmingCharacters(in: .whitespacesAndNewlines),
-                               expMonth: String(monthAndYear[0]).trimmingCharacters(in: .whitespacesAndNewlines),
-                               expYear: String(monthAndYear[1]).trimmingCharacters(in: .whitespacesAndNewlines),
+        return CardDetailsInfo(number: cardNumber.text,
+                               expMonth: String(monthAndYear[0]),
+                               expYear: String(monthAndYear[1]),
                                cvc: cvv.text.trimmingCharacters(in: .whitespacesAndNewlines))
     }
     
-    init(styling: CardPaymentTokenViewStyling = CardPaymentTokenViewStyling.defaultStyling, buttonAction: @escaping (CardDetailsInfo) -> Void) {
+    init(styling: CardPaymentTokenViewStyling, buttonAction: @escaping (CardDetailsInfo) -> Void) {
         cardNumber = LabeledTextField(labelText: "Card Number", tintColor: styling.tintColor)
         cvv = LabeledTextField(labelText: "CVV", tintColor: styling.tintColor)
-        validityDate = LabeledTextField(labelText: "Validity", tintColor: styling.tintColor)
+        validityDate = LabeledTextField(labelText: "Validity", hint: "MM/YYYY", tintColor: styling.tintColor)
         imageView = UIImageView(image: styling.image)
         action = buttonAction
         super.init(frame: .zero)
+        setupNotifications()
         setupViews()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func hideActivityIndicator() {
+        indicatorView.isHidden = true
+    }
         
 }
 
 private extension CardPaymentTokenView {
+    func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     func setupViews() {
         addSubviews()
         setupSelf()
@@ -77,6 +94,7 @@ private extension CardPaymentTokenView {
         setupMainStack()
         setupMinorStack()
         setupButton()
+        setupActivityIndicator()
     }
     
     func addSubviews() {
@@ -86,6 +104,7 @@ private extension CardPaymentTokenView {
         mainStack.addArrangedSubview(minorStack)
         minorStack.addArrangedSubview(validityDate)
         minorStack.addArrangedSubview(cvv)
+        addSubview(indicatorView)
     }
     
     func setupSelf() {
@@ -126,18 +145,44 @@ private extension CardPaymentTokenView {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         actionButton.setTitle("Add Card", for: .normal)
         addSubview(actionButton)
+        self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         NSLayoutConstraint.activate([
             actionButton.heightAnchor.constraint(equalToConstant: 50),
             actionButton.widthAnchor.constraint(equalToConstant: 120),
-            actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            buttonConstraint!,
             actionButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
         actionButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     }
     
-    @objc
-    func buttonAction() {
+    func setupActivityIndicator() {
+        indicatorView.isHidden = true
+        indicatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            indicatorView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            indicatorView.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+    }
+    
+    @objc func buttonAction() {
+        self.endEditing(true)
+        indicatorView.isHidden = false
+        indicatorView.startAnimating()
         action(inputData)
     }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        guard let size = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {return}
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.buttonConstraint?.constant = (self?.buttonConstraint?.constant ?? 0) - size.height
+            self?.layoutIfNeeded()
+        }
+    }
 
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.buttonConstraint?.constant = -16
+            self?.layoutIfNeeded()
+        }
+    }
 }

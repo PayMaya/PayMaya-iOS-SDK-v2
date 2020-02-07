@@ -22,7 +22,7 @@ import UIKit
 class ViewControllerFactory {
     func makeRootViewController() -> UIViewController {
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [makeShopViewController(), makeSinglePaymentViewController(), makeCardsViewController()]
+        tabBarController.viewControllers = [makeShopViewController(), makeSinglePaymentViewController(), makeCardPaymentViewController()]
         return tabBarController
     }
 }
@@ -40,9 +40,9 @@ private extension ViewControllerFactory {
         return makeNavigationController(with: viewController)
     }
     
-    func makeCardsViewController() -> UIViewController {
-        let viewController = CardsViewController()
-        viewController.title = "Cards"
+    func makeCardPaymentViewController() -> UIViewController {
+        let viewController = PayWithCardViewController()
+        viewController.title = "Card"
         return makeNavigationController(with: viewController)
     }
     

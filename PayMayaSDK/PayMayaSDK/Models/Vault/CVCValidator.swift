@@ -18,24 +18,15 @@
 //
 
 import Foundation
-import Networking
 
-struct CreateWalletLinkRequest: Request {
-    typealias Response = CreateWalletLinkResponse
-    
-    var method: HTTPMethod {
-        return .post
+class CVCValidator: FieldValidator {
+    func isCharAcceptable(char: Character) -> Bool {
+        let tempSet = CharacterSet(charactersIn: String(char))
+        return tempSet.isSubset(of: .decimalDigits)
     }
     
-    var url: String {
-        return PayMayaSDK.environment.baseURL + "/payby/v2/paymaya/link"
-    }
-    
-    let body: Data?
-    var headers: HTTPHeaders
-    
-    init(walletLinkInfo: WalletLinkInfo, authenticationKey: String) {
-        body = try? JSONEncoder().encode(walletLinkInfo)
-        headers = HTTPHeaders.defaultHeaders(using: authenticationKey)
+    func validate(string: String) -> Bool {
+        guard Int(string) != nil else {return false}
+        return 3...4 ~= string.count
     }
 }

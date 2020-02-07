@@ -59,6 +59,7 @@ extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectResponse 
             if let status = redirectURL.status(for: url) {
                 webViewController?.dismiss(animated: true)
                 callback(.processed(status: status))
+                Log.info("Finished process: redirecting to \(url) with \(status)")
             }
         }
         
@@ -70,6 +71,7 @@ extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectResponse 
         session.make(request) { result in
             switch result {
             case .success(let response):
+                Log.info("Got response with id \(response.id)")
                 callback(.prepared(id: response.id))
                 DispatchQueue.main.async {
                     webViewController.loadURL(response.redirectUrl)
@@ -81,14 +83,17 @@ extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectResponse 
                 }
                 guard let error: PayMayaError = data.parseJSON() else {
                     callback(.error(NetworkError.incorrectData))
+                    Log.error(NetworkError.incorrectData.localizedDescription)
                     return
                 }
                 callback(.error(error))
+                Log.error(error.localizedDescription)
             case .error(let error):
                 DispatchQueue.main.async {
                     webViewController.dismiss(animated: true)
                 }
                 callback(.error(error))
+                Log.error(error.localizedDescription)
             }
         }
     }

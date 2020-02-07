@@ -25,8 +25,8 @@ import Networking
 class PayMayaSDKTests: XCTestCase {
     
     override class func setUp() {
-        PayMayaSDK.environment = .sandbox
-        PayMayaSDK.set(checkoutPublicKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah")
+        PayMayaSDK.setup(environment: .sandbox)
+        PayMayaSDK.add(authenticationKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", for: .checkout)
     }
 
     func test_givenPublicKey_whenCreatesCheckoutPayment_thenSessionGetsEncodedKey() {

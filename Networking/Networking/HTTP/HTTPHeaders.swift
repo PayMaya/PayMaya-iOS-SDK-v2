@@ -25,8 +25,16 @@ public extension HTTPHeaders {
     mutating func addHTTPBasicAuthentication(credentials: String) {
         self["Authorization"] = "Basic " + credentials
     }
+    
     mutating func addContentType(_ contentType: HTTPContentType) {
         self["Content-Type"] = contentType.rawValue
+    }
+    
+    static func defaultHeaders(using authKey: String) -> HTTPHeaders {
+        var headers = HTTPHeaders()
+        headers.addContentType(.json)
+        headers.addHTTPBasicAuthentication(credentials: authKey)
+        return headers
     }
 }
 

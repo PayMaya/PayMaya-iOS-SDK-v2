@@ -21,4 +21,5 @@ import Foundation
 
 protocol FieldValidator {
     func validate(string: String) -> Bool
+    func isCharAcceptable(char: Character) -> Bool
 }

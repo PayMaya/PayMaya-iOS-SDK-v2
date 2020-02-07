@@ -18,24 +18,25 @@
 //
 
 import Foundation
-import Networking
 
-struct CreateWalletLinkRequest: Request {
-    typealias Response = CreateWalletLinkResponse
-    
-    var method: HTTPMethod {
-        return .post
+class ExpirationDateValidator: FieldValidator {
+    func isCharAcceptable(char: Character) -> Bool {
+        let customSet = CharacterSet(charactersIn: "1234567890/")
+        let tempSet = CharacterSet(charactersIn: String(char))
+        return tempSet.isSubset(of: customSet)
     }
     
-    var url: String {
-        return PayMayaSDK.environment.baseURL + "/payby/v2/paymaya/link"
+    func validate(string: String) -> Bool {
+        let tempSet = CharacterSet(charactersIn: "1234567890/")
+        guard CharacterSet(charactersIn: string).isSubset(of: tempSet) else {return false}
+        guard let date = date(from: string) else {return false}
+        let comparison = Calendar.current.compare(date, to: Date(), toGranularity: .month)
+        return comparison == .orderedDescending || comparison == .orderedSame
     }
     
-    let body: Data?
-    var headers: HTTPHeaders
-    
-    init(walletLinkInfo: WalletLinkInfo, authenticationKey: String) {
-        body = try? JSONEncoder().encode(walletLinkInfo)
-        headers = HTTPHeaders.defaultHeaders(using: authenticationKey)
+    private func date(from string: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/yyyy"
+        return formatter.date(from: string)
     }
 }

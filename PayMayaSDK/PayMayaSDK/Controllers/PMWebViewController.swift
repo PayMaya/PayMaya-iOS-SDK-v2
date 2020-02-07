@@ -37,6 +37,7 @@ class PMWebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Log.verbose("View loaded.")
         setupNavigationItem()
         (view as? PMWebView)?.webView.navigationDelegate = self
         if #available(iOS 13.0, *) {
@@ -46,11 +47,14 @@ class PMWebViewController: UIViewController {
     
     func loadURL(_ urlString: String) {
         guard let url = URL(string: urlString) else {
-            onError?(NetworkError.invalidURL(url: urlString))
+            let error = NetworkError.invalidURL(url: urlString)
+            onError?(error)
+            Log.error(error.localizedDescription)
             return
         }
         let request = URLRequest(url: url)
         (view as? PMWebView)?.webView.load(request)
+        Log.info("Loading URL: \(url.absoluteString)")
     }
     
     @available(*, unavailable)
@@ -67,7 +71,9 @@ private extension PMWebViewController {
     }
     
     @objc func dismissControlller() {
-        dismiss(animated: true)
+        dismiss(animated: true) {
+            Log.verbose("Controller dismissed by user")
+        }
     }
 }
 
@@ -76,15 +82,18 @@ extension PMWebViewController: WKNavigationDelegate {
         (view as? PMWebView)?.indicatorView.startAnimating()
         if let url = webView.url {
             onChangedURL?(url.absoluteString)
+            Log.info("WKNavigationDelegate: redirecting to \(url.absoluteString)")
         }
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         (view as? PMWebView)?.indicatorView.stopAnimating()
+        Log.verbose("Web view did finish loading \(webView.url?.absoluteString ?? "")")
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         (view as? PMWebView)?.indicatorView.stopAnimating()
         onError?(error)
+        Log.error("WKNavigationDelegate: error redirecting to \(webView.url?.absoluteString ?? "") : \(error.localizedDescription)")
     }
 }

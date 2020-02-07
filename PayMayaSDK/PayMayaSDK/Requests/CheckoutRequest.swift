@@ -36,7 +36,6 @@ struct CheckoutRequest: Request {
     
     init(checkoutInfo: CheckoutInfo, authenticationKey: String) {
         body = try? JSONEncoder().encode(checkoutInfo)
-        headers.addContentType(.json)
-        headers.addHTTPBasicAuthentication(credentials: authenticationKey)
+        headers = HTTPHeaders.defaultHeaders(using: authenticationKey)
     }
 }

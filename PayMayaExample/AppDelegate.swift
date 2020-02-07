@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        PayMayaSDK.setup(environment: .sandbox)
+        PayMayaSDK.setup(environment: .sandbox, logLevel: .all)
         
         PayMayaSDK.add(authenticationKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", for: .checkout)
         PayMayaSDK.add(authenticationKey: "pk-MOfNKu3FmHMVHtjyjG7vhr7vFevRkWxmxYL1Yq6iFk5", for: .payments)

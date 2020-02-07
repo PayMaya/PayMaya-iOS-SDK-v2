@@ -23,9 +23,11 @@ import UIKit
 class CardPaymentTokenViewController: UIViewController {
     
     private let buttonAction: (CardDetailsInfo) -> Void
+    private let styling: CardPaymentTokenViewStyling
     
-    init(buttonAction: @escaping (CardDetailsInfo) -> Void) {
+    init(buttonAction: @escaping (CardDetailsInfo) -> Void, styling: CardPaymentTokenViewStyling) {
         self.buttonAction = buttonAction
+        self.styling = styling
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,7 +37,7 @@ class CardPaymentTokenViewController: UIViewController {
     }
     
     override func loadView() {
-        view = CardPaymentTokenView(buttonAction: buttonAction)
+        view = CardPaymentTokenView(styling: styling, buttonAction: buttonAction)
     }
     
     override func viewDidLoad() {
@@ -43,9 +45,13 @@ class CardPaymentTokenViewController: UIViewController {
         setupNavigationBar()
     }
     
+    func hideActivityIndicator() {
+        (view as? CardPaymentTokenView)?.hideActivityIndicator()
+    }
 }
 
 private extension CardPaymentTokenViewController {
+
     func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
     }

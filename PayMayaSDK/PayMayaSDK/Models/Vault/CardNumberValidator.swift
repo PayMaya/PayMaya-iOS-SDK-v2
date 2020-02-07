@@ -18,36 +18,30 @@
 //
 
 import Foundation
-import UIKit
-import PayMayaSDK
 
-class CardsViewController: UIViewController {
-    
-    override func loadView() {
-        #warning("make this generic")
-        view = ShopView()
+class CardNumberValidator: FieldValidator {
+    func validate(string: String) -> Bool {
+        guard Int(string) != nil else {return false}
+        guard 16...19 ~= string.count else {return false}
+        return luhnValidation(string: string)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
+    func isCharAcceptable(char: Character) -> Bool {
+        let tempSet = CharacterSet(charactersIn: String(char))
+        return tempSet.isSubset(of: .decimalDigits)
     }
-}
-
-private extension CardsViewController {
     
-    func setup() {
-        guard let shopView = view as? ShopView else {return}
-        shopView.checkoutAction = { [weak self] in
-            self?.addCard()
+    private func luhnValidation(string: String) -> Bool {
+        var sum = 0
+        let reversedCharacters = string.reversed().map { String($0) }
+        for (idx, element) in reversedCharacters.enumerated() {
+            guard let digit = Int(element) else { return false }
+            switch ((idx % 2 == 1), digit) {
+            case (true, 9): sum += 9
+            case (true, 0...8): sum += (digit * 2) % 9
+            default: sum += digit
+            }
         }
+        return sum % 10 == 0
     }
-    
-    func addCard() {
-        #warning("move it into viewmodel")
-        PayMayaSDK.addCard(self) { result in
-            print(result)
-        }
-    }
-    
 }

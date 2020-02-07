@@ -36,7 +36,6 @@ struct SinglePaymentRequest: Request {
     
     init(singlePaymentInfo: SinglePaymentInfo, authenticationKey: String) {
         body = try? JSONEncoder().encode(singlePaymentInfo)
-        headers.addContentType(.json)
-        headers.addHTTPBasicAuthentication(credentials: authenticationKey)
+        headers = HTTPHeaders.defaultHeaders(using: authenticationKey)
     }
 }

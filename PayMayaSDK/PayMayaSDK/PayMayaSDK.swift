@@ -35,15 +35,20 @@ public class PayMayaSDK {
     
     public static func add(authenticationKey: String, for method: AuthenticationMethod) {
         authKeys[method] = authenticationKey.convertToAuthenticationKey()
+        Log.info("Adding authentication key: \(authenticationKey) for method: \(method)")
     }
     
-    public static func setup(environment: PayMayaEnvironment) {
+    public static func setup(environment: PayMayaEnvironment, logLevel: LogLevel = .off) {
         self.environment = environment
+        Log.logLevel = logLevel
+        Log.info("Setting environment: \(environment)")
     }
 
     public static func checkout(_ checkoutInfo: CheckoutInfo, context: UIViewController, callback: @escaping PaymentCallback) {
         guard let authKey = authKeys[.checkout] else {
-            callback(.error(AuthenticationError.missingCheckoutKey))
+            let error = AuthenticationError.missingCheckoutKey
+            callback(.error(error))
+            Log.error(error.localizedDescription)
             return
         }
 
@@ -57,7 +62,9 @@ public class PayMayaSDK {
 
     public static func singlePayment(_ singlePaymentInfo: SinglePaymentInfo, context: UIViewController, callback: @escaping PaymentCallback) {
         guard let authKey = authKeys[.payments] else {
-            callback(.error(AuthenticationError.missingPaymentsKey))
+            let error = AuthenticationError.missingPaymentsKey
+            callback(.error(error))
+            Log.error(error.localizedDescription)
             return
         }
 
@@ -71,7 +78,9 @@ public class PayMayaSDK {
 
     public static func createWallet(_ walletLinkInfo: WalletLinkInfo, context: UIViewController, callback: @escaping PaymentCallback) {
         guard let authKey = authKeys[.payments] else {
-            callback(.error(AuthenticationError.missingPaymentsKey))
+            let error = AuthenticationError.missingPaymentsKey
+            callback(.error(error))
+            Log.error(error.localizedDescription)
             return
         }
 
@@ -83,11 +92,13 @@ public class PayMayaSDK {
                 .showWebView(context: context, callback: callback)
     }
 
-    public static func addCard(_ context: UIViewController, callback: @escaping (CreateCardResult) -> Void) {
+    public static func cardPayment(_ context: UIViewController,
+                                   styling: CardPaymentTokenViewStyling = CardPaymentTokenViewStyling.defaultStyling,
+                                   callback: @escaping (CreateCardResult) -> Void) {
         guard let authKey = authKeys[.cardToken] else {
             callback(.error(AuthenticationError.missingCardTokenKey))
             return
         }
-        CardPaymentTokenUseCase(session: session, authenticationKey: authKey).start(context: context, callback: callback)
+        CardPaymentTokenUseCase(session: session, authenticationKey: authKey).start(context: context, styling: styling, callback: callback)
     }
 }

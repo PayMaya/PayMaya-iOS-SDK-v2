@@ -28,7 +28,7 @@ public enum AuthenticationError: LocalizedError {
         switch self {
         case .missingCheckoutKey: return "Missing public key for Checkout. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .checkout)"
         case .missingPaymentsKey: return "Missing public key for Pay with PayMaya. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .payments)"
-        case .missingCardTokenKey: return "Missing public key for Card Token Payment. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .vault)"
+        case .missingCardTokenKey: return "Missing public key for Card Token Payment. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .cardToken)"
         }
     }
 }

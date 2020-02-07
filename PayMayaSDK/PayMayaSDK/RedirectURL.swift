@@ -25,13 +25,13 @@ public struct RedirectURL: Encodable {
     public let cancel: String
     
     public init?(success: String, failure: String, cancel: String) {
+        guard [success, failure, cancel].areSecureURLs else {
+            Log.error("Unable to create redirectURL: URLs should start with https://")
+            return nil
+        }
         self.success = success
         self.failure = failure
         self.cancel = cancel
-        
-        if !validateURLs() {
-            return nil
-        }
     }
 }
 
@@ -52,9 +52,10 @@ extension RedirectURL {
             return nil
         }
     }
-    
-    func validateURLs() -> Bool {
-        let result = [success, failure, cancel].map { $0.starts(with: "https://") }
-        return !result.contains(false)
+}
+
+private extension Array where Element == String {
+    var areSecureURLs: Bool {
+        !map { $0.starts(with: "https://") }.contains(false)
     }
 }

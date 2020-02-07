@@ -35,10 +35,4 @@ public struct CardPaymentTokenResponse: Decodable {
     public let createdAt: Date
     public let updatedAt: Date
     public let issuer: String
-    
-    public var createdAtDate: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:ss"
-        return formatter.string(from: createdAt)
-    }
 }

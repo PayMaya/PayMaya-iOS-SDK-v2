@@ -28,7 +28,7 @@
 		BFA9095B23DAF55E001A277F /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095923DAF55E001A277F /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BFC6F5EE23E4740A00DD18B2 /* PaymentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F5ED23E4740A00DD18B2 /* PaymentButton.swift */; };
 		BFC6F5F023E47DC300DD18B2 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F5EF23E47DC300DD18B2 /* PaymentsViewModel.swift */; };
-		EB7B49D323E9A14C00090EC7 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7B49D223E9A14C00090EC7 /* CardsViewController.swift */; };
+		EB7B49D323E9A14C00090EC7 /* PayWithCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7B49D223E9A14C00090EC7 /* PayWithCardViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,7 +68,7 @@
 		BFC6583423D7032D000F5B52 /* PayMayaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayMayaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC6F5ED23E4740A00DD18B2 /* PaymentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentButton.swift; sourceTree = "<group>"; };
 		BFC6F5EF23E47DC300DD18B2 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
-		EB7B49D223E9A14C00090EC7 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		EB7B49D223E9A14C00090EC7 /* PayWithCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayWithCardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +158,7 @@
 				BF89AFFE23E2F742008D9AD5 /* Common */,
 				BF2A081223E2EF9F009C87DC /* Shop */,
 				BF05FA9F23E45F3900D43D24 /* Payments */,
-				EB7B49D123E9A10C00090EC7 /* Vault */,
+				EB7B49D123E9A10C00090EC7 /* CardPayment */,
 				BF1205F123DF0D1D0097693A /* LaunchScreen.storyboard */,
 				BF1205EB23DF0CDB0097693A /* AppDelegate.swift */,
 				BF89B00723E33328008D9AD5 /* ViewControllerFactory.swift */,
@@ -168,12 +168,12 @@
 			path = PayMayaExample;
 			sourceTree = "<group>";
 		};
-		EB7B49D123E9A10C00090EC7 /* Vault */ = {
+		EB7B49D123E9A10C00090EC7 /* CardPayment */ = {
 			isa = PBXGroup;
 			children = (
-				EB7B49D223E9A14C00090EC7 /* CardsViewController.swift */,
+				EB7B49D223E9A14C00090EC7 /* PayWithCardViewController.swift */,
 			);
-			path = Vault;
+			path = CardPayment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,7 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB7B49D323E9A14C00090EC7 /* CardsViewController.swift in Sources */,
+				EB7B49D323E9A14C00090EC7 /* PayWithCardViewController.swift in Sources */,
 				BF89B00623E308E6008D9AD5 /* ExampleButton.swift in Sources */,
 				BF89B00423E2F7F0008D9AD5 /* Gradients.swift in Sources */,
 				BF05FAA323E45F7C00D43D24 /* PaymentsView.swift in Sources */,

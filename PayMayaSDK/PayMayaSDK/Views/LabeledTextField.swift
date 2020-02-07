@@ -28,16 +28,16 @@ class LabeledTextField: UIStackView {
     private var validator: FieldValidator?
     
     var text: String {
-        return textField.text ?? ""
+        return (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    init(labelText: String, tintColor: UIColor) {
+    init(labelText: String, hint: String? = nil, tintColor: UIColor) {
         super.init(frame: .zero)
         self.axis = .vertical
         self.distribution = .equalSpacing
         self.alignment = .leading
         self.spacing = 4.0
-        setupViews(labelText: labelText, tintColor: tintColor)
+        setupViews(labelText: labelText, hint: hint, tintColor: tintColor)
     }
     
     @available(*, unavailable)
@@ -69,10 +69,10 @@ extension LabeledTextField: UITextFieldDelegate {
 
 private extension LabeledTextField {
     
-    func setupViews(labelText: String, tintColor: UIColor) {
+    func setupViews(labelText: String, hint: String?, tintColor: UIColor) {
         addSubviews()
         setupLabel(text: labelText, tint: tintColor)
-        setupTextField(text: labelText, tint: tintColor)
+        setupTextField(text: labelText, hint: hint, tint: tintColor)
     }
     
     func addSubviews() {
@@ -91,12 +91,15 @@ private extension LabeledTextField {
         ])
     }
     
-    func setupTextField(text: String, tint: UIColor) {
+    func setupTextField(text: String, hint: String?, tint: UIColor) {
         textField.textColor = tint
-        textField.placeholder = text
+        textField.placeholder = hint ?? text
         textField.borderStyle = .roundedRect
+        textField.layer.borderColor = tint.cgColor
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = 4.0
         textField.tintColor = tint
-        textField.keyboardType = .numbersAndPunctuation
+        textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         NSLayoutConstraint.activate([

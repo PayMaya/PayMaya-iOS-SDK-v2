@@ -32,11 +32,10 @@ struct CardPaymentTokenRequest: Request {
     }
     
     let body: Data?
-    var headers: HTTPHeaders = [:]
+    var headers: HTTPHeaders
     
     init(cardDetails: CardDetailsInfo, authenticationKey: String) {
         body = try? JSONEncoder().encode(CardObject(card: cardDetails))
-        headers.addContentType(.json)
-        headers.addHTTPBasicAuthentication(credentials: authenticationKey)
+        headers = HTTPHeaders.defaultHeaders(using: authenticationKey)
     }
 }
