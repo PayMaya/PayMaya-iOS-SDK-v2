@@ -32,6 +32,10 @@ public struct CardPaymentTokenViewStyling {
     public static var defaultStyling = CardPaymentTokenViewStyling()
 }
 
+private struct Constants {
+    static let buttonDefaultConstraint: CGFloat = -16
+}
+
 class CardPaymentTokenView: UIView {
     private let cardNumber: LabeledTextField
     private let cvv: LabeledTextField
@@ -93,6 +97,7 @@ private extension CardPaymentTokenView {
         setupLogo()
         setupMainStack()
         setupMinorStack()
+        setupValidators()
         setupButton()
         setupActivityIndicator()
     }
@@ -141,11 +146,21 @@ private extension CardPaymentTokenView {
         
     }
     
+    func setupValidators() {
+        cardNumber.setValidator(CardNumberValidator())
+        cardNumber.setValidityDelegate(self)
+        validityDate.setValidator(ExpirationDateValidator())
+        validityDate.setCustomDelegate(ExpirationDateFieldDelegate())
+        validityDate.setValidityDelegate(self)
+        cvv.setValidator(CVCValidator())
+        cvv.setValidityDelegate(self)
+    }
+    
     func setupButton() {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         actionButton.setTitle("Add Card", for: .normal)
         addSubview(actionButton)
-        self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+        self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: Constants.buttonDefaultConstraint)
         NSLayoutConstraint.activate([
             actionButton.heightAnchor.constraint(equalToConstant: 50),
             actionButton.widthAnchor.constraint(equalToConstant: 120),
@@ -153,6 +168,7 @@ private extension CardPaymentTokenView {
             actionButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
         actionButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        actionButton.isEnabled = false
     }
     
     func setupActivityIndicator() {
@@ -174,15 +190,21 @@ private extension CardPaymentTokenView {
     @objc func keyboardWillShow(_ notification: NSNotification) {
         guard let size = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {return}
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.buttonConstraint?.constant = (self?.buttonConstraint?.constant ?? 0) - size.height
+            self?.buttonConstraint?.constant = Constants.buttonDefaultConstraint - size.height
             self?.layoutIfNeeded()
         }
     }
 
     @objc func keyboardWillHide(_ notification: NSNotification) {
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.buttonConstraint?.constant = -16
+            self?.buttonConstraint?.constant = Constants.buttonDefaultConstraint
             self?.layoutIfNeeded()
         }
+    }
+}
+
+extension CardPaymentTokenView: LabeledTextFieldValidityDelegate {
+    func editingDidChange() {
+        actionButton.isEnabled = cardNumber.isValid && cvv.isValid && validityDate.isValid
     }
 }

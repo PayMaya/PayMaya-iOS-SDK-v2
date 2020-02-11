@@ -40,8 +40,6 @@
 		BFD5327023DB3B6700DBCC6F /* PMWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5326F23DB3B6700DBCC6F /* PMWebViewControllerTests.swift */; };
 		BFD5DAC723E866E6004E504A /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5DAC623E866E6004E504A /* AuthenticationError.swift */; };
 		BFD5DADB23EB1046004E504A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5DADA23EB1046004E504A /* Log.swift */; };
-		EB093F6423E826D300DC98A5 /* VaultProcessUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F6323E826D300DC98A5 /* VaultProcessUseCase.swift */; };
-		EB093F6823E828E700DC98A5 /* CreateCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F6723E828E700DC98A5 /* CreateCardResponse.swift */; };
 		EB093F6423E826D300DC98A5 /* CardPaymentTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F6323E826D300DC98A5 /* CardPaymentTokenUseCase.swift */; };
 		EB093F6823E828E700DC98A5 /* CardPaymentTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F6723E828E700DC98A5 /* CardPaymentTokenResponse.swift */; };
 		EB093F6D23E84EA700DC98A5 /* WalletLinkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F6B23E84EA700DC98A5 /* WalletLinkInfo.swift */; };
@@ -58,6 +56,7 @@
 		EB7B4A2023EDE70B00090EC7 /* CVCValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7B4A1F23EDE70B00090EC7 /* CVCValidatorTests.swift */; };
 		EB7E036823EDEA44005BB363 /* ExpirationDateValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7E036723EDEA44005BB363 /* ExpirationDateValidatorTests.swift */; };
 		EB7E036A23EDF2CB005BB363 /* CardNumberValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7E036923EDF2CB005BB363 /* CardNumberValidatorTests.swift */; };
+		EBA442C823F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA442C723F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,8 +119,6 @@
 		BFD5326F23DB3B6700DBCC6F /* PMWebViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWebViewControllerTests.swift; sourceTree = "<group>"; };
 		BFD5DAC623E866E6004E504A /* AuthenticationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationError.swift; sourceTree = "<group>"; };
 		BFD5DADA23EB1046004E504A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		EB093F6323E826D300DC98A5 /* VaultProcessUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultProcessUseCase.swift; sourceTree = "<group>"; };
-		EB093F6723E828E700DC98A5 /* CreateCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardResponse.swift; sourceTree = "<group>"; };
 		EB093F6323E826D300DC98A5 /* CardPaymentTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentTokenUseCase.swift; sourceTree = "<group>"; };
 		EB093F6723E828E700DC98A5 /* CardPaymentTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentTokenResponse.swift; sourceTree = "<group>"; };
 		EB093F6B23E84EA700DC98A5 /* WalletLinkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletLinkInfo.swift; sourceTree = "<group>"; };
@@ -138,6 +135,7 @@
 		EB7B4A1F23EDE70B00090EC7 /* CVCValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCValidatorTests.swift; sourceTree = "<group>"; };
 		EB7E036723EDEA44005BB363 /* ExpirationDateValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirationDateValidatorTests.swift; sourceTree = "<group>"; };
 		EB7E036923EDF2CB005BB363 /* CardNumberValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberValidatorTests.swift; sourceTree = "<group>"; };
+		EBA442C723F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiratonDateFieldDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +319,7 @@
 				EB7B4A1823EDD9BB00090EC7 /* CVCValidator.swift */,
 				EB7B4A1A23EDDBE900090EC7 /* ExpirationDateValidator.swift */,
 				EB7B4A1C23EDE35900090EC7 /* CardNumberValidator.swift */,
+				EBA442C723F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift */,
 			);
 			path = Vault;
 			sourceTree = "<group>";
@@ -497,10 +496,11 @@
 				BFA9094023D9F122001A277F /* CheckoutBuyer.swift in Sources */,
 				EB7B4A1923EDD9BB00090EC7 /* CVCValidator.swift in Sources */,
 				BFA9094223D9F122001A277F /* CheckoutItem.swift in Sources */,
+				EBA442C823F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift in Sources */,
 				EB093F7923E860F400DC98A5 /* FieldValidator.swift in Sources */,
-				EB093F6823E828E700DC98A5 /* CreateCardResponse.swift in Sources */,
+				EB093F6823E828E700DC98A5 /* CardPaymentTokenResponse.swift in Sources */,
 				BFD5DADB23EB1046004E504A /* Log.swift in Sources */,
-				EB093F6423E826D300DC98A5 /* VaultProcessUseCase.swift in Sources */,
+				EB093F6423E826D300DC98A5 /* CardPaymentTokenUseCase.swift in Sources */,
 				EB093F6823E828E700DC98A5 /* CardPaymentTokenResponse.swift in Sources */,
 				EB093F6423E826D300DC98A5 /* CardPaymentTokenUseCase.swift in Sources */,
 				BFA9094B23D9F13A001A277F /* CheckoutResponse.swift in Sources */,

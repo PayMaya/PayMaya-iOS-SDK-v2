@@ -43,6 +43,9 @@ class CardPaymentTokenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = true
+        }
     }
     
     func hideActivityIndicator() {

@@ -20,24 +20,37 @@
 import Foundation
 import UIKit
 
+protocol LabeledTextFieldValidityDelegate: class {
+    func editingDidChange()
+}
+
 class LabeledTextField: UIStackView {
     private var label = UILabel()
     private var textField = UITextField()
    
-    private weak var delegate: UITextFieldDelegate?
+    private weak var validityDelegate: LabeledTextFieldValidityDelegate?
+    private var delegate: UITextFieldDelegate?
     private var validator: FieldValidator?
+    
+    private let defaultColor: UIColor
     
     var text: String {
         return (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
+    var isValid: Bool {
+        guard let text = textField.text else {return false}
+        return validator?.validate(string: text) ?? false
+    }
+    
     init(labelText: String, hint: String? = nil, tintColor: UIColor) {
+        self.defaultColor = tintColor
         super.init(frame: .zero)
         self.axis = .vertical
         self.distribution = .equalSpacing
         self.alignment = .leading
         self.spacing = 4.0
-        setupViews(labelText: labelText, hint: hint, tintColor: tintColor)
+        setupViews(labelText: labelText, hint: hint)
     }
     
     @available(*, unavailable)
@@ -45,8 +58,12 @@ class LabeledTextField: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setDelegate(_ delegate: UITextFieldDelegate) {
+    func setCustomDelegate(_ delegate: UITextFieldDelegate) {
         self.delegate = delegate
+    }
+    
+    func setValidityDelegate(_ delegate: LabeledTextFieldValidityDelegate) {
+        self.validityDelegate = delegate
     }
     
     func setValidator(_ validator: FieldValidator) {
@@ -56,23 +73,32 @@ class LabeledTextField: UIStackView {
 
 extension LabeledTextField: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        //validate
-        //change color to red if wrong
+        guard let text = textField.text, let valid = validator?.validate(string: text) else {return}
+        changeValidationState(valid: valid)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //validate?
-        //change color back to normal
-        return true
+        guard !string.isEmpty else { return true }
+        return validator?.isCharAcceptable(char: Character(string)) ?? false &&
+            delegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true        
+    }
+
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        changeValidationState(valid: true)
+    }
+    
+    @objc func editingDidChange() {
+        validityDelegate?.editingDidChange()
     }
 }
 
 private extension LabeledTextField {
     
-    func setupViews(labelText: String, hint: String?, tintColor: UIColor) {
+    func setupViews(labelText: String, hint: String?) {
         addSubviews()
-        setupLabel(text: labelText, tint: tintColor)
-        setupTextField(text: labelText, hint: hint, tint: tintColor)
+        setupLabel(text: labelText)
+        setupTextField(text: labelText, hint: hint)
     }
     
     func addSubviews() {
@@ -80,9 +106,9 @@ private extension LabeledTextField {
         self.addArrangedSubview(textField)
     }
     
-    func setupLabel(text: String, tint: UIColor) {
+    func setupLabel(text: String) {
         label.text = text
-        label.textColor = tint
+        label.textColor = defaultColor
         label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -91,14 +117,14 @@ private extension LabeledTextField {
         ])
     }
     
-    func setupTextField(text: String, hint: String?, tint: UIColor) {
-        textField.textColor = tint
+    func setupTextField(text: String, hint: String?) {
+        textField.textColor = defaultColor
         textField.placeholder = hint ?? text
         textField.borderStyle = .roundedRect
-        textField.layer.borderColor = tint.cgColor
+        textField.layer.borderColor = defaultColor.cgColor
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 4.0
-        textField.tintColor = tint
+        textField.tintColor = defaultColor
         textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
@@ -106,6 +132,17 @@ private extension LabeledTextField {
             textField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             textField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
+        textField.addTarget(self, action: #selector(editingDidChange), for: UIControl.Event.editingChanged)
     }
     
+    func changeValidationState(valid: Bool) {
+        UIView.transition(with: label, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.label.textColor = valid ? self?.defaultColor : .red
+        })
+        UIView.transition(with: textField, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.textField.textColor = valid ? self?.defaultColor : .red
+            self?.textField.layer.borderColor = valid ? self?.defaultColor.cgColor : UIColor.red.cgColor
+            self?.textField.tintColor = valid ? self?.defaultColor : .red
+        })
+    }
 }
