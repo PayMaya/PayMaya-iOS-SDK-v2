@@ -18,7 +18,7 @@
 //
 
 import XCTest
-@testable import Networking
+@testable import PayMayaSDK
 
 class NetworkingTests: XCTestCase {
     

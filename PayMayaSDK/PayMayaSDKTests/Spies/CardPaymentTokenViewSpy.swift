@@ -17,19 +17,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import Networking
+import Foundation
 
-class NetworkErrorTests: XCTestCase {
+@testable import PayMayaSDK
 
-    func test_givenInvalidUrlError_whenAccessingLocalizedDescription_getsProperString() {
-        let url = "www.test.com"
-        let error = NetworkError.invalidURL(url: "www.test.com")
-        XCTAssertEqual(error.localizedDescription, "Invalid URL: \(url)")
+class CardPaymentViewTokenSpy: CardPaymentTokenView {
+    
+    var editingDidChangeCalled: Int = 0
+    
+    override func editingDidChange(valid: Bool) {
+        editingDidChangeCalled += 1
     }
     
-    func test_givenUnknownError_whenAccessingLocalizedDescription_getsProperString() {
-        XCTAssertEqual(NetworkError.unknown.localizedDescription, "The operation couldn’t be completed. Unknown reason")
-    }
-
 }

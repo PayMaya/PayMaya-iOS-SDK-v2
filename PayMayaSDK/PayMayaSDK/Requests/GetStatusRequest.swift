@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Networking
 
 class GetStatusRequest: Request {
     typealias Response = GetStatusResponse

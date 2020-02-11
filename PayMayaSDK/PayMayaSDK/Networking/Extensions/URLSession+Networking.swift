@@ -21,7 +21,7 @@ import Foundation
 
 extension URLSession: Networking, FoundationNetworking { }
 
-public extension Networking where Self: FoundationNetworking {
+extension Networking where Self: FoundationNetworking {
     func make<NetworkRequest: Request>(_ request: NetworkRequest, callback: @escaping (NetworkResult<NetworkRequest.Response>) -> Void) {
         guard let urlRequest = URLRequest(request: request) else {
             callback(.error(NetworkError.invalidURL(url: request.url)))

@@ -41,9 +41,10 @@ protocol CardPaymentTokenViewContract: class {
 }
 
 class CardPaymentTokenView: UIView {
-    private let cardNumber = LabeledTextField()
-    private let cvv = LabeledTextField()
-    private let validityDate = LabeledTextField()
+    private let cardNumber: LabeledTextField
+    private let cvv: LabeledTextField
+    private let validityDate: LabeledTextField
+
     private let imageView = UIImageView()
     private let indicatorView = UIActivityIndicatorView(style: .gray)
     
@@ -51,17 +52,18 @@ class CardPaymentTokenView: UIView {
     private let minorStack = UIStackView()
     private let actionButton = UIButton(type: .system)
     
-    #warning("make it private?")
-    var model: CardPaymentTokenViewModel? {
-        didSet {
-            model?.setContract(self)
-        }
-    }
-    
+    private let model: CardPaymentTokenViewModel
+
     private var buttonConstraint: NSLayoutConstraint?
-        
-    init() {
+
+    init(with model: CardPaymentTokenViewModel) {
+        self.model = model
+        self.cardNumber = LabeledTextField(with: model.cardNumberModel)
+        self.cvv = LabeledTextField(with: model.cvvModel)
+        self.validityDate = LabeledTextField(with: model.expirationDateModel)
         super.init(frame: .zero)
+        model.setContract(self)
+        model.setOnEditingChanged(onEditingChanged(_:))
         setupNotifications()
     }
     
@@ -93,13 +95,12 @@ private extension CardPaymentTokenView {
     }
     
     func setupViews(with data: CardPaymentTokenInitialData) {
-        setupModels()
         addSubviews()
         setupSelf()
         setupLogo(with: data.styling.image)
         setupMainStack()
         setupMinorStack()
-        setupButton(with: data.buttonTitle)
+        setupButton()
         setupActivityIndicator()
     }
     
@@ -124,14 +125,14 @@ private extension CardPaymentTokenView {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
             imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
-            imageView.heightAnchor.constraint(equalToConstant: 100),
+            imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
             imageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16)
         ])
     }
     
     func setupMainStack() {
         mainStack.axis = .vertical
-        mainStack.distribution = .equalSpacing
+        mainStack.distribution = .fillEqually
         mainStack.spacing = 8
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -148,14 +149,15 @@ private extension CardPaymentTokenView {
         
     }
     
-    func setupButton(with title: String) {
+    func setupButton() {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.setTitle(title, for: .normal)
+        actionButton.setTitle("Pay with card", for: .normal)
         addSubview(actionButton)
         self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: Constants.buttonDefaultConstraint)
         NSLayoutConstraint.activate([
             actionButton.heightAnchor.constraint(equalToConstant: 50),
             actionButton.widthAnchor.constraint(equalToConstant: 120),
+            actionButton.topAnchor.constraint(greaterThanOrEqualTo: minorStack.bottomAnchor, constant: 16),
             buttonConstraint!,
             actionButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
@@ -172,18 +174,15 @@ private extension CardPaymentTokenView {
         ])
     }
     
-    func setupModels() {
-        model?.setEditingDelegate(self)
-        cardNumber.model = model?.cardNumberModel
-        cvv.model = model?.cvvModel
-        validityDate.model = model?.expirationDateModel
+    func onEditingChanged(_ valid: Bool) {
+        actionButton.isEnabled = valid
     }
     
     @objc func buttonAction() {
         self.endEditing(true)
         indicatorView.isHidden = false
         indicatorView.startAnimating()
-        model?.buttonPressed()
+        model.buttonPressed()
     }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
@@ -199,11 +198,5 @@ private extension CardPaymentTokenView {
             self?.buttonConstraint?.constant = Constants.buttonDefaultConstraint
             self?.layoutIfNeeded()
         }
-    }
-}
-
-extension CardPaymentTokenView: LabeledTextFieldEditingDelegate {
-    func editingDidChange(valid: Bool) {
-        actionButton.isEnabled = valid
     }
 }

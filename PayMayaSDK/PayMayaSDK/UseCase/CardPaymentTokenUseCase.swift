@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Networking
 import UIKit
 
 public enum CreateCardResult {
@@ -41,7 +40,8 @@ class CardPaymentTokenUseCase {
     func start(context: UIViewController,
                styling: CardPaymentTokenViewStyling,
                callback: @escaping (CreateCardResult) -> Void) {
-        let addCardVC = CardPaymentTokenViewController(buttonAction: cardDataReceived, styling: styling)
+        let initData = CardPaymentTokenInitialData(action: cardDataReceived(_:), styling: styling)
+        let addCardVC = CardPaymentTokenViewController(with: initData)
         let navVC = UINavigationController(rootViewController: addCardVC)
         
         self.callback = callback
@@ -77,12 +77,6 @@ private extension CardPaymentTokenUseCase {
             self?.executionContext?.dismiss(animated: true) {
                 self?.callback?(result)
             }
-        }
-    }
-    
-    func handleRequestFinished() {
-        DispatchQueue.main.async { [weak self] in
-            (self?.executionContext as? CardPaymentTokenViewController)?.hideActivityIndicator()
         }
     }
 }

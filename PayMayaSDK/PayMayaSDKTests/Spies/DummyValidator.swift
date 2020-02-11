@@ -19,22 +19,9 @@
 
 import Foundation
 
-struct SinglePaymentRequest: Request {
-    typealias Response = SinglePaymentResponse
-    
-    var method: HTTPMethod {
-        return .post
-    }
-    
-    var url: String {
-        return PayMayaSDK.environment.baseURL + "/payby/v2/paymaya/payments"
-    }
-    
-    let body: Data?
-    var headers: HTTPHeaders = [:]
-    
-    init(singlePaymentInfo: SinglePaymentInfo, authenticationKey: String) {
-        body = try? JSONEncoder().encode(singlePaymentInfo)
-        headers = HTTPHeaders.defaultHeaders(using: authenticationKey)
-    }
+@testable import PayMayaSDK
+
+class DummyValidator: FieldValidator {
+    func validate(string: String) -> Bool { return true }
+    func isCharAcceptable(char: Character) -> Bool { return true }
 }

@@ -1,3 +1,4 @@
+//
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -17,18 +18,5 @@
 //
 
 import Foundation
-import Networking
 
-struct MockFoundationNetworking: Networking, FoundationNetworking {
-    
-    private let completion: (Data?, URLResponse?, Error?)
-    
-    init(completion: (Data?, URLResponse?, Error?)) {
-        self.completion = completion
-    }
-    
-    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-        completionHandler(completion.0, completion.1, completion.2)
-        return URLSessionDataTask()
-    }
-}
+struct VoidResponse: Decodable { }

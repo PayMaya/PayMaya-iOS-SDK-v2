@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Networking
 
 struct CardPaymentTokenRequest: Request {
     typealias Response = CardPaymentTokenResponse

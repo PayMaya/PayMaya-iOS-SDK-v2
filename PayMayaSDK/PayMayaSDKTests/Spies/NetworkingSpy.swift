@@ -17,8 +17,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Networking
 import Foundation
+@testable import PayMayaSDK
 
 class NetworkingSpy: Networking {
     var credentials: String? = ""

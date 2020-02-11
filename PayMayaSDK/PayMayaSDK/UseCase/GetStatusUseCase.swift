@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Networking
 
 public typealias StatusCallback = (Result<PaymentStatus, Error>) -> Void
 

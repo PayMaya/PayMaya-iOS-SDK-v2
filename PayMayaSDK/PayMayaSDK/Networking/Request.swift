@@ -19,22 +19,23 @@
 
 import Foundation
 
-struct SinglePaymentRequest: Request {
-    typealias Response = SinglePaymentResponse
+protocol Request {
+    associatedtype Response: Decodable
     
-    var method: HTTPMethod {
-        return .post
+    var url: String { get }
+    var method: HTTPMethod { get }
+    var body: Data? { get }
+    var headers: HTTPHeaders { get set }
+    
+    func json(from data: Data) -> Response?
+}
+
+extension Request {
+    var body: Data? {
+        return nil
     }
     
-    var url: String {
-        return PayMayaSDK.environment.baseURL + "/payby/v2/paymaya/payments"
-    }
-    
-    let body: Data?
-    var headers: HTTPHeaders = [:]
-    
-    init(singlePaymentInfo: SinglePaymentInfo, authenticationKey: String) {
-        body = try? JSONEncoder().encode(singlePaymentInfo)
-        headers = HTTPHeaders.defaultHeaders(using: authenticationKey)
+    func json(from data: Data) -> Response? {
+        return data.parseJSON()
     }
 }

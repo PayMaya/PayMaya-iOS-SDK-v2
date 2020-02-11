@@ -19,7 +19,6 @@
 
 import XCTest
 import WebKit
-import Networking
 @testable import PayMayaSDK
 
 class PMWebViewControllerTests: XCTestCase {

@@ -24,8 +24,6 @@
 		BF89B00823E33328008D9AD5 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00723E33328008D9AD5 /* ViewControllerFactory.swift */; };
 		BFA9095723DAF552001A277F /* PayMayaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095623DAF552001A277F /* PayMayaSDK.framework */; };
 		BFA9095823DAF552001A277F /* PayMayaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095623DAF552001A277F /* PayMayaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BFA9095A23DAF55E001A277F /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095923DAF55E001A277F /* Networking.framework */; };
-		BFA9095B23DAF55E001A277F /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFA9095923DAF55E001A277F /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BFC6F5EE23E4740A00DD18B2 /* PaymentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F5ED23E4740A00DD18B2 /* PaymentButton.swift */; };
 		BFC6F5F023E47DC300DD18B2 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F5EF23E47DC300DD18B2 /* PaymentsViewModel.swift */; };
 		EB7B49D323E9A14C00090EC7 /* PayWithCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7B49D223E9A14C00090EC7 /* PayWithCardViewController.swift */; };
@@ -38,7 +36,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BFA9095B23DAF55E001A277F /* Networking.framework in Embed Frameworks */,
 				BFA9095823DAF552001A277F /* PayMayaSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -76,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFA9095A23DAF55E001A277F /* Networking.framework in Frameworks */,
 				BFA9095723DAF552001A277F /* PayMayaSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,7 +402,6 @@
 		BFC6584623D7032E000F5B52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -432,7 +427,6 @@
 		BFC6584723D7032E000F5B52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";

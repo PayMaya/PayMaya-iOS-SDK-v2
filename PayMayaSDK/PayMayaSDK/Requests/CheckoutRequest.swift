@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Networking
 
 struct CheckoutRequest: Request {
     typealias Response = CheckoutResponse

@@ -5,9 +5,6 @@
       location = "group:PayMayaSDK/PayMayaSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Networking/Networking.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:PayMayaExample/PayMayaExample.xcodeproj">
    </FileRef>
 </Workspace>

@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Networking
 
 struct CreateWalletLinkRequest: Request {
     typealias Response = CreateWalletLinkResponse

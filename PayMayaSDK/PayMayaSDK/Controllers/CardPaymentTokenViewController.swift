@@ -22,12 +22,10 @@ import UIKit
 
 class CardPaymentTokenViewController: UIViewController {
     
-    private let buttonAction: (CardDetailsInfo) -> Void
-    private let styling: CardPaymentTokenViewStyling
+    private let initialData: CardPaymentTokenInitialData
     
-    init(buttonAction: @escaping (CardDetailsInfo) -> Void, styling: CardPaymentTokenViewStyling) {
-        self.buttonAction = buttonAction
-        self.styling = styling
+    init(with data: CardPaymentTokenInitialData) {
+        self.initialData = data
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,10 +35,7 @@ class CardPaymentTokenViewController: UIViewController {
     }
     
     override func loadView() {
-        let view = CardPaymentTokenView()
-        let modelData = CardPaymentTokenInitialData(action: buttonAction, buttonTitle: "Pay with card", styling: styling)
-        view.model = CardPaymentTokenViewModel(data: modelData)
-        self.view = view
+        self.view = CardPaymentTokenView(CardPaymentTokenViewModel(data: initialData))
     }
     
     override func viewDidLoad() {

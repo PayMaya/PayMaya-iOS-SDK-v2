@@ -23,25 +23,23 @@ import UIKit
 protocol LabeledTextFieldContract: class {
     func changeValidationState(valid: Bool, defaultColor: UIColor)
     func initialSetup(data: LabeledTextFieldInitData)
+    func textSet(text: String)
 }
 
 class LabeledTextField: UIStackView {
-    private var label = UILabel()
-    private var textField = UITextField()
+    private let label = UILabel()
+    private let textField = UITextField()
    
-    #warning("make it private?")
-    var model: LabeledTextFieldViewModel? {
-        didSet {
-            model?.setContract(self)
-        }
-    }
+    private let model: LabeledTextFieldViewModel
     
-    init() {
+    init(with model: LabeledTextFieldViewModel) {
+        self.model = model
         super.init(frame: .zero)
         self.axis = .vertical
         self.distribution = .equalSpacing
         self.alignment = .leading
         self.spacing = 4.0
+        model.setContract(self)
     }
     
     @available(*, unavailable)
@@ -51,7 +49,7 @@ class LabeledTextField: UIStackView {
 }
 
 extension LabeledTextField: LabeledTextFieldContract {
-    
+   
     func changeValidationState(valid: Bool, defaultColor: UIColor) {
         UIView.transition(with: label, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.label.textColor = valid ? defaultColor : .red
@@ -65,6 +63,10 @@ extension LabeledTextField: LabeledTextFieldContract {
     
     func initialSetup(data: LabeledTextFieldInitData) {
         setupViews(labelText: data.labelText, hint: data.hintText, color: data.tintColor)
+    }
+    
+    func textSet(text: String) {
+        textField.text = text
     }
     
 }
@@ -108,7 +110,6 @@ private extension LabeledTextField {
             textField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             textField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
-        guard let model = model else {return}
         textField.addTarget(model, action: #selector(LabeledTextFieldViewModel.editingDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     

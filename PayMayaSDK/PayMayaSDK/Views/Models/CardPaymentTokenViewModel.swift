@@ -20,26 +20,24 @@
 import Foundation
 
 struct CardPaymentTokenInitialData {
-    let buttonTitle: String
     let buttonAction: (CardDetailsInfo) -> Void
     let styling: CardPaymentTokenViewStyling
     
-    init(action: @escaping (CardDetailsInfo) -> Void, buttonTitle: String, styling: CardPaymentTokenViewStyling) {
+    init(action: @escaping (CardDetailsInfo) -> Void, styling: CardPaymentTokenViewStyling) {
         self.buttonAction = action
         self.styling = styling
-        self.buttonTitle = buttonTitle
     }
 }
 
 class CardPaymentTokenViewModel {
-    private let initialData: CardPaymentTokenInitialData
-    
-    #warning("make it private and pass with initial data?")
     let cardNumberModel: LabeledTextFieldViewModel
     let cvvModel: LabeledTextFieldViewModel
     let expirationDateModel: LabeledTextFieldViewModel
     
-    private weak var editingDelegate: LabeledTextFieldEditingDelegate?
+    private let initialData: CardPaymentTokenInitialData
+
+    private var onEditingChange: OnEditingChange?
+
     private weak var contract: CardPaymentTokenViewContract? {
         didSet {
             contract?.initialSetup(data: initialData)
@@ -63,8 +61,8 @@ class CardPaymentTokenViewModel {
         self.contract = contract
     }
     
-    func setEditingDelegate(_ delegate: LabeledTextFieldEditingDelegate) {
-        self.editingDelegate = delegate
+    func setOnEditingChanged(_ closure: @escaping OnEditingChange) {
+        self.onEditingChange = closure
     }
     
     func buttonPressed() {
@@ -73,11 +71,6 @@ class CardPaymentTokenViewModel {
     
 }
 
-extension CardPaymentTokenViewModel: LabeledTextFieldEditingDelegate {
-    func editingDidChange(valid: Bool) {
-        editingDelegate?.editingDidChange(valid: ![cardNumberModel, cvvModel, expirationDateModel].map({ $0.isValid }).contains(false))
-    }
-}
 
 private extension CardPaymentTokenViewModel {
     private var inputData: CardDetailsInfo {
@@ -90,6 +83,10 @@ private extension CardPaymentTokenViewModel {
     
     func setupModels() {
         expirationDateModel.setExtraDelegate(ExpirationDateFieldDelegate())
-        [cardNumberModel, cvvModel, expirationDateModel].forEach({ $0.setEndEditingDelegate(self) })
+        [cardNumberModel, cvvModel, expirationDateModel].forEach({ $0.setOnEditingChanged(self.onEditingChanged(_:)) })
+    }
+
+    func onEditingChanged(_ valid: Bool) {
+        onEditingChange?(![cardNumberModel, cvvModel, expirationDateModel].map({ $0.isValid }).contains(false))
     }
 }

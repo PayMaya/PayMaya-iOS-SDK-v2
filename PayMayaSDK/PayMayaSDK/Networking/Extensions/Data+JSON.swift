@@ -18,17 +18,17 @@
 //
 
 import Foundation
-import XCTest
 
-@testable import PayMayaSDK
-
-class CardPaymentTokenViewControllerTests: XCTestCase {
-    
-    func test_whenInitialized_shouldHaveTokenViewAsMainView() {
-        let sut = CardPaymentTokenViewController(buttonAction: { _ in }, styling: CardPaymentTokenViewStyling.defaultStyling)
-        sut.loadViewIfNeeded()
-        XCTAssert(sut.view is CardPaymentTokenView)
+extension Data {
+    func parseJSON<T: Decodable>() -> T? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(customDateFormatter)
+        return try? decoder.decode(T.self, from: self)
     }
-        
+    
+    private var customDateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-ddEEEEEHH:mm:ss.SSSZ"
+        return formatter
+    }
 }
-

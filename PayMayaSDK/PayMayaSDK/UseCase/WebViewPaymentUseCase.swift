@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Networking
 import UIKit
 
 public enum PaymentResult {

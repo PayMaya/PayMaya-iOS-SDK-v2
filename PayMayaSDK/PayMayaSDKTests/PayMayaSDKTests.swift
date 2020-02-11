@@ -18,7 +18,6 @@
 //
 
 import XCTest
-import Networking
 @testable import PayMayaSDK
 
 class PayMayaSDKTests: XCTestCase {
@@ -100,11 +99,17 @@ class PayMayaSDKTests: XCTestCase {
     
     func test_whenCardPaymentCalled_shouldDisplayCardPaymentVC() {
         setupSDK()
+        let exp = expectation(description: "Should present proper VC")
         let vc = ViewControllerSpy()
         vc.onPresented = { vc in
-            XCTAssert(vc is CardPaymentTokenViewController)
+            if vc is CardPaymentTokenViewController {
+                exp.fulfill()
+            }
         }
         PayMayaSDK.cardPayment(vc, callback: { _ in })
+        waitForExpectations(timeout: 0.05, handler: { error in
+            XCTAssertNil(error)
+        })
     }
 
     func test_setupEnvironment() {

@@ -1,4 +1,3 @@
-//
 //  Copyright (c) 2020 PayMaya Philippines, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -17,18 +16,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Networking
+import Foundation
+@testable import PayMayaSDK
 
-struct IncorrectRequest: Request {
-    typealias Response = VoidResponse
+struct MockFoundationNetworking: Networking, FoundationNetworking {
     
-    var url: String {
-        return ""
+    private let completion: (Data?, URLResponse?, Error?)
+    
+    init(completion: (Data?, URLResponse?, Error?)) {
+        self.completion = completion
     }
     
-    var method: HTTPMethod {
-        return .get
+    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        completionHandler(completion.0, completion.1, completion.2)
+        return URLSessionDataTask()
     }
-    
-    var headers: HTTPHeaders = [:]
 }

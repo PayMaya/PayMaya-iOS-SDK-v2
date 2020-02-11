@@ -20,6 +20,8 @@
 import Foundation
 import UIKit
 
+typealias OnEditingChange = (Bool) -> Void
+
 struct LabeledTextFieldInitData {
     let labelText: String
     let hintText: String?
@@ -30,10 +32,6 @@ struct LabeledTextFieldInitData {
         self.hintText = hint
         self.tintColor = tintColor
     }
-}
-
-protocol LabeledTextFieldEditingDelegate: class {
-    func editingDidChange(valid: Bool)
 }
 
 class LabeledTextFieldViewModel: NSObject {
@@ -47,8 +45,10 @@ class LabeledTextFieldViewModel: NSObject {
             contract?.initialSetup(data: initData)
         }
     }
-    private weak var editingDelegate: LabeledTextFieldEditingDelegate?
-    private weak var extraDelegate: UITextFieldDelegate?
+    private var extraDelegate: UITextFieldDelegate?
+
+    private var onEditingChange: OnEditingChange?
+
     
     var isValid: Bool {
         return validator.validate(string: text)
@@ -67,12 +67,17 @@ class LabeledTextFieldViewModel: NSObject {
         self.contract = contract
     }
     
-    func setEndEditingDelegate(_ delegate: LabeledTextFieldEditingDelegate) {
-        self.editingDelegate = delegate
+    func setOnEditingChanged(_ closure: @escaping OnEditingChange) {
+        self.onEditingChange = closure
     }
     
     func setExtraDelegate(_ delegate: UITextFieldDelegate) {
         self.extraDelegate = delegate
+    }
+
+    func setText(_ text: String) {
+        self.text = text
+        self.contract?.textSet(text: text)
     }
 }
 
@@ -95,7 +100,7 @@ extension LabeledTextFieldViewModel: UITextFieldDelegate {
     
     @objc func editingDidChange(_ textField: UITextField) {
         guard let text = textField.text else {return}
-        self.text = text
-        editingDelegate?.editingDidChange(valid: isValid)
+        setText(text)
+        onEditingChange?(isValid)
     }
 }

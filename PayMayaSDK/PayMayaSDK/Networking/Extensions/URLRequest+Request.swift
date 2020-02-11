@@ -19,6 +19,12 @@
 
 import Foundation
 
-public struct VoidResponse: Decodable {
-    
+extension URLRequest {
+    init?<T: Request>(request: T) {
+        guard let url = URL(string: request.url) else { return nil }
+        self.init(url: url)
+        allHTTPHeaderFields = request.headers
+        httpBody = request.body
+        httpMethod = request.method.rawValue
+    }
 }

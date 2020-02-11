@@ -17,22 +17,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Networking
+import Foundation
+import UIKit
 
-struct CorrectRequest: Request {
-    typealias Response = MockResponse
+@testable import PayMayaSDK
+
+class CardPaymentViewContractSpy: CardPaymentTokenViewContract {
+    var setupCalled: Int = 0
     
-    var url: String {
-        return "www.test.com"
+    func initialSetup(data: CardPaymentTokenInitialData) {
+        setupCalled += 1
+    }
+}
+
+class LabeledTextFieldContractSpy: LabeledTextFieldContract {
+    var changeValidationStateCalled: Int = 0
+    var setupCalled: Int = 0
+    var textSetCalled: Int = 0
+    
+    func changeValidationState(valid: Bool, defaultColor: UIColor) {
+        changeValidationStateCalled += 1
     }
     
-    var method: HTTPMethod {
-        return .get
+    func initialSetup(data: LabeledTextFieldInitData) {
+        setupCalled += 1
     }
     
-    var headers: HTTPHeaders = [:]
-    
-    struct MockResponse: Decodable {
-        let name: String
+    func textSet(text: String) {
+        textSetCalled += 1
     }
+    
+    
 }

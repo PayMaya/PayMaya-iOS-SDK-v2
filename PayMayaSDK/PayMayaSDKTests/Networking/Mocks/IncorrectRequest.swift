@@ -17,25 +17,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+@testable import PayMayaSDK
 
-public protocol Request {
-    associatedtype Response: Decodable
+struct IncorrectRequest: Request {
+    typealias Response = VoidResponse
     
-    var url: String { get }
-    var method: HTTPMethod { get }
-    var body: Data? { get }
-    var headers: HTTPHeaders { get set }
-    
-    func json(from data: Data) -> Response?
-}
-
-public extension Request {
-    var body: Data? {
-        return nil
+    var url: String {
+        return ""
     }
     
-    func json(from data: Data) -> Response? {
-        return data.parseJSON()
+    var method: HTTPMethod {
+        return .get
     }
+    
+    var headers: HTTPHeaders = [:]
 }

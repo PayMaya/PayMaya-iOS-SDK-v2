@@ -18,7 +18,6 @@
 //
 
 import XCTest
-import Networking
 @testable import PayMayaSDK
 
 class DataExtensionTests: XCTestCase {

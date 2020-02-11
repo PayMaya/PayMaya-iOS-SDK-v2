@@ -1,0 +1,92 @@
+//
+//  Copyright (c) 2020 PayMaya Philippines, Inc.
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+//  associated documentation files (the "Software"), to deal in the Software without restriction,
+//  including without limitation the rights to use, copy, modify, merge, publish, distribute,
+//  sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all copies or
+//  substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+//  NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+
+import Foundation
+import XCTest
+import UIKit
+
+@testable import PayMayaSDK
+
+class CardPaymentTokenViewsTests: XCTestCase {
+    
+    func testController_whenInitialized_shouldHaveTokenViewAsMainView() {
+        let initData = CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyling.defaultStyling)
+        let sut = CardPaymentTokenViewController(with: initData)
+        sut.loadViewIfNeeded()
+        XCTAssert(sut.view is CardPaymentTokenView)
+    }
+        
+    func testView_whenCalledEndEditingOnAnySubview_shouldCallEndEditingOnView() {
+        let dummyTextField = UITextField()
+        dummyTextField.text = "test"
+        let spy = CardPaymentViewTokenSpy()
+        spy.model = CardPaymentTokenViewModel()
+        spy.model?.cardNumberModel.editingDidChange(dummyTextField)
+        spy.model?.cvvModel.editingDidChange(dummyTextField)
+        spy.model?.expirationDateModel.editingDidChange(dummyTextField)
+        XCTAssertEqual(spy.editingDidChangeCalled, 3)
+    }
+    
+    func testView_whenSetContract_shouldCallViewSetupExactlyOnce() {
+        let model = CardPaymentTokenViewModel()
+        let contract = CardPaymentViewContractSpy()
+        model.setContract(contract)
+        XCTAssertEqual(contract.setupCalled, 1)
+    }
+    
+    func testLabeledView_whenCalledEndEditing_shouldSetTextOnContract() {
+        let model = LabeledTextFieldViewModel()
+        let contract = LabeledTextFieldContractSpy()
+        let dummyTextField = UITextField()
+        dummyTextField.text = "test"
+        model.setContract(contract)
+        model.editingDidChange(dummyTextField)
+        XCTAssertEqual(contract.textSetCalled, 1)
+    }
+    
+    func testLabeledView_whenSetContract_shouldCallViewSetupExactlyOnce() {
+        let model = LabeledTextFieldViewModel()
+        let contract = LabeledTextFieldContractSpy()
+        model.setContract(contract)
+        XCTAssertEqual(contract.setupCalled, 1)
+    }
+    
+    func testLabeledView_whenCalledDelegateMethods_shouldCallErrorStateEveryTime() {
+        let model = LabeledTextFieldViewModel()
+        let contract = LabeledTextFieldContractSpy()
+        let dummyTextField = UITextField()
+        dummyTextField.text = "test"
+        model.setContract(contract)
+        model.textFieldDidBeginEditing(dummyTextField)
+        model.textFieldDidEndEditing(dummyTextField, reason: .committed)
+        XCTAssertEqual(contract.changeValidationStateCalled, 2)
+    }
+}
+
+private extension CardPaymentTokenViewModel {
+    convenience init() {
+        self.init(data: CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyling.defaultStyling))
+    }
+}
+
+private extension LabeledTextFieldViewModel {
+    convenience override init() {
+        self.init(validator: DummyValidator(), styling: LabeledTextFieldInitData(labelText: "", tintColor: .clear))
+    }
+}

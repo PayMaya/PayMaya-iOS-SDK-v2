@@ -17,18 +17,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+@testable import PayMayaSDK
 
-public enum NetworkResult<Success> {
-    case success(Success)
-    case failure(Data)
-    case error(Error)
-}
-
-public protocol Networking {
-    func make<NetworkRequest: Request>(_ request: NetworkRequest, callback: @escaping (NetworkResult<NetworkRequest.Response>) -> Void)
-}
-
-public protocol FoundationNetworking {
-    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+struct CorrectRequest: Request {
+    typealias Response = MockResponse
+    
+    var url: String {
+        return "www.test.com"
+    }
+    
+    var method: HTTPMethod {
+        return .get
+    }
+    
+    var headers: HTTPHeaders = [:]
+    
+    struct MockResponse: Decodable {
+        let name: String
+    }
 }
