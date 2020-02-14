@@ -57,6 +57,7 @@ class WebViewPaymentUseCase<NetworkRequest: Request> {
 
 extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectResponse {
     func showWebView(context: UIViewController) {
+        Log.info("Starting WebViewPaymentUseCase process")
         let webViewController = makeWebViewController()
         let navVC = UINavigationController(rootViewController: webViewController)
         

@@ -27,6 +27,7 @@ class ExpirationDateFieldDelegate: NSObject, UITextFieldDelegate {
         guard let text = textField.text, let textRange = Range(range, in: text) else {return false}
         let updatedText = text.replacingCharacters(in: textRange, with: string)
         guard updatedText.count == 2 else {return true}
+        Log.info("Expiration date input is 2 chars length: adding slash")
         textField.text = updatedText + "/"
         return false
     }

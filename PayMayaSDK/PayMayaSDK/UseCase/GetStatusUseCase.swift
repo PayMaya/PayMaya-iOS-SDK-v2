@@ -31,13 +31,17 @@ class GetStatusUseCase {
     
     func getStatus(for id: String, authenticationKey: String, callback: @escaping StatusCallback) {
         let request = GetStatusRequest(id: id, authenticationKey: authenticationKey)
+        Log.info("Getting payment status for id: \(id)")
         session.make(request) { result in
             switch result {
             case .success(let response):
+                Log.info("Payment status for id \(id): \(response.status)")
                 callback(.success(response.status))
             case .error(let error):
+                Log.error("Error getting payment status: \(error.localizedDescription)")
                 callback(.failure(error))
             case .failure(let data):
+                Log.error("Failed to get payment status: \(data.parseError().localizedDescription)")
                 callback(.failure(data.parseError()))
             }
         }

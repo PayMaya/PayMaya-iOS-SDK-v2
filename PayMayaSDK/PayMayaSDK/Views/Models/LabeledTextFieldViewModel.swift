@@ -83,18 +83,22 @@ class LabeledTextFieldViewModel: NSObject {
 
 extension LabeledTextFieldViewModel: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        guard let text = textField.text else {return}
-        contract?.changeValidationState(valid: validator.validate(string: text), defaultColor: initData.styling.tintColor)
+        Log.verbose("TextFieldDelegate: editingEnded. Current validation state: \(isValid)")
+        contract?.changeValidationState(valid: isValid, defaultColor: initData.styling.tintColor)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard !string.isEmpty else { return true }
-        return validator.isCharAcceptable(char: Character(string)) &&
-            extraDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true
+        let isCharAcceptable = validator.isCharAcceptable(char: Character(string))
+        let characterReplace = extraDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true
+        Log.verbose("TextFieldDelegate: checking character validation returned \(isCharAcceptable)")
+        return  isCharAcceptable && characterReplace
+            
     }
 
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        Log.verbose("TextFieldDelegate: editingStarted.")
         contract?.changeValidationState(valid: true, defaultColor: initData.styling.tintColor)
     }
     

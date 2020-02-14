@@ -27,18 +27,21 @@ extension Networking where Self: FoundationNetworking {
             callback(.error(NetworkError.invalidURL(url: request.url)))
             return
         }
-        #warning("TODO: Add pinning")
+        Log.info("Networking: creating dataTask for API request: \(urlRequest.url?.absoluteString ?? "empty")")
         dataTask(with: urlRequest) { data, response, error in
             
             if let error = error {
                 callback(.error(error))
+                Log.error("Networking: error calling API request: \(response?.url?.absoluteString ?? "empty")")
                 return
             }
             
             if let data = data {
                 if let responseObject = request.json(from: data) {
+                    Log.info("Networking: parsed response for API request: \(response?.url?.absoluteString ?? "empty")")
                     callback(.success(responseObject))
                 } else {
+                    Log.error("Networking: failed parsing response for API request: \(response?.url?.absoluteString ?? "empty")")
                     callback(.failure(data))
                 }
                 return

@@ -40,6 +40,7 @@ class CardPaymentTokenUseCase {
     func start(context: UIViewController,
                styling: CardPaymentTokenViewStyle,
                callback: @escaping (CreateCardResult) -> Void) {
+        Log.info("Starting CardPaymentTokenUseCase process")
         let initData = CardPaymentTokenInitialData(action: cardDataReceived(_:), styling: styling)
         let addCardVC = CardPaymentTokenViewController(with: initData)
         let navVC = UINavigationController(rootViewController: addCardVC)
@@ -56,13 +57,17 @@ class CardPaymentTokenUseCase {
 private extension CardPaymentTokenUseCase {
     func cardDataReceived(_ data: CardDetailsInfo) {
         let request = CardPaymentTokenRequest(cardDetails: data, authenticationKey: authenticationKey)
+        Log.info("Collected data from credit card form; Getting payment token...")
         session.make(request) { [weak self] result in
             switch result {
             case .success(let response):
+                Log.info("Payment token received: \(response.paymentTokenId)")
                 self?.dismiss(with: .success(response))
             case .failure(let data):
+                Log.error("Failed to get payment token: \(data.parseError().localizedDescription)")
                 self?.alert(with: .error(data.parseError()))
             case .error(let error):
+                Log.error("Error getting payment token: \(error.localizedDescription)")
                 self?.alert(with: .error(error))
             }
         }
@@ -70,6 +75,7 @@ private extension CardPaymentTokenUseCase {
     
     func dismiss(with result: CreateCardResult) {
         DispatchQueue.main.async { [weak self] in
+            Log.info("Dismissing VC with result: \(result)")
             self?.executionContext?.dismiss(animated: true) {
                 self?.callback?(result)
             }

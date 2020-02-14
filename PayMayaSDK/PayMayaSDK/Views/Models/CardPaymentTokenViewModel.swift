@@ -87,6 +87,10 @@ private extension CardPaymentTokenViewModel {
     }
 
     func onEditingChanged(_ valid: Bool) {
+        Log.info("Input changed, model states:" +
+            "cardNumber: valid = \(cardNumberModel.isValid), " +
+            "cvvModel: valid = \(cvvModel.isValid), " +
+            "expirationDate: valid = \(expirationDateModel.isValid)")
         onEditingChange?(![cardNumberModel, cvvModel, expirationDateModel].map({ $0.isValid }).contains(false))
     }
 }
