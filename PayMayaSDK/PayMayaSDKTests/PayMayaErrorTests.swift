@@ -18,30 +18,29 @@
 //
 
 import Foundation
+import XCTest
 
-public class PayMayaError: Decodable, LocalizedError {
-    public let code: String
-    public let message: String?
-    public let error: String?
-    public let parameters: [[String: String]]?
-    public let reference: String?
-    
-    public var errorDescription: String? {
-        return (message ?? error ?? localizedDescription) + (descriptionFromParameters ?? "")
-    }
-    
-    var descriptionFromParameters: String? {
-        var descriptions = [String]()
-        guard let parameters = parameters, !parameters.isEmpty else {return nil}
-        for parameter in parameters {
-            guard let desc = parameter["description"] else {continue}
-            descriptions.append(desc)
+@testable import PayMayaSDK
+
+class PayMayaErrorTests: XCTestCase {
+    func test_givenError_whenParametersPresent_shouldAddItToErrorDescription() {
+        let json = """
+            {
+             "code":"2553",
+             "message":"Missing/invalid parameters.",
+             "parameters":[
+                            {"field":"card.cvc","description":"A 3-4 digit cvc / cvv is required."}
+                          ]
+            }
+        """
+        
+        let resultString = """
+        Missing/invalid parameters.\nAdditional informations: \nA 3-4 digit cvc / cvv is required.\n
+        """
+        guard let error: PayMayaError = json.data(using: .utf8)?.parseJSON() else {
+            XCTFail("Should parse json into error")
+            return
         }
-        guard !descriptions.isEmpty else {return nil}
-        var result = "\nAdditional informations: \n"
-        for desc in descriptions {
-            result += desc + "\n"
-        }
-        return result
+        XCTAssertEqual(error.localizedDescription, resultString)
     }
 }

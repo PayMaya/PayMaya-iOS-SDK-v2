@@ -20,18 +20,6 @@
 import Foundation
 import UIKit
 
-public struct CardPaymentTokenViewStyling {
-    public var tintColor: UIColor
-    public var image: UIImage
-    
-    public init(tintColor: UIColor? = nil, image: UIImage? = nil) {
-        self.tintColor = tintColor ?? .black
-        self.image = image ?? UIImage(named: "PMDefaultLogo", in: Bundle(for: CardPaymentTokenView.self), compatibleWith: nil) ?? UIImage()
-    }
-    
-    public static var defaultStyling = CardPaymentTokenViewStyling()
-}
-
 private struct Constants {
     static let buttonDefaultConstraint: CGFloat = -16
 }
@@ -79,6 +67,10 @@ class CardPaymentTokenView: UIView {
     func hideActivityIndicator() {
         indicatorView.isHidden = true
     }
+    
+    func onEditingChanged(_ valid: Bool) {
+        actionButton.isEnabled = valid
+    }
         
 }
 
@@ -96,7 +88,7 @@ private extension CardPaymentTokenView {
     
     func setupViews(with data: CardPaymentTokenInitialData) {
         addSubviews()
-        setupSelf()
+        setupSelf(with: data.styling)
         setupLogo(with: data.styling.image)
         setupMainStack()
         setupMinorStack()
@@ -114,8 +106,8 @@ private extension CardPaymentTokenView {
         addSubview(indicatorView)
     }
     
-    func setupSelf() {
-        self.backgroundColor = .white
+    func setupSelf(with styling: CardPaymentTokenViewStyle) {
+        self.backgroundColor = styling.backgroundColor
     }
     
     func setupLogo(with image: UIImage) {
@@ -172,10 +164,6 @@ private extension CardPaymentTokenView {
             indicatorView.centerYAnchor.constraint(equalTo: centerYAnchor),
             indicatorView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
-    }
-    
-    func onEditingChanged(_ valid: Bool) {
-        actionButton.isEnabled = valid
     }
     
     @objc func buttonAction() {

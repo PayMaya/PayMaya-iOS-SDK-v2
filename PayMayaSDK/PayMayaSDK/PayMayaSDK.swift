@@ -98,7 +98,7 @@ public class PayMayaSDK {
     }
 
     public static func cardPayment(_ context: UIViewController,
-                                   styling: CardPaymentTokenViewStyling = CardPaymentTokenViewStyling.defaultStyling,
+                                   styling: CardPaymentTokenViewStyle = CardPaymentTokenViewStyle.defaultStyle,
                                    callback: @escaping (CreateCardResult) -> Void) {
         guard let authKey = authKeys[.cardToken] else {
             callback(.error(AuthenticationError.missingCardTokenKey))

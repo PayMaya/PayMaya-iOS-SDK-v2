@@ -27,7 +27,7 @@ class CardPaymentTokenViewModelsTests: XCTestCase {
     func test_givenSampleData_shouldReturnThisDataInCallback() {
         let exp = expectation(description: "Should call callback and return proper values")
         let mock = CallbackMock(exp: exp)
-        let initData = CardPaymentTokenInitialData(action: mock.callback(_:), styling: CardPaymentTokenViewStyling.defaultStyling)
+        let initData = CardPaymentTokenInitialData(action: mock.callback(_:), styling: CardPaymentTokenViewStyle.defaultStyle)
         _ = CardTokenViewModelMock(data: initData)
         waitForExpectations(timeout: 0.01, handler: { error in
             XCTAssertNil(error)

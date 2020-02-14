@@ -25,7 +25,7 @@ class CardPaymentViewTokenSpy: CardPaymentTokenView {
     
     var editingDidChangeCalled: Int = 0
     
-    override func editingDidChange(valid: Bool) {
+    override func onEditingChanged(_ valid: Bool) {
         editingDidChangeCalled += 1
     }
     

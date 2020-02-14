@@ -35,7 +35,7 @@ class CardPaymentTokenViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = CardPaymentTokenView(CardPaymentTokenViewModel(data: initialData))
+        self.view = CardPaymentTokenView(with: CardPaymentTokenViewModel(data: initialData))
     }
     
     override func viewDidLoad() {
@@ -55,6 +55,7 @@ private extension CardPaymentTokenViewController {
 
     func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
+        navigationController?.navigationBar.barTintColor = initialData.styling.navbarColor
     }
     
     @objc func cancel() {

@@ -25,12 +25,12 @@ typealias OnEditingChange = (Bool) -> Void
 struct LabeledTextFieldInitData {
     let labelText: String
     let hintText: String?
-    let tintColor: UIColor
+    let styling: CardPaymentTokenViewStyle
     
-    init(labelText: String, hint: String? = nil, tintColor: UIColor) {
+    init(labelText: String, hint: String? = nil, styling: CardPaymentTokenViewStyle) {
         self.labelText = labelText
         self.hintText = hint
-        self.tintColor = tintColor
+        self.styling = styling
     }
 }
 
@@ -58,9 +58,9 @@ class LabeledTextFieldViewModel: NSObject {
         return text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    init(validator: FieldValidator, styling: LabeledTextFieldInitData) {
+    init(validator: FieldValidator, data: LabeledTextFieldInitData) {
         self.validator = validator
-        self.initData = styling
+        self.initData = data
     }
     
     func setContract(_ contract: LabeledTextFieldContract) {
@@ -84,7 +84,7 @@ class LabeledTextFieldViewModel: NSObject {
 extension LabeledTextFieldViewModel: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         guard let text = textField.text else {return}
-        contract?.changeValidationState(valid: validator.validate(string: text), defaultColor: initData.tintColor)
+        contract?.changeValidationState(valid: validator.validate(string: text), defaultColor: initData.styling.tintColor)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -95,7 +95,7 @@ extension LabeledTextFieldViewModel: UITextFieldDelegate {
 
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        contract?.changeValidationState(valid: true, defaultColor: initData.tintColor)
+        contract?.changeValidationState(valid: true, defaultColor: initData.styling.tintColor)
     }
     
     @objc func editingDidChange(_ textField: UITextField) {

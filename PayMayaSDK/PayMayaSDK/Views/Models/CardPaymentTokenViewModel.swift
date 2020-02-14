@@ -21,9 +21,9 @@ import Foundation
 
 struct CardPaymentTokenInitialData {
     let buttonAction: (CardDetailsInfo) -> Void
-    let styling: CardPaymentTokenViewStyling
+    let styling: CardPaymentTokenViewStyle
     
-    init(action: @escaping (CardDetailsInfo) -> Void, styling: CardPaymentTokenViewStyling) {
+    init(action: @escaping (CardDetailsInfo) -> Void, styling: CardPaymentTokenViewStyle) {
         self.buttonAction = action
         self.styling = styling
     }
@@ -47,13 +47,13 @@ class CardPaymentTokenViewModel {
     init(data: CardPaymentTokenInitialData) {
         self.initialData = data
         self.cardNumberModel = LabeledTextFieldViewModel(validator: CardNumberValidator(),
-                                                         styling: LabeledTextFieldInitData(labelText: "Card Number", tintColor: data.styling.tintColor))
+                                                         data: LabeledTextFieldInitData(labelText: "Card Number", styling: data.styling))
         self.cvvModel = LabeledTextFieldViewModel(validator: CVCValidator(),
-                                                  styling: LabeledTextFieldInitData(labelText: "CVV", tintColor: data.styling.tintColor))
+                                                  data: LabeledTextFieldInitData(labelText: "CVV", styling: data.styling))
         self.expirationDateModel = LabeledTextFieldViewModel(validator: ExpirationDateValidator(),
-                                                             styling: LabeledTextFieldInitData(labelText: "Validity",
+                                                             data: LabeledTextFieldInitData(labelText: "Validity",
                                                                                                hint: "MM/YYYY",
-                                                                                               tintColor: data.styling.tintColor))
+                                                                                               styling: data.styling))
         setupModels()
     }
     

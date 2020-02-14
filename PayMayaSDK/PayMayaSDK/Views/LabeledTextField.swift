@@ -62,7 +62,7 @@ extension LabeledTextField: LabeledTextFieldContract {
     }
     
     func initialSetup(data: LabeledTextFieldInitData) {
-        setupViews(labelText: data.labelText, hint: data.hintText, color: data.tintColor)
+        setupViews(labelText: data.labelText, hint: data.hintText, styling: data.styling)
     }
     
     func textSet(text: String) {
@@ -73,10 +73,10 @@ extension LabeledTextField: LabeledTextFieldContract {
 
 private extension LabeledTextField {
     
-    func setupViews(labelText: String, hint: String?, color: UIColor) {
+    func setupViews(labelText: String, hint: String?, styling: CardPaymentTokenViewStyle) {
         addSubviews()
-        setupLabel(text: labelText, color: color)
-        setupTextField(text: labelText, hint: hint, color: color)
+        setupLabel(text: labelText, color: styling.tintColor, font: styling.font)
+        setupTextField(text: labelText, hint: hint, styling: styling)
     }
     
     func addSubviews() {
@@ -84,9 +84,10 @@ private extension LabeledTextField {
         self.addArrangedSubview(textField)
     }
     
-    func setupLabel(text: String, color: UIColor) {
+    func setupLabel(text: String, color: UIColor, font: UIFont) {
         label.text = text
         label.textColor = color
+        label.font = font
         label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -95,14 +96,16 @@ private extension LabeledTextField {
         ])
     }
     
-    func setupTextField(text: String, hint: String?, color: UIColor) {
-        textField.textColor = color
-        textField.placeholder = hint ?? text
+    func setupTextField(text: String, hint: String?, styling: CardPaymentTokenViewStyle) {
+        textField.textColor = styling.tintColor
         textField.borderStyle = .roundedRect
-        textField.layer.borderColor = color.cgColor
+        textField.layer.borderColor = styling.tintColor.cgColor
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 4.0
-        textField.tintColor = color
+        textField.tintColor = styling.tintColor
+        textField.font = styling.font
+        textField.backgroundColor = styling.backgroundColor
+        textField.attributedPlaceholder = NSAttributedString(string: hint ?? text, attributes: [.foregroundColor:styling.placeholderColor])
         textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = model

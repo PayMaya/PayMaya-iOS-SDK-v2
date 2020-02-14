@@ -52,7 +52,7 @@ private extension PayWithCardViewController {
             case .success(let token):
                 self?.showAlert("Your payment token: \(token.paymentTokenId)")
             case .error(let error):
-                self?.showAlert("Error getting payment token: \(error.localizedDescription)")
+                print("Error getting payment token: \(error.localizedDescription)")
             }
         }
     }

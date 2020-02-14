@@ -38,7 +38,7 @@ class CardPaymentTokenUseCase {
     }
     
     func start(context: UIViewController,
-               styling: CardPaymentTokenViewStyling,
+               styling: CardPaymentTokenViewStyle,
                callback: @escaping (CreateCardResult) -> Void) {
         let initData = CardPaymentTokenInitialData(action: cardDataReceived(_:), styling: styling)
         let addCardVC = CardPaymentTokenViewController(with: initData)
@@ -61,13 +61,9 @@ private extension CardPaymentTokenUseCase {
             case .success(let response):
                 self?.dismiss(with: .success(response))
             case .failure(let data):
-                guard let error: PayMayaError = data.parseJSON() else {
-                    self?.dismiss(with: .error(NetworkError.incorrectData))
-                    return
-                }
-                self?.dismiss(with: .error(error))
+                self?.alert(with: .error(data.parseError()))
             case .error(let error):
-                self?.dismiss(with: .error(error))
+                self?.alert(with: .error(error))
             }
         }
     }
@@ -75,6 +71,17 @@ private extension CardPaymentTokenUseCase {
     func dismiss(with result: CreateCardResult) {
         DispatchQueue.main.async { [weak self] in
             self?.executionContext?.dismiss(animated: true) {
+                self?.callback?(result)
+            }
+        }
+    }
+    
+    func alert(with result: CreateCardResult) {
+        guard case let CreateCardResult.error(error) = result else {return}
+        DispatchQueue.main.async { [weak self] in
+            let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .default))
+            self?.executionContext?.present(alert, animated: true) {
                 self?.callback?(result)
             }
         }

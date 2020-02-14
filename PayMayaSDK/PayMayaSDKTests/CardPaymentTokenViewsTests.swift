@@ -26,7 +26,7 @@ import UIKit
 class CardPaymentTokenViewsTests: XCTestCase {
     
     func testController_whenInitialized_shouldHaveTokenViewAsMainView() {
-        let initData = CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyling.defaultStyling)
+        let initData = CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyle.defaultStyle)
         let sut = CardPaymentTokenViewController(with: initData)
         sut.loadViewIfNeeded()
         XCTAssert(sut.view is CardPaymentTokenView)
@@ -35,11 +35,11 @@ class CardPaymentTokenViewsTests: XCTestCase {
     func testView_whenCalledEndEditingOnAnySubview_shouldCallEndEditingOnView() {
         let dummyTextField = UITextField()
         dummyTextField.text = "test"
-        let spy = CardPaymentViewTokenSpy()
-        spy.model = CardPaymentTokenViewModel()
-        spy.model?.cardNumberModel.editingDidChange(dummyTextField)
-        spy.model?.cvvModel.editingDidChange(dummyTextField)
-        spy.model?.expirationDateModel.editingDidChange(dummyTextField)
+        let model = CardPaymentTokenViewModel()
+        let spy = CardPaymentViewTokenSpy(with: model)
+        model.cardNumberModel.editingDidChange(dummyTextField)
+        model.cvvModel.editingDidChange(dummyTextField)
+        model.expirationDateModel.editingDidChange(dummyTextField)
         XCTAssertEqual(spy.editingDidChangeCalled, 3)
     }
     
@@ -81,12 +81,12 @@ class CardPaymentTokenViewsTests: XCTestCase {
 
 private extension CardPaymentTokenViewModel {
     convenience init() {
-        self.init(data: CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyling.defaultStyling))
+        self.init(data: CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyle.defaultStyle))
     }
 }
 
 private extension LabeledTextFieldViewModel {
     convenience override init() {
-        self.init(validator: DummyValidator(), styling: LabeledTextFieldInitData(labelText: "", tintColor: .clear))
+        self.init(validator: DummyValidator(), data: LabeledTextFieldInitData(labelText: "", styling: CardPaymentTokenViewStyle.defaultStyle))
     }
 }

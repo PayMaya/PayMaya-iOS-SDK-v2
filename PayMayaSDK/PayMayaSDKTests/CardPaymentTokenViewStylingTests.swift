@@ -25,18 +25,12 @@ import XCTest
 class CardPaymentTokenViewStylingTests: XCTestCase {
     
     func test_givenNoImage_shouldUseFallbackImage() {
-        let sut = CardPaymentTokenViewStyling()
+        let sut = CardPaymentTokenViewStyle.defaultStyle
         let image = UIImage(named: "PMDefaultLogo", in: Bundle(for: CardPaymentTokenView.self), compatibleWith: nil)
         guard let imgData = image?.pngData(), let defaultData = sut.image.pngData() else {
             XCTFail("No data for images")
             return
         }
         XCTAssertEqual(imgData, defaultData)
-    }
-    
-    func test_givenNoColor_shouldUseBlack() {
-        let sut = CardPaymentTokenViewStyling()
-        XCTAssertEqual(sut.tintColor, .black)
-    }
-    
+    }    
 }
