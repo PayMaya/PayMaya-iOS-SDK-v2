@@ -19,16 +19,16 @@
 
 import Foundation
 
-public enum AuthenticationError: LocalizedError {
+enum AuthenticationError: LocalizedError {
     case missingCheckoutKey
     case missingPaymentsKey
     case missingCardTokenKey
     
-    public var errorDescription: String? {
+    var errorDescription: String? {
         switch self {
-        case .missingCheckoutKey: return "Missing public key for Checkout. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .checkout)"
-        case .missingPaymentsKey: return "Missing public key for Pay with PayMaya. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .payments)"
-        case .missingCardTokenKey: return "Missing public key for Card Token Payment. Call PayMayaSDK.add(authenticationKey: <<key>>,for: .cardToken)"
+        case .missingCheckoutKey: return "Missing public key for Checkout. Call PayMayaSDK.add(authenticationKey: <<key>>, for: .checkout)"
+        case .missingPaymentsKey: return "Missing public key for Pay with PayMaya. Call PayMayaSDK.add(authenticationKey: <<key>>, for: .payments)"
+        case .missingCardTokenKey: return "Missing public key for Card Token Payment. Call PayMayaSDK.add(authenticationKey: <<key>>, for: .cardToken)"
         }
     }
 }

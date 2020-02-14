@@ -20,8 +20,19 @@
 import Foundation
 import UIKit
 
+/// Customization for the card payment process.
 public enum CardPaymentTokenViewStyle {
+    
+    /// Light mode
+    /// - Parameters:
+    ///   - font: Font for all texts
+    ///   - logo: Optional merchant's logo
     case light(font: UIFont?, logo: UIImage?)
+    
+    /// Dark mode
+    /// - Parameters:
+    ///   - font: Font for all texts
+    ///   - logo: Optional merchant's logo
     case dark(font: UIFont?, logo: UIImage?)
     
     var tintColor: UIColor {
@@ -90,6 +101,7 @@ public enum CardPaymentTokenViewStyle {
         }
     }
     
+    /// Default light mode styling with PayMaya's logo
     public static var defaultStyle: CardPaymentTokenViewStyle {
         return .light(font: nil, logo: nil)
     }

@@ -20,13 +20,23 @@
 import Foundation
 import UIKit
 
+/// Payment result type.
 public enum PaymentResult {
+    
+    /// Called when the id is created.
     case prepared(id: String)
+    
+    /// Called when the transaction is finished with the proper status.
     case processed(status: RedirectStatus)
+    
+    /// Called when the process was interrupted by the user.
     case interrupted(paymentStatus: PaymentStatus)
+    
+    /// Called when got an error.
     case error(Error)
 }
 
+/// Payment result completion block.
 public typealias PaymentCallback = (PaymentResult) -> Void
 
 class WebViewPaymentUseCase<NetworkRequest: Request> {

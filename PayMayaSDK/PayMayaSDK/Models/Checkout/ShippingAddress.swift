@@ -19,21 +19,68 @@
 
 import Foundation
 
+/// Shipping address of recipient
 public struct ShippingAddress: Encodable {
-    public let firstName: String
-    public let middleName: String
-    public let lastName: String
-    public let phone: String
-    public let email: String
-    public let line1: String
-    public let line2: String
-    public let city: String
-    public let state: String
-    public let zipCode: String
-    public let countryCode: String
-    public let shippingType: String
     
-    public init(firstName: String, middleName: String, lastName: String, phone: String, email: String, line1: String, line2: String, city: String, state: String, zipCode: String, countryCode: String, shippingType: String) {
+    /// Recipient's first name.
+    public let firstName: String?
+    
+    /// Recipient's middle name.
+    public let middleName: String?
+    
+    /// Recipient's last name.
+    public let lastName: String?
+    
+    /// Recipient's phone number e.g. "+(63)1234567890"
+    public let phone: String?
+    
+    /// Recipient's email address e.g. "jdelacruz@sampleonly.com".
+    public let email: String?
+    
+    /// Recipient's primary address line.
+    public let line1: String?
+    
+    /// Recipient's secondary address line.
+    public let line2: String?
+    
+    /// Recipient's city.
+    public let city: String?
+    
+    /// Recipient's state or province.
+    public let state: String?
+    
+    /// Recipient's postal or zip code e.g. "1605".
+    public let zipCode: String?
+    
+    /// Specifies the country code as defined in the ISO 3166-1 alpha-2 currency code standard (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Value should only be uppercase letters. Maximum of 2 characters.
+    public let countryCode: String?
+    
+    /// Specifies the shipping type. Value should only be uppercase letters. Maximum of 2 characters. ST - for standard, SD - for same day.
+    public let shippingType: String?
+    
+    /// Shipping address of recipient
+    /// - Parameters:
+    ///   - firstName: Recipient's first name.
+    ///   - middleName: Recipient's middle name.
+    ///   - lastName: Recipient's last name.
+    ///   - phone: Recipient's phone number e.g. "+(63)1234567890"
+    ///   - email: Recipient's email address e.g. "jdelacruz@sampleonly.com".
+    ///   - line1: Recipient's primary address line.
+    ///   - line2: Recipient's secondary address line.
+    ///   - city: Recipient's city.
+    ///   - state: Recipient's state or province.
+    ///   - zipCode: Recipient's postal or zip code e.g. "1605".
+    ///   - countryCode: Specifies the country code as defined in the ISO 3166-1 alpha-2 currency code standard (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Value should only be uppercase letters. Maximum of 2 characters.
+    ///   - shippingType: Specifies the shipping type. Value should only be uppercase letters. Maximum of 2 characters. ST - for standard, SD - for same day.
+    public init(firstName: String? = nil,
+                middleName: String? = nil,
+                lastName: String? = nil,
+                phone: String? = nil,
+                email: String? = nil,
+                line1: String? = nil,
+                line2: String? = nil,
+                city: String? = nil,
+                state: String, zipCode: String, countryCode: String, shippingType: String) {
         self.firstName = firstName
         self.middleName = middleName
         self.lastName = lastName

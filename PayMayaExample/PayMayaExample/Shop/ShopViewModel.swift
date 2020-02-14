@@ -80,7 +80,7 @@ extension ShopViewModel: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ShopItemCell.self, for: indexPath)!
         let item = items[indexPath.row]
-        cell.setup(title: item.name, price: item.amount.value, backgroundColors: gradients[indexPath.row])
+        cell.setup(title: item.name, price: item.totalAmount.value, backgroundColors: gradients[indexPath.row])
         cell.buttonAction = { [weak self] btn in
             btn.isEnabled = false
             self?.updateCart(with: item)

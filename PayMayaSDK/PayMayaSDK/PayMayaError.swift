@@ -19,14 +19,14 @@
 
 import Foundation
 
-public class PayMayaError: Decodable, LocalizedError {
-    public let code: String
-    public let message: String?
-    public let error: String?
-    public let parameters: [[String: String]]?
-    public let reference: String?
+class PayMayaError: Decodable, LocalizedError {
+    let code: String
+    let message: String?
+    let error: String?
+    let parameters: [[String: String]]?
+    let reference: String?
     
-    public var errorDescription: String? {
+    var errorDescription: String? {
         return (message ?? error ?? localizedDescription) + (descriptionFromParameters ?? "")
     }
     

@@ -19,18 +19,56 @@
 
 import Foundation
 
+/// Represents the entity that bought items from the merchant's shop.
 public struct CheckoutBuyer: Encodable {
-    public let firstName: String
-    public let middleName: String
-    public let lastName: String
-    public let birthday: String
-    public let customerSince: String
-    public let sex: String
-    public let contact: Contact
-    public let shippingAddress: ShippingAddress
-    public let billingAddress: BillingAddress
     
-    public init(firstName: String, middleName: String, lastName: String, birthday: String, customerSince: String, sex: String, contact: Contact, shippingAddress: ShippingAddress, billingAddress: BillingAddress) {
+    /// Specifies the buyer's first name.
+    public let firstName: String?
+    
+    /// Specifies the buyer's middle name.
+    public let middleName: String?
+    
+    /// Specifies the buyer's last name.
+    public let lastName: String?
+    
+    /// Specifies the buyer's birthday. Format YYYY-MM-DD (e.g. "1995-10-24").
+    public let birthday: String?
+    
+    /// Specifies the date when buyer become merchant's customer. Format YYYY-MM-DD (e.g. "1995-10-24").
+    public let customerSince: String?
+    
+    /// Specifies the buyer's gender. M/F.
+    public let sex: String?
+    
+    /// Buyer's contact information.
+    public let contact: Contact?
+    
+    /// Shipping address to be used for the transaction.
+    public let shippingAddress: ShippingAddress?
+    
+    /// Billing address to be used for the transaction.
+    public let billingAddress: BillingAddress?
+    
+    /// Represents the entity that bought items from the merchant's shop.
+    /// - Parameters:
+    ///   - firstName: Specifies the buyer's first name.
+    ///   - middleName: Specifies the buyer's middle name.
+    ///   - lastName: Specifies the buyer's last name.
+    ///   - birthday: Specifies the buyer's birthday. Format YYYY-MM-DD (e.g. "1995-10-24").
+    ///   - customerSince: Specifies the date when buyer become merchant's customer. Format YYYY-MM-DD (e.g. "1995-10-24").
+    ///   - sex: Specifies the buyer's gender. M/F.
+    ///   - contact: Buyer's contact information.
+    ///   - shippingAddress: Shipping address to be used for the transaction.
+    ///   - billingAddress: Billing address to be used for the transaction.
+    public init(firstName: String? = nil,
+                middleName: String? = nil,
+                lastName: String? = nil,
+                birthday: String? = nil,
+                customerSince: String? = nil,
+                sex: String? = nil,
+                contact: Contact? = nil,
+                shippingAddress: ShippingAddress? = nil,
+                billingAddress: BillingAddress? = nil) {
         self.firstName = firstName
         self.middleName = middleName
         self.lastName = lastName

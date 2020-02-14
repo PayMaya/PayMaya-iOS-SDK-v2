@@ -19,12 +19,26 @@
 
 import Foundation
 
+/// Details about the wallet link creation process
 public struct WalletLinkInfo: Encodable {
+    
+    /// List of redirect URLs depending on creation completion status.
     public let redirectUrl: RedirectURL
+    
+    /// A unique identifier for tracking purposes.
     public let requestReferenceNumber: String
+    
+    /// Merchant provided additional wallet link information. Optional.
     public let metadata: [String: String]
     
-    public init(redirectUrl: RedirectURL, requestReferenceNumber: String, metadata: [String : String] = [:]) {
+    /// Details about the wallet link creation process
+    /// - Parameters:
+    ///   - redirectUrl: List of redirect URLs depending on creation completion status.
+    ///   - requestReferenceNumber: A unique identifier for tracking purposes.
+    ///   - metadata: Merchant provided additional wallet link information. Optional.
+    public init(redirectUrl: RedirectURL,
+                requestReferenceNumber: String,
+                metadata: [String : String] = [:]) {
         self.redirectUrl = redirectUrl
         self.requestReferenceNumber = requestReferenceNumber
         self.metadata = metadata

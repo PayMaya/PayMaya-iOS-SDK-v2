@@ -19,20 +19,46 @@
 
 import Foundation
 
+/// Current status of the payment token.
 public enum PaymentTokenStatus: String, Decodable {
+    
+    /// Default value of created payment token
     case available = "AVAILABLE"
+    
+    /// When the payment is being processed
     case currentlyInUse = "CURRENTLY_IN_USE"
+    
+    /// When the token has already been used
     case used = "USED"
+    
+    /// When the token has already expired, and cannot be used
     case expired = "EXPIRED"
+    
+    /// When the payment is being staged for 3-D Secure payment verification
     case preverification = "PREVERIFICATION"
+    
+    /// When the payment is being processed for 3-D Secure payment
     case veryfing = "VERYFING"
+    
+    /// When the payment has already failed 3-D Secure payment verification
     case verificationFailed = "VERIFICATION_FAILED"
 }
 
+/// Payment token response.
 public struct CardPaymentTokenResponse: Decodable {
+    
+    /// Payment token id that represents your customer’s credit or debit card details which can be used for payments and customer card addition
     public let paymentTokenId: String
+    
+    /// Current status of the payment token.
     public let state: PaymentTokenStatus
+    
+    /// Creation date of the payment token.
     public let createdAt: Date
+    
+    /// Update date of the payment token.
     public let updatedAt: Date
+    
+    /// Card issuer
     public let issuer: String
 }

@@ -19,30 +19,46 @@
 
 import Foundation
 
+/// Represents the entity that can be purchased from a merchant's shop.
 public struct CheckoutItem: Encodable {
+    
+    /// Specifies the item name.
     public let name: String
+    
+    /// Specifies the number of bought items.
     public let quantity: Int
-    public let code: String
-    public let description: String
-    public let amount: CheckoutItemAmount
+    
+    /// Specifies the merchant assigned SKU code.
+    public let code: String?
+    
+    /// Specifies the item description.
+    public let description: String?
+    
+    /// Specifies the price amount per item.
+    public let amount: CheckoutItemAmount?
+    
+    /// Specifies the total price amount for all the bought items.
     public let totalAmount: CheckoutItemAmount
     
-    public init(name: String, quantity: Int, code: String, description: String, amount: CheckoutItemAmount, totalAmount: CheckoutItemAmount) {
+    /// Represents the entity that can be purchased from a merchant's shop.
+    /// - Parameters:
+    ///   - name: Specifies the item name.
+    ///   - quantity: Specifies the number of bought items.
+    ///   - code: Specifies the merchant assigned SKU code.
+    ///   - description: Specifies the item description.
+    ///   - amount: Specifies the price amount per item.
+    ///   - totalAmount: Specifies the total price amount for all the bought items.
+    public init(name: String,
+                quantity: Int,
+                code: String? = nil,
+                description: String? = nil,
+                amount: CheckoutItemAmount? = nil,
+                totalAmount: CheckoutItemAmount) {
         self.name = name
         self.quantity = quantity
         self.code = code
         self.description = description
         self.amount = amount
         self.totalAmount = totalAmount
-    }
-}
-
-public struct CheckoutItemAmount: Encodable {
-    public let value: Double
-    public let details: AmountDetails
-    
-    public init(value: Double, details: AmountDetails) {
-        self.value = value
-        self.details = details
     }
 }

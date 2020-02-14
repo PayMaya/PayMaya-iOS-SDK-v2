@@ -19,26 +19,34 @@
 
 import Foundation
 
+/// Details about the payment transction
 public struct SinglePaymentInfo: Encodable {
+    
+    /// Total amount details for the transaction.
     public let totalAmount: SinglePaymentTotalAmount
+    
+    /// List of redirect URLs depending on payment completion status.
     public let redirectUrl: RedirectURL
+    
+    /// A unique transaction identifier for tracking purposes.
     public let requestReferenceNumber: String
+    
+    /// Merchant provided additional cart information. Optional.
     public let metadata: [String: String]
     
-    public init(totalAmount: SinglePaymentTotalAmount, redirectUrl: RedirectURL, requestReferenceNumber: String, metadata: [String : String] = [:]) {
+    /// Details about the payment transction
+    /// - Parameters:
+    ///   - totalAmount: Total amount details for the transaction.
+    ///   - redirectUrl: List of redirect URLs depending on payment completion status.
+    ///   - requestReferenceNumber: A unique transaction identifier for tracking purposes.
+    ///   - metadata: Merchant provided additional cart information. Optional.
+    public init(totalAmount: SinglePaymentTotalAmount,
+                redirectUrl: RedirectURL,
+                requestReferenceNumber: String,
+                metadata: [String : String] = [:]) {
         self.totalAmount = totalAmount
         self.redirectUrl = redirectUrl
         self.requestReferenceNumber = requestReferenceNumber
         self.metadata = metadata
-    }
-}
-
-public struct SinglePaymentTotalAmount: Encodable {
-    public let currency: String
-    public let value: Double
-    
-    public init(currency: String, value: Double) {
-        self.currency = currency
-        self.value = value
     }
 }

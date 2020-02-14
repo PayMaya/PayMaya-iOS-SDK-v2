@@ -19,11 +19,23 @@
 
 import Foundation
 
+/// List of redirect URLs depending on completion status. Required. Must be secure https url.
 public struct RedirectURL: Encodable {
+    
+    /// Redirect URL when payment is successful.
     public let success: String
+    
+    /// Redirect URL when payment failes.
     public let failure: String
+    
+    /// Redirect URL when payment is cancelled.
     public let cancel: String
     
+    /// List of redirect URLs depending on completion status. Required. Must be secure https url.
+    /// - Parameters:
+    ///   - success: Redirect URL when payment is successful.
+    ///   - failure: Redirect URL when payment failes.
+    ///   - cancel: Redirect URL when payment is cancelled.
     public init?(success: String, failure: String, cancel: String) {
         guard [success, failure, cancel].areSecureURLs else {
             Log.error("Unable to create redirectURL: URLs should start with https://")
@@ -35,8 +47,17 @@ public struct RedirectURL: Encodable {
     }
 }
 
+/// Status of the process with the proper redirection url
 public enum RedirectStatus {
-    case success(String), failure(String), cancel(String)
+    
+    /// Successful status with success Redirect URL
+    case success(String)
+    
+    /// Failure status with failure Redirect URL
+    case failure(String)
+    
+    /// Cancelled status with cancel Redirect URL
+    case cancel(String)
 }
 
 extension RedirectURL {

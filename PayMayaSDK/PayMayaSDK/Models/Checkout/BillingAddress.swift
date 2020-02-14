@@ -19,15 +19,41 @@
 
 import Foundation
 
+/// Billing address of buyer
 public struct BillingAddress: Encodable {
-    public let line1: String
-    public let line2: String
-    public let city: String
-    public let state: String
-    public let zipCode: String
-    public let countryCode: String
     
-    public init(line1: String, line2: String, city: String, state: String, zipCode: String, countryCode: String) {
+    /// Specifies the primary address line.
+    public let line1: String?
+    
+    /// Specifies the secondary address line.
+    public let line2: String?
+    
+    /// Specifies the city.
+    public let city: String?
+    
+    /// Specifies the state or province.
+    public let state: String?
+    
+    /// Specifies the postal or zip code e.g. "1605".
+    public let zipCode: String?
+    
+    /// Specifies the country code as defined in the ISO 3166-1 alpha-2 currency code standard (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Value should only be uppercase letters. Maximum of 2 characters.
+    public let countryCode: String?
+    
+    /// Billing address of buyer
+    /// - Parameters:
+    ///   - line1: Specifies the primary address line.
+    ///   - line2: Specifies the secondary address line.
+    ///   - city: Specifies the city.
+    ///   - state: Specifies the state or province.
+    ///   - zipCode: Specifies the postal or zip code e.g. "1605".
+    ///   - countryCode: Specifies the country code as defined in the ISO 3166-1 alpha-2 currency code standard (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Value should only be uppercase letters. Maximum of 2 characters.
+    public init(line1: String? = nil,
+                line2: String? = nil,
+                city: String? = nil,
+                state: String? = nil,
+                zipCode: String? = nil,
+                countryCode: String? = nil) {
         self.line1 = line1
         self.line2 = line2
         self.city = city

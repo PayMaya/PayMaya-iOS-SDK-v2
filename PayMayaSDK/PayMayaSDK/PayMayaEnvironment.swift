@@ -20,7 +20,11 @@
 import Foundation
 
 public enum PayMayaEnvironment {
-    case sandbox, production
+    ///  Uses sandbox environment for all transactions. Useful for testing.
+    case sandbox
+    
+    /// Uses live environment for all transactions. This environment must be used for App Store submissions.
+    case production
     
     var baseURL: String {
         switch self {

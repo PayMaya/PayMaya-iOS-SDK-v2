@@ -19,15 +19,41 @@
 
 import Foundation
 
+/// Contains information about the buyer, the items inside the cart, transaction amount, status of payment and other details.
 public struct CheckoutInfo: Encodable {
+    
+    /// Transaction amount details.
     public let totalAmount: CheckoutTotalAmount
+    
+    /// Customer profile information.
     public let buyer: CheckoutBuyer?
+    
+    /// List of bought items for the transaction.
     public let items: [CheckoutItem]
+    
+    /// List of redirect URLs depending on checkout completion status.
     public let redirectUrl: RedirectURL
+    
+    /// A unique identifier to a transaction for tracking purposes.
     public let requestReferenceNumber: String
+    
+    /// Merchant provided additional cart information. Optional.
     public let metadata: [String: String]
     
-    public init(totalAmount: CheckoutTotalAmount, buyer: CheckoutBuyer? = nil, items: [CheckoutItem], redirectUrl: RedirectURL, requestReferenceNumber: String, metadata: [String: String] = [:]) {
+    /// Contains information about the buyer, the items inside the cart, transaction amount, status of payment and other details.
+    /// - Parameters:
+    ///   - totalAmount: Transaction amount details.
+    ///   - buyer: Customer profile information.
+    ///   - items: List of bought items for the transaction.
+    ///   - redirectUrl: List of redirect URLs depending on checkout completion status.
+    ///   - requestReferenceNumber: A unique identifier to a transaction for tracking purposes.
+    ///   - metadata: Merchant provided additional cart information. Optional.
+    public init(totalAmount: CheckoutTotalAmount,
+                buyer: CheckoutBuyer? = nil,
+                items: [CheckoutItem],
+                redirectUrl: RedirectURL,
+                requestReferenceNumber: String,
+                metadata: [String: String] = [:]) {
         self.totalAmount = totalAmount
         self.buyer = buyer
         self.items = items

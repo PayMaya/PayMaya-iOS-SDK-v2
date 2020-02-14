@@ -19,14 +19,37 @@
 
 import Foundation
 
+/// When creating a checkout, the merchant can optionally provide these details.
+/// If provided, it will reflect to the Checkout Page and will be viewed by the buyer for review.
 public struct AmountDetails: Encodable {
-    public let discount: Double
-    public let serviceCharge: Double
-    public let shippingFee: Double
-    public let tax: Double
-    public let subtotal: Double
     
-    public init(discount: Double, serviceCharge: Double, shippingFee: Double, tax: Double, subtotal: Double) {
+    /// Discount amount for the transaction.
+    public let discount: Double?
+    
+    /// Service charge amount for the transaction.
+    public let serviceCharge: Double?
+    
+    /// Shipping fee amount for the transaction.
+    public let shippingFee: Double?
+    
+    /// Tax amount for the transaction.
+    public let tax: Double?
+    
+    /// Sum of amounts for all items in the transaction.
+    public let subtotal: Double?
+    
+    /// Gives information about the transaction amount details.
+    /// - Parameters:
+    ///   - discount: Discount amount for the transaction.
+    ///   - serviceCharge: Service charge amount for the transaction.
+    ///   - shippingFee: Shipping fee amount for the transaction.
+    ///   - tax: Tax amount for the transaction.
+    ///   - subtotal: Sum of amounts for all items in the transaction.
+    public init(discount: Double? = nil,
+                serviceCharge: Double? = nil,
+                shippingFee: Double? = nil,
+                tax: Double? = nil,
+                subtotal: Double? = nil) {
         self.discount = discount
         self.serviceCharge = serviceCharge
         self.shippingFee = shippingFee

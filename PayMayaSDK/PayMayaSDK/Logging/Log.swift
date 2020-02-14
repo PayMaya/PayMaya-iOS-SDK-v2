@@ -19,20 +19,27 @@
 
 import Foundation
 
-enum LogType: String {
-    case info = "ℹ️"
-    case error = "⛔️"
-    case verbose = "✏️"
-}
-
 public enum LogLevel {
+    /// Don't log anything
     case off
+    
+    /// Log only errors
     case error
+    
+    /// Log errors and informative messages
     case debug
+    
+    /// Log everything that's happening
     case all
 }
 
 class Log {
+    fileprivate enum LogType: String {
+        case info = "ℹ️"
+        case error = "⛔️"
+        case verbose = "✏️"
+    }
+    
     static var logLevel: LogLevel = .off
     
     static func error(_ message: String, fileName: String = #file, line: Int = #line, funcName: String = #function) {

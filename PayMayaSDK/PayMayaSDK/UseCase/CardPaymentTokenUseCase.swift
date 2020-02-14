@@ -20,8 +20,13 @@
 import Foundation
 import UIKit
 
+/// Card creation result type.
 public enum CreateCardResult {
+    
+    /// Called when process finished.
     case success(CardPaymentTokenResponse)
+    
+    /// Called when got an error.
     case error(Error)
 }
 

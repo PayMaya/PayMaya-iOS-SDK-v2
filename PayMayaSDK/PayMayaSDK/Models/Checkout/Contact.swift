@@ -19,11 +19,21 @@
 
 import Foundation
 
+/// Buyer's contact details.
 public struct Contact: Encodable {
-    public let phone: String
-    public let email: String
     
-    public init(phone: String, email: String) {
+    /// Buyer's phone number e.g. "+(63)1234567890".
+    public let phone: String?
+    
+    /// Buyer's email address e.g. "jdelacruz@sampleonly.com".
+    public let email: String?
+    
+    /// Buyer's contact details.
+    /// - Parameters:
+    ///   - phone: Buyer's phone number.
+    ///   - email: Buyer's email address.
+    public init(phone: String? = nil,
+                email: String? = nil) {
         self.phone = phone
         self.email = email
     }
