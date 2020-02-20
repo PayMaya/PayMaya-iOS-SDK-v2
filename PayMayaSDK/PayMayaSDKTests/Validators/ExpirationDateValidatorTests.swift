@@ -35,7 +35,6 @@ class ExpirationDateValidatorTest: XCTestCase {
     func test_givenDate_whenWrongDate_shouldFail() {
         XCTAssertFalse(validator.validate(string: "18/2020"))
         XCTAssertFalse(validator.validate(string: "00/00"))
-        XCTAssertFalse(validator.validate(string: "2/20"))
     }
     
     func test_givenDate_whenDateHasPassed_shouldFail() {
@@ -59,7 +58,6 @@ class ExpirationDateValidatorTest: XCTestCase {
     
     func test_givenInputChar_whenCorrect_shouldPass() {
         XCTAssertTrue(validator.isCharAcceptable(char: "1"))
-        XCTAssertTrue(validator.isCharAcceptable(char: "/"))
     }
     
     private func currentDateFormattedAdding(months: Int) -> String {

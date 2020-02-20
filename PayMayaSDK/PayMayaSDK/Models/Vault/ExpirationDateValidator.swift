@@ -21,7 +21,7 @@ import Foundation
 
 class ExpirationDateValidator: FieldValidator {
     func isCharAcceptable(char: Character) -> Bool {
-        let customSet = CharacterSet(charactersIn: "1234567890/")
+        let customSet = CharacterSet(charactersIn: "1234567890")
         let tempSet = CharacterSet(charactersIn: String(char))
         return tempSet.isSubset(of: customSet)
     }
@@ -36,7 +36,7 @@ class ExpirationDateValidator: FieldValidator {
     
     private func date(from string: String) -> Date? {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/yyyy"
+        formatter.dateFormat = "MM/yy"
         return formatter.date(from: string)
     }
 }

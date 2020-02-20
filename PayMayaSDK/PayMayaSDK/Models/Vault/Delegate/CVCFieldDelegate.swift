@@ -17,19 +17,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
 import UIKit
 
-class ExpirationDateFieldDelegate: NSObject, UITextFieldDelegate {
+class CVCFieldDelegate: NSObject, UITextFieldDelegate {
+
+    private enum Constants {
+        static let maxCharacterCount = 4
+    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard !string.isEmpty else {return true}
         guard let text = textField.text, let textRange = Range(range, in: text) else {return false}
         let updatedText = text.replacingCharacters(in: textRange, with: string)
-        guard updatedText.count == 2 else {return true}
-        Log.info("Expiration date input is 2 chars length: adding slash")
-        textField.text = updatedText + "/"
-        return false
+        return updatedText.count <= Constants.maxCharacterCount
     }
     
 }

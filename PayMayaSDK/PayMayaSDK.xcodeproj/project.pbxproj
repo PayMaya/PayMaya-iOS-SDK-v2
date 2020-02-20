@@ -9,13 +9,10 @@
 /* Begin PBXBuildFile section */
 		BF05FA9623E4590400D43D24 /* RedirectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF05FA9523E4590400D43D24 /* RedirectResponse.swift */; };
 		BF29AB5023DB472D00212ADE /* RedirectURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */; };
-		BF2E692923F6A4780046EE46 /* CheckoutItemAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E692823F6A4780046EE46 /* CheckoutItemAmount.swift */; };
-		BF2E697323F6B6FB0046EE46 /* SinglePaymentTotalAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697223F6B6FB0046EE46 /* SinglePaymentTotalAmount.swift */; };
-		BF2E697523F6C8C10046EE46 /* LogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697423F6C8C10046EE46 /* LogTests.swift */; };
-		BF2E697723FE83DB0046EE46 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697623FE83DB0046EE46 /* Logger.swift */; };
 		BF2E697923FE8B450046EE46 /* String+Grouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697823FE8B450046EE46 /* String+Grouping.swift */; };
 		BF2E697B23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697A23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift */; };
 		BF2E697D23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */; };
+		BF2E697F23FE9DD50046EE46 /* CVCFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */; };
 		BF89B00A23E425D0008D9AD5 /* SinglePaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */; };
 		BF89B00C23E425EE008D9AD5 /* SinglePaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */; };
 		BF89B00E23E4260C008D9AD5 /* SinglePaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */; };
@@ -117,13 +114,10 @@
 		BF05FA9523E4590400D43D24 /* RedirectResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResponse.swift; sourceTree = "<group>"; };
 		BF1205F523DF0F530097693A /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectURLTests.swift; sourceTree = "<group>"; };
-		BF2E692823F6A4780046EE46 /* CheckoutItemAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutItemAmount.swift; sourceTree = "<group>"; };
-		BF2E697223F6B6FB0046EE46 /* SinglePaymentTotalAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentTotalAmount.swift; sourceTree = "<group>"; };
-		BF2E697423F6C8C10046EE46 /* LogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTests.swift; sourceTree = "<group>"; };
-		BF2E697623FE83DB0046EE46 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		BF2E697823FE8B450046EE46 /* String+Grouping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Grouping.swift"; sourceTree = "<group>"; };
 		BF2E697A23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberFieldDelegate.swift; sourceTree = "<group>"; };
 		BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+SetTextPreservingCursor.swift"; sourceTree = "<group>"; };
+		BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCFieldDelegate.swift; sourceTree = "<group>"; };
 		BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentRequest.swift; sourceTree = "<group>"; };
 		BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentResponse.swift; sourceTree = "<group>"; };
 		BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentInfo.swift; sourceTree = "<group>"; };
@@ -239,6 +233,16 @@
 				BF1205F523DF0F530097693A /* Networking.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF2E698023FEA02D0046EE46 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				EBA442C723F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift */,
+				BF2E697A23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift */,
+				BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		BFA908F023D9EF81001A277F = {
@@ -473,12 +477,11 @@
 		EB093F6623E8273500DC98A5 /* Vault */ = {
 			isa = PBXGroup;
 			children = (
+				BF2E698023FEA02D0046EE46 /* Delegate */,
 				EB7B4A1823EDD9BB00090EC7 /* CVCValidator.swift */,
 				EB7B49DF23EB116000090EC7 /* CardDetailsInfo.swift */,
 				EB7B4A1C23EDE35900090EC7 /* CardNumberValidator.swift */,
 				EB7B4A1A23EDDBE900090EC7 /* ExpirationDateValidator.swift */,
-				EBA442C723F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift */,
-				BF2E697A23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift */,
 				EB093F7823E860F400DC98A5 /* FieldValidator.swift */,
 				EBC6509A23F59884009A6DC9 /* CardPaymentTokenViewStyling.swift */,
 			);
@@ -668,6 +671,7 @@
 				BFAB772723E82E4F00AEB11D /* CreateWalletLinkResponse.swift in Sources */,
 				BF2E697B23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift in Sources */,
 				BFA9094423D9F122001A277F /* CheckoutInfo.swift in Sources */,
+				BF2E697F23FE9DD50046EE46 /* CVCFieldDelegate.swift in Sources */,
 				BF89B00A23E425D0008D9AD5 /* SinglePaymentRequest.swift in Sources */,
 				EB093F7323E858E900DC98A5 /* CardPaymentTokenView.swift in Sources */,
 				BFB7656823F2DBFB000D1AC0 /* URLRequest+Request.swift in Sources */,

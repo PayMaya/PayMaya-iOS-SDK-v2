@@ -32,12 +32,11 @@ class ExpirationDateFieldDelegateTests: XCTestCase {
         XCTAssertTrue(result)
     }
     
-    func test_givenTextFieldInput_whenMoreThanTwoChars_shouldReturnTrue() {
+    func test_givenTextFieldInput_whenMoreThanTwoChars_shouldReturnFalse() {
         let textToEnter = "123"
         let (result, text) = putTextAndCallDelegate(text: textToEnter)
-        XCTAssertEqual(textToEnter, text)
-        XCTAssertFalse(text.hasSuffix("/"))
-        XCTAssertTrue(result)
+        XCTAssertEqual("12/3", text)
+        XCTAssertFalse(result)
     }
     
     func test_givenTextFieldInput_afterTwoChars_shouldPutSlash_andReturnFalse() {

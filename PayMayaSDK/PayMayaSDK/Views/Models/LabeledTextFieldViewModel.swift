@@ -39,6 +39,7 @@ class LabeledTextFieldViewModel: NSObject {
     private var text: String = ""
     
     private let initData: LabeledTextFieldInitData
+    let isSecure: Bool
     
     private weak var contract: LabeledTextFieldContract? {
         didSet {
@@ -58,9 +59,10 @@ class LabeledTextFieldViewModel: NSObject {
         return text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    init(validator: FieldValidator, data: LabeledTextFieldInitData) {
+    init(validator: FieldValidator, data: LabeledTextFieldInitData, isSecure: Bool = false) {
         self.validator = validator
         self.initData = data
+        self.isSecure = isSecure
     }
     
     func setContract(_ contract: LabeledTextFieldContract) {

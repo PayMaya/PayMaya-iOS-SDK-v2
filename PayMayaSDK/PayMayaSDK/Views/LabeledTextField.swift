@@ -109,6 +109,7 @@ private extension LabeledTextField {
         textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = model
+        textField.isSecureTextEntry = model.isSecure
         NSLayoutConstraint.activate([
             textField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             textField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
