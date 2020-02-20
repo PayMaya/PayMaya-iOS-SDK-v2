@@ -17,35 +17,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
 import UIKit
 
-@testable import PayMayaSDK
-
-class CardPaymentViewContractSpy: CardPaymentTokenViewContract {
-    var setupCalled: Int = 0
-    
-    func initialSetup(data: CardPaymentTokenInitialData) {
-        setupCalled += 1
-    }
-}
-
-class LabeledTextFieldContractSpy: LabeledTextFieldContract {
-    var changeValidationStateCalled: Int = 0
-    var setupCalled: Int = 0
-    var textSetCalled: Int = 0
-    
-    func changeValidationState(valid: Bool) {
-        changeValidationStateCalled += 1
+class RoundButton: UIButton {
+    override var isEnabled: Bool {
+        didSet {
+            alpha = isEnabled ? 1 : 0.3
+        }
     }
     
-    func initialSetup(data: LabeledTextFieldInitData) {
-        setupCalled += 1
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.height / 2
     }
-    
-    func textSet(text: String) {
-        textSetCalled += 1
-    }
-    
-    
 }

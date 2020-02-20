@@ -21,7 +21,7 @@ import Foundation
 import UIKit
 
 protocol LabeledTextFieldContract: class {
-    func changeValidationState(valid: Bool, defaultColor: UIColor)
+    func changeValidationState(valid: Bool)
     func initialSetup(data: LabeledTextFieldInitData)
     func textSet(text: String)
 }
@@ -36,15 +36,16 @@ class LabeledTextField: UITextField {
     }
     
     private let placeholderLayer = CATextLayer()
-    private let rightButton = UIButton(type: .system)
+    private let hintLayer = CATextLayer()
+    private let hintButton = UIButton(type: .system)
     private let lineView = UIView()
     private let errorLabel = UILabel()
     
     private let model: LabeledTextFieldViewModel
     
     private var heightConstraint: NSLayoutConstraint!
+    
     private var currentColor: UIColor = .black
-    private var currentFont = UIFont.systemFont(ofSize: 14)
     
     override var text: String? {
         didSet { animatePlaceholder() }
@@ -52,10 +53,12 @@ class LabeledTextField: UITextField {
     
     override var placeholder: String? {
         get { placeholderLayer.string as? String }
-        set {
-            placeholderLayer.string = newValue
-            accessibilityLabel = newValue
-        }
+        set { placeholderLayer.string = newValue }
+    }
+    
+    private var hint: String? {
+        get { hintLayer.string as? String }
+        set { hintLayer.string = newValue }
     }
     
     init(model: LabeledTextFieldViewModel) {
@@ -73,10 +76,6 @@ class LabeledTextField: UITextField {
         model.setContract(self)
         errorLabel.text = model.defaultErrorReason
         delegate = model
-        isSecureTextEntry = model.isSecure
-        if model.hasHint {
-            setupRightButton()
-        }
         addTarget(model, action: #selector(LabeledTextFieldViewModel.editingDidChange), for: .editingChanged)
     }
     
@@ -96,6 +95,7 @@ class LabeledTextField: UITextField {
     override func layoutSubviews() {
         super.layoutSubviews()
         placeholderLayer.bounds = bounds
+        hintLayer.bounds = bounds
     }
     
     @available(*, unavailable)
@@ -106,17 +106,20 @@ class LabeledTextField: UITextField {
 }
 
 extension LabeledTextField: LabeledTextFieldContract {
-    func changeValidationState(valid: Bool, defaultColor: UIColor) {
-        currentColor = valid ? defaultColor : .red
+    func changeValidationState(valid: Bool) {
+        currentColor = valid ? tintColor : .red
         errorLabel.isHidden = valid
         animatePlaceholder()
     }
     
     func initialSetup(data: LabeledTextFieldInitData) {
         placeholder = data.labelText
+        hint = data.hintText
         currentColor = data.styling.tintColor
-        textColor = data.styling.tintColor
-        currentFont = data.styling.font
+        textColor = data.styling.inputTextColor
+        tintColor = data.styling.tintColor
+        isSecureTextEntry = data.isSecure
+        if data.hasHintButton { setupHintButton() }
         updateFonts()
         animatePlaceholder()
     }
@@ -131,6 +134,7 @@ private extension LabeledTextField {
         setupPlaceholder()
         setupLineView()
         setupErrorLabel()
+        setupHint()
         
         keyboardType = .numberPad
         
@@ -141,13 +145,13 @@ private extension LabeledTextField {
         ])
     }
     
-      func setupRightButton() {
+      func setupHintButton() {
         let icon = UIImage(named: "info", in: Bundle(for: CardPaymentTokenView.self), compatibleWith: nil) ?? UIImage()
-        rightButton.setImage(icon, for: .normal)
-        rightButton.tintColor = .lightGray
-        rightButton.addTarget(self, action: #selector(handleHintTapped), for: .touchUpInside)
+        hintButton.setImage(icon, for: .normal)
+        hintButton.tintColor = .lightGray
+        hintButton.addTarget(self, action: #selector(handleHintTapped), for: .touchUpInside)
         rightViewMode = .always
-        rightView = rightButton
+        rightView = hintButton
       }
     
     func setupPlaceholder() {
@@ -157,6 +161,17 @@ private extension LabeledTextField {
         placeholderLayer.position = CGPoint(x: 0, y: 20)
         placeholderLayer.bounds = placeholderRect(forBounds: bounds)
         animatePlaceholder()
+    }
+    
+    func setupHint() {
+        hintLayer.contentsScale = UIScreen.main.scale
+        layer.addSublayer(hintLayer)
+        hintLayer.anchorPoint = CGPoint(x: 0, y: 0)
+        hintLayer.position = CGPoint(x: 0, y: 20)
+        hintLayer.bounds = placeholderRect(forBounds: bounds)
+        hintLayer.foregroundColor = UIColor.lightGray.cgColor
+        hintLayer.setAffineTransform(.init(translationX: 0, y: model.styling.font.pointSize / 2))
+        hintLayer.isHidden = true
     }
     
     func setupLineView() {
@@ -180,18 +195,20 @@ private extension LabeledTextField {
     }
     
     func updateFonts() {
-        self.font = currentFont
-        let errorFont = UIFont.systemFont(ofSize: currentFont.pointSize - 4, weight: .light)
-        placeholderLayer.fontSize = currentFont.pointSize
-        placeholderLayer.font = font
-        self.font = font
+        self.font = model.styling.font
+        let errorFont = UIFont.systemFont(ofSize: model.styling.font.pointSize - 4, weight: .light)
+        [placeholderLayer, hintLayer].forEach {
+            $0.fontSize = model.styling.font.pointSize
+            $0.font = font
+        }
         errorLabel.font = errorFont
-        heightConstraint.constant = currentFont.pointSize + Constants.topPadding + Constants.topPlaceholderPadding + Constants.spaceBetweenPlaceholderAndText + errorFont.pointSize + Constants.bottomPadding
+        heightConstraint.constant = model.styling.font.pointSize + Constants.topPadding + Constants.topPlaceholderPadding + Constants.spaceBetweenPlaceholderAndText + errorFont.pointSize + Constants.bottomPadding
     }
     
     func setupListeners() {
         addTarget(self, action: #selector(stateDidChange), for: .editingDidEnd)
         addTarget(self, action: #selector(stateDidChange), for: .editingDidBegin)
+        addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
     @objc func handleHintTapped() {
@@ -202,7 +219,7 @@ private extension LabeledTextField {
 
 private extension LabeledTextField {
     func calculateRect(forBounds bounds: CGRect) -> CGRect {
-        let widthPadding: CGFloat = rightButton.frame.width
+        let widthPadding: CGFloat = hintButton.frame.width
         let placeholderExpanded = isEditing || text?.isEmpty == false
         let placeholderExpandedYBounds = bounds.origin.y + Constants.spaceBetweenPlaceholderAndText
         let placeholderHiddenYBounds = bounds.origin.y + Constants.topPadding
@@ -215,25 +232,35 @@ private extension LabeledTextField {
         )
     }
     
-    var isPlaceholderSmall: Bool {
+    var isEditingMode: Bool {
         return isEditing || text?.isEmpty == false
     }
     
     func animatePlaceholder() {
-        let placeholderSize = isPlaceholderSmall ? currentFont.pointSize - 2 : currentFont.pointSize
-        let yOffset = isPlaceholderSmall ? -Constants.topPlaceholderPadding : placeholderSize / 2
-        let placeholderColor: UIColor = isPlaceholderSmall ? currentColor : currentColor == .red ? .red : .lightGray
+        let placeholderSize = isEditingMode ? model.styling.font.pointSize - 2 : model.styling.font.pointSize
+        let yOffset = isEditingMode ? -Constants.topPlaceholderPadding : placeholderSize / 2
+        let lineColor = currentColor
+        let placeholderColor = currentColor == .red ? currentColor : model.styling.placeholderColor
         let transform = CGAffineTransform(translationX: 0, y: yOffset)
         
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             self?.placeholderLayer.setAffineTransform(transform)
             self?.placeholderLayer.fontSize = placeholderSize
             self?.placeholderLayer.foregroundColor = placeholderColor.cgColor
-            self?.lineView.backgroundColor = placeholderColor
+            self?.lineView.backgroundColor = lineColor
         })
     }
     
     @objc func stateDidChange() {
+        toggleHint()
         animatePlaceholder()
+    }
+    
+    @objc func textDidChange() {
+        toggleHint()
+    }
+    
+    func toggleHint() {
+        hintLayer.isHidden = !(text?.isEmpty == true && hint?.isEmpty == false && isEditingMode)
     }
 }

@@ -38,7 +38,7 @@ class CardPaymentTokenView: UIView {
     
     private let mainStack = UIStackView()
     private let minorStack = UIStackView()
-    private let actionButton = UIButton(type: .system)
+    private let actionButton = RoundButton(type: .system)
     
     private let model: CardPaymentTokenViewModel
 
@@ -92,7 +92,7 @@ private extension CardPaymentTokenView {
         setupLogo(with: data.styling.image)
         setupMainStack()
         setupMinorStack()
-        setupButton()
+        setupButton(with: data.styling)
         setupActivityIndicator()
     }
     
@@ -141,14 +141,17 @@ private extension CardPaymentTokenView {
         
     }
     
-    func setupButton() {
+    func setupButton(with styling: CardPaymentTokenViewStyle) {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
+        actionButton.backgroundColor = styling.tintColor
+        actionButton.setTitleColor(.white, for: .normal)
+        actionButton.titleLabel?.font = styling.font
         actionButton.setTitle("Pay with card", for: .normal)
         addSubview(actionButton)
         self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: Constants.buttonDefaultConstraint)
         NSLayoutConstraint.activate([
             actionButton.heightAnchor.constraint(equalToConstant: 50),
-            actionButton.widthAnchor.constraint(equalToConstant: 120),
+            actionButton.widthAnchor.constraint(equalToConstant: 140),
             actionButton.topAnchor.constraint(greaterThanOrEqualTo: minorStack.bottomAnchor, constant: 16),
             buttonConstraint!,
             actionButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)

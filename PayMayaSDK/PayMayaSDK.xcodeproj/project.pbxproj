@@ -14,6 +14,7 @@
 		BF2E697D23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */; };
 		BF2E697F23FE9DD50046EE46 /* CVCFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */; };
 		BF2E698423FEBE040046EE46 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E698323FEBE040046EE46 /* String+Substring.swift */; };
+		BF2E698623FEE69F0046EE46 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E698523FEE69F0046EE46 /* RoundButton.swift */; };
 		BF89B00A23E425D0008D9AD5 /* SinglePaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */; };
 		BF89B00C23E425EE008D9AD5 /* SinglePaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */; };
 		BF89B00E23E4260C008D9AD5 /* SinglePaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */; };
@@ -120,6 +121,7 @@
 		BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+SetTextPreservingCursor.swift"; sourceTree = "<group>"; };
 		BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCFieldDelegate.swift; sourceTree = "<group>"; };
 		BF2E698323FEBE040046EE46 /* String+Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Substring.swift"; sourceTree = "<group>"; };
+		BF2E698523FEE69F0046EE46 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentRequest.swift; sourceTree = "<group>"; };
 		BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentResponse.swift; sourceTree = "<group>"; };
 		BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentInfo.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				EB093F7223E858E900DC98A5 /* CardPaymentTokenView.swift */,
 				EB093F7623E85E4B00DC98A5 /* LabeledTextField.swift */,
 				BFA9096223DB04F0001A277F /* PMWebView.swift */,
+				BF2E698523FEE69F0046EE46 /* RoundButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF2E698623FEE69F0046EE46 /* RoundButton.swift in Sources */,
 				BFB7659323F2EA61000D1AC0 /* CardPaymentTokenResponse.swift in Sources */,
 				BFB7659223F2EA49000D1AC0 /* GetStatusUseCase.swift in Sources */,
 				BFB7659123F2EA36000D1AC0 /* CardPaymentTokenUseCase.swift in Sources */,

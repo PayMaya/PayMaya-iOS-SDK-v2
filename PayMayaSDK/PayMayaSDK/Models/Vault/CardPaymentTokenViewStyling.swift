@@ -25,37 +25,47 @@ public enum CardPaymentTokenViewStyle {
     case dark(font: UIFont?, logo: UIImage?)
     
     var tintColor: UIColor {
+        #warning("to be changed when button styling")
         switch self {
-        case .light(_):
+        case .light:
+            return .pmDefault
+        case .dark:
+            return .pmDefault
+        }
+    }
+    
+    var inputTextColor: UIColor {
+        switch self {
+        case .light:
             return .black
-        case .dark(_):
-            return .pmGrey
+        case .dark:
+            return .white
         }
     }
     
     var backgroundColor: UIColor {
         switch self {
-        case .light(_):
+        case .light:
             return .white
-        case .dark(_):
+        case .dark:
             return .pmBlackBackground
         }
     }
     
     var navbarColor: UIColor {
         switch self {
-        case .light(_):
-            return UIColor.pmGrey
-        case .dark(_):
-            return UIColor.pmBlackNavBar
+        case .light:
+            return .pmGrey
+        case .dark:
+            return .pmBlackNavBar
         }
     }
     
     var placeholderColor: UIColor {
         switch self {
-        case .light(_):
-            return .pmGreyPlaceholder
-        case .dark(_):
+        case .light:
+            return .lightGray
+        case .dark:
             return .pmGrey
         }
     }
@@ -92,8 +102,8 @@ private extension UIColor {
         return UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
     }
     
-    static var pmGreyPlaceholder: UIColor {
-        return UIColor(red: 205/255, green: 205/255, blue: 205/255, alpha: 0.7)
+    static var pmDefault: UIColor {
+        return UIColor(red: 0.19, green: 0.50, blue: 1.00, alpha: 1.00)
     }
     
     static var pmBlackNavBar: UIColor {

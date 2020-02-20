@@ -58,7 +58,7 @@ private class CardTokenViewModelMock: CardPaymentTokenViewModel {
         super.init(data: data)
         cardNumberModel.setText("123123123")
         cvvModel.setText("111")
-        expirationDateModel.setText("12/2022")
+        expirationDateModel.setText("12/22")
         buttonPressed()
     }
 

@@ -26,11 +26,15 @@ struct LabeledTextFieldInitData {
     let labelText: String
     let hintText: String?
     let styling: CardPaymentTokenViewStyle
-    
-    init(labelText: String, hint: String? = nil, styling: CardPaymentTokenViewStyle) {
+    let isSecure: Bool
+    let hasHintButton: Bool
+
+    init(labelText: String, hint: String? = nil, isSecure: Bool = false, hasHintButton: Bool = false, styling: CardPaymentTokenViewStyle) {
         self.labelText = labelText
         self.hintText = hint
         self.styling = styling
+        self.isSecure = isSecure
+        self.hasHintButton = hasHintButton
     }
 }
 
@@ -39,8 +43,6 @@ class LabeledTextFieldViewModel: NSObject {
     private var text: String = ""
     
     private let initData: LabeledTextFieldInitData
-    let isSecure: Bool
-    let hasHint: Bool
 
     private weak var contract: LabeledTextFieldContract? {
         didSet {
@@ -57,18 +59,20 @@ class LabeledTextFieldViewModel: NSObject {
     }
     
     var inputText: String {
-        return text.trimmingCharacters(in: .whitespacesAndNewlines)
+        return text.replacingOccurrences(of: " ", with: "")
     }
     
     var defaultErrorReason: String {
         return validator.errorReason
     }
+    
+    var styling: CardPaymentTokenViewStyle {
+        return initData.styling
+    }
 
-    init(validator: FieldValidator, data: LabeledTextFieldInitData, isSecure: Bool = false, hasHint: Bool = false) {
+    init(validator: FieldValidator, data: LabeledTextFieldInitData) {
         self.validator = validator
         self.initData = data
-        self.isSecure = isSecure
-        self.hasHint = hasHint
     }
     
     func setContract(_ contract: LabeledTextFieldContract) {
@@ -92,7 +96,7 @@ class LabeledTextFieldViewModel: NSObject {
 extension LabeledTextFieldViewModel: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         Log.verbose("TextFieldDelegate: editingEnded. Current validation state: \(isValid)")
-        contract?.changeValidationState(valid: isValid, defaultColor: initData.styling.tintColor)
+        contract?.changeValidationState(valid: isValid)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -66,17 +66,6 @@ class CardPaymentTokenViewsTests: XCTestCase {
         model.setContract(contract)
         XCTAssertEqual(contract.setupCalled, 1)
     }
-    
-    func testLabeledView_whenCalledDelegateMethods_shouldCallErrorStateEveryTime() {
-        let model = LabeledTextFieldViewModel()
-        let contract = LabeledTextFieldContractSpy()
-        let dummyTextField = UITextField()
-        dummyTextField.text = "test"
-        model.setContract(contract)
-        model.textFieldDidEndEditing(dummyTextField, reason: .committed)
-        model.textFieldDidEndEditing(dummyTextField, reason: .committed)
-        XCTAssertEqual(contract.changeValidationStateCalled, 2)
-    }
 }
 
 private extension CardPaymentTokenViewModel {
