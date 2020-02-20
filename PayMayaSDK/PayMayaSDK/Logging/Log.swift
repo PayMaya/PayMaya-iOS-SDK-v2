@@ -34,13 +34,14 @@ public enum LogLevel {
 }
 
 class Log {
-    fileprivate enum LogType: String {
+    enum LogType: String {
         case info = "ℹ️"
         case error = "⛔️"
         case verbose = "✏️"
     }
     
     static var logLevel: LogLevel = .off
+    static var logger: Logger = PrintLogger()
     
     static func error(_ message: String, fileName: String = #file, line: Int = #line, funcName: String = #function) {
         Log.log(message, type: .error, fileName: fileName, line: line, funcName: funcName)
@@ -73,7 +74,7 @@ private extension Log {
         case (.debug, _):
             if type == .verbose { break } else { fallthrough }
         case (.all, _):
-            print("\(currentDate) \(type.rawValue) [\(sourceFileName(filePath: fileName)):\(line)] \(funcName) ‣ \(message)")
+            logger.log("\(currentDate) \(type.rawValue) [\(sourceFileName(filePath: fileName)):\(line)] \(funcName) ‣ \(message)")
         default: break
         }
         
