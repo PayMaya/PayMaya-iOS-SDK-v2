@@ -40,7 +40,8 @@ class LabeledTextFieldViewModel: NSObject {
     
     private let initData: LabeledTextFieldInitData
     let isSecure: Bool
-    
+    let hasHint: Bool
+
     private weak var contract: LabeledTextFieldContract? {
         didSet {
             contract?.initialSetup(data: initData)
@@ -59,10 +60,15 @@ class LabeledTextFieldViewModel: NSObject {
         return text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    init(validator: FieldValidator, data: LabeledTextFieldInitData, isSecure: Bool = false) {
+    var defaultErrorReason: String {
+        return validator.errorReason
+    }
+
+    init(validator: FieldValidator, data: LabeledTextFieldInitData, isSecure: Bool = false, hasHint: Bool = false) {
         self.validator = validator
         self.initData = data
         self.isSecure = isSecure
+        self.hasHint = hasHint
     }
     
     func setContract(_ contract: LabeledTextFieldContract) {
@@ -97,12 +103,6 @@ extension LabeledTextFieldViewModel: UITextFieldDelegate {
         return  isCharAcceptable && characterReplace
     }
 
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        Log.verbose("TextFieldDelegate: editingStarted.")
-        contract?.changeValidationState(valid: true, defaultColor: initData.styling.tintColor)
-    }
-    
     @objc func editingDidChange(_ textField: UITextField) {
         guard let text = textField.text else {return}
         setText(text)

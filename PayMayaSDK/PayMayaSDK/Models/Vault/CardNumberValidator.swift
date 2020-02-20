@@ -20,7 +20,10 @@
 import Foundation
 
 class CardNumberValidator: FieldValidator {
-   
+    var errorReason: String {
+        return "Invalid credit card format"
+    }
+    
     func validate(string: String) -> Bool {
         let trimmed = string.replacingOccurrences(of: " ", with: "")
         guard Int(trimmed) != nil else {return false}

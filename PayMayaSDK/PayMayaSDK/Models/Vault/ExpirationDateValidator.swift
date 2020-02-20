@@ -20,6 +20,10 @@
 import Foundation
 
 class ExpirationDateValidator: FieldValidator {
+    var errorReason: String {
+        return "Invalid expiry date format"
+    }
+    
     func isCharAcceptable(char: Character) -> Bool {
         let customSet = CharacterSet(charactersIn: "1234567890")
         let tempSet = CharacterSet(charactersIn: String(char))

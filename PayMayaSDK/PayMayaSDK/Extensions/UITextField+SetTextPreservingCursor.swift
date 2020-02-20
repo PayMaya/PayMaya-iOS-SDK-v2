@@ -31,5 +31,6 @@ extension UITextField {
         else {
             text = newText
         }
+        sendActions(for: .editingChanged)
     }
 }

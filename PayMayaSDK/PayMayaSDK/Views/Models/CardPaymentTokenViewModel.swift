@@ -49,7 +49,7 @@ class CardPaymentTokenViewModel {
         self.cardNumberModel = LabeledTextFieldViewModel(validator: CardNumberValidator(),
                                                          data: LabeledTextFieldInitData(labelText: "Card Number", styling: data.styling))
         self.cvvModel = LabeledTextFieldViewModel(validator: CVCValidator(),
-                                                  data: LabeledTextFieldInitData(labelText: "CVV", styling: data.styling), isSecure: true)
+                                                  data: LabeledTextFieldInitData(labelText: "CVV", styling: data.styling), isSecure: true, hasHint: true)
         self.expirationDateModel = LabeledTextFieldViewModel(validator: ExpirationDateValidator(),
                                                              data: LabeledTextFieldInitData(labelText: "Expiry Date",
                                                                                                hint: "MM/YY",

@@ -13,6 +13,7 @@
 		BF2E697B23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697A23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift */; };
 		BF2E697D23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */; };
 		BF2E697F23FE9DD50046EE46 /* CVCFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */; };
+		BF2E698423FEBE040046EE46 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E698323FEBE040046EE46 /* String+Substring.swift */; };
 		BF89B00A23E425D0008D9AD5 /* SinglePaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */; };
 		BF89B00C23E425EE008D9AD5 /* SinglePaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */; };
 		BF89B00E23E4260C008D9AD5 /* SinglePaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */; };
@@ -118,6 +119,7 @@
 		BF2E697A23FE8B5E0046EE46 /* CardNumberFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberFieldDelegate.swift; sourceTree = "<group>"; };
 		BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+SetTextPreservingCursor.swift"; sourceTree = "<group>"; };
 		BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCFieldDelegate.swift; sourceTree = "<group>"; };
+		BF2E698323FEBE040046EE46 /* String+Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Substring.swift"; sourceTree = "<group>"; };
 		BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentRequest.swift; sourceTree = "<group>"; };
 		BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentResponse.swift; sourceTree = "<group>"; };
 		BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentInfo.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				BFD5DACE23E996A8004E504A /* Data+Error.swift */,
 				BFA9095F23DAFBE3001A277F /* String+Encoding.swift */,
 				BF2E697823FE8B450046EE46 /* String+Grouping.swift */,
+				BF2E698323FEBE040046EE46 /* String+Substring.swift */,
 				BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */,
 			);
 			path = Extensions;
@@ -692,6 +695,7 @@
 				EBA442C823F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift in Sources */,
 				EB093F7923E860F400DC98A5 /* FieldValidator.swift in Sources */,
 				BFD5DADB23EB1046004E504A /* Log.swift in Sources */,
+				BF2E698423FEBE040046EE46 /* String+Substring.swift in Sources */,
 				BFB7656623F2DBF1000D1AC0 /* Networking.swift in Sources */,
 				BFA9094B23D9F13A001A277F /* CheckoutResponse.swift in Sources */,
 				BFB7656B23F2DBFF000D1AC0 /* HTTPMethod.swift in Sources */,

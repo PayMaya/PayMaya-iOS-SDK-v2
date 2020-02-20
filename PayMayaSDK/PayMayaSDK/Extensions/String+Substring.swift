@@ -19,10 +19,9 @@
 
 import Foundation
 
-@testable import PayMayaSDK
-
-class DummyValidator: FieldValidator {
-    func validate(string: String) -> Bool { return true }
-    func isCharAcceptable(char: Character) -> Bool { return true }
-    var errorReason: String { return "" }
+extension String {
+    func substring(with nsrange: NSRange) -> String? {
+        guard let range = Range(nsrange, in: self) else { return nil }
+        return String(self[range])
+    }
 }

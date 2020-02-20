@@ -73,7 +73,7 @@ class CardPaymentTokenViewsTests: XCTestCase {
         let dummyTextField = UITextField()
         dummyTextField.text = "test"
         model.setContract(contract)
-        model.textFieldDidBeginEditing(dummyTextField)
+        model.textFieldDidEndEditing(dummyTextField, reason: .committed)
         model.textFieldDidEndEditing(dummyTextField, reason: .committed)
         XCTAssertEqual(contract.changeValidationStateCalled, 2)
     }

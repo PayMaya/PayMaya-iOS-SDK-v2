@@ -20,6 +20,10 @@
 import Foundation
 
 class CVCValidator: FieldValidator {
+    var errorReason: String {
+        return "Invalid CVC format"
+    }
+    
     func isCharAcceptable(char: Character) -> Bool {
         let tempSet = CharacterSet(charactersIn: String(char))
         return tempSet.isSubset(of: .decimalDigits)

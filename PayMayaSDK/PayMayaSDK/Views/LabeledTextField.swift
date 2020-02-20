@@ -26,95 +26,214 @@ protocol LabeledTextFieldContract: class {
     func textSet(text: String)
 }
 
-class LabeledTextField: UIStackView {
-    private let label = UILabel()
-    private let textField = UITextField()
-   
+class LabeledTextField: UITextField {
+    
+    private enum Constants {
+        static let topPadding: CGFloat = 0
+        static let spaceBetweenPlaceholderAndText: CGFloat = 8
+        static let topPlaceholderPadding: CGFloat = 16
+        static let bottomPadding: CGFloat = 8
+    }
+    
+    private let placeholderLayer = CATextLayer()
+    private let rightButton = UIButton(type: .system)
+    private let lineView = UIView()
+    private let errorLabel = UILabel()
+    
     private let model: LabeledTextFieldViewModel
     
-    init(with model: LabeledTextFieldViewModel) {
+    private var heightConstraint: NSLayoutConstraint!
+    private var currentColor: UIColor = .black
+    private var currentFont = UIFont.systemFont(ofSize: 14)
+    
+    override var text: String? {
+        didSet { animatePlaceholder() }
+    }
+    
+    override var placeholder: String? {
+        get { placeholderLayer.string as? String }
+        set {
+            placeholderLayer.string = newValue
+            accessibilityLabel = newValue
+        }
+    }
+    
+    init(model: LabeledTextFieldViewModel) {
         self.model = model
         super.init(frame: .zero)
-        self.axis = .vertical
-        self.distribution = .equalSpacing
-        self.alignment = .leading
-        self.spacing = 4.0
+        addSubview(lineView)
+        addSubview(errorLabel)
+        setupView()
+        updateFonts()
+        setupListeners()
+        configure(using: model)
+    }
+    
+    private func configure(using model: LabeledTextFieldViewModel) {
         model.setContract(self)
+        errorLabel.text = model.defaultErrorReason
+        delegate = model
+        isSecureTextEntry = model.isSecure
+        if model.hasHint {
+            setupRightButton()
+        }
+        addTarget(model, action: #selector(LabeledTextFieldViewModel.editingDidChange), for: .editingChanged)
+    }
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return calculateRect(forBounds: bounds)
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return textRect(forBounds: bounds)
+    }
+    
+    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.rightViewRect(forBounds: bounds)
+        return .init(x: rect.origin.x, y: rect.origin.y + Constants.spaceBetweenPlaceholderAndText, width: rect.width, height: rect.height)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        placeholderLayer.bounds = bounds
     }
     
     @available(*, unavailable)
-    required init(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 extension LabeledTextField: LabeledTextFieldContract {
-   
     func changeValidationState(valid: Bool, defaultColor: UIColor) {
-        UIView.transition(with: label, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
-            self?.label.textColor = valid ? defaultColor : .red
-        })
-        UIView.transition(with: textField, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
-            self?.textField.textColor = valid ? defaultColor : .red
-            self?.textField.layer.borderColor = valid ? defaultColor.cgColor : UIColor.red.cgColor
-            self?.textField.tintColor = valid ? defaultColor : .red
-        })
+        currentColor = valid ? defaultColor : .red
+        errorLabel.isHidden = valid
+        animatePlaceholder()
     }
     
     func initialSetup(data: LabeledTextFieldInitData) {
-        setupViews(labelText: data.labelText, hint: data.hintText, styling: data.styling)
+        placeholder = data.labelText
+        currentColor = data.styling.tintColor
+        textColor = data.styling.tintColor
+        currentFont = data.styling.font
+        updateFonts()
+        animatePlaceholder()
     }
     
     func textSet(text: String) {
-        textField.text = text
+        self.text = text
+    }
+}
+
+private extension LabeledTextField {
+    func setupView() {
+        setupPlaceholder()
+        setupLineView()
+        setupErrorLabel()
+        
+        keyboardType = .numberPad
+        
+        heightConstraint = heightAnchor.constraint(equalToConstant: 0)
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            heightConstraint
+        ])
+    }
+    
+      func setupRightButton() {
+        let icon = UIImage(named: "info", in: Bundle(for: CardPaymentTokenView.self), compatibleWith: nil) ?? UIImage()
+        rightButton.setImage(icon, for: .normal)
+        rightButton.tintColor = .lightGray
+        rightButton.addTarget(self, action: #selector(handleHintTapped), for: .touchUpInside)
+        rightViewMode = .always
+        rightView = rightButton
+      }
+    
+    func setupPlaceholder() {
+        placeholderLayer.contentsScale = UIScreen.main.scale
+        layer.addSublayer(placeholderLayer)
+        placeholderLayer.anchorPoint = CGPoint(x: 0, y: 0)
+        placeholderLayer.position = CGPoint(x: 0, y: 20)
+        placeholderLayer.bounds = placeholderRect(forBounds: bounds)
+        animatePlaceholder()
+    }
+    
+    func setupLineView() {
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            lineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            lineView.heightAnchor.constraint(equalToConstant: 1)
+        ])
+    }
+    
+    func setupErrorLabel() {
+        errorLabel.isHidden = true
+        errorLabel.textColor = .red
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            errorLabel.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 4),
+        ])
+    }
+    
+    func updateFonts() {
+        self.font = currentFont
+        let errorFont = UIFont.systemFont(ofSize: currentFont.pointSize - 4, weight: .light)
+        placeholderLayer.fontSize = currentFont.pointSize
+        placeholderLayer.font = font
+        self.font = font
+        errorLabel.font = errorFont
+        heightConstraint.constant = currentFont.pointSize + Constants.topPadding + Constants.topPlaceholderPadding + Constants.spaceBetweenPlaceholderAndText + errorFont.pointSize + Constants.bottomPadding
+    }
+    
+    func setupListeners() {
+        addTarget(self, action: #selector(stateDidChange), for: .editingDidEnd)
+        addTarget(self, action: #selector(stateDidChange), for: .editingDidBegin)
+    }
+    
+    @objc func handleHintTapped() {
+        #warning("TODO in another task")
     }
     
 }
 
 private extension LabeledTextField {
-    
-    func setupViews(labelText: String, hint: String?, styling: CardPaymentTokenViewStyle) {
-        addSubviews()
-        setupLabel(text: labelText, color: styling.tintColor, font: styling.font)
-        setupTextField(text: labelText, hint: hint, styling: styling)
+    func calculateRect(forBounds bounds: CGRect) -> CGRect {
+        let widthPadding: CGFloat = rightButton.frame.width
+        let placeholderExpanded = isEditing || text?.isEmpty == false
+        let placeholderExpandedYBounds = bounds.origin.y + Constants.spaceBetweenPlaceholderAndText
+        let placeholderHiddenYBounds = bounds.origin.y + Constants.topPadding
+        let yOrigin = placeholderExpanded ? placeholderExpandedYBounds : placeholderHiddenYBounds
+        return CGRect(
+            x: leftView?.bounds.maxX ?? bounds.minX,
+            y: yOrigin,
+            width: bounds.size.width - widthPadding,
+            height: bounds.size.height - Constants.topPadding * 2
+        )
     }
     
-    func addSubviews() {
-        self.addArrangedSubview(label)
-        self.addArrangedSubview(textField)
+    var isPlaceholderSmall: Bool {
+        return isEditing || text?.isEmpty == false
     }
     
-    func setupLabel(text: String, color: UIColor, font: UIFont) {
-        label.text = text
-        label.textColor = color
-        label.font = font
-        label.font = .systemFont(ofSize: 12)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-        ])
+    func animatePlaceholder() {
+        let placeholderSize = isPlaceholderSmall ? currentFont.pointSize - 2 : currentFont.pointSize
+        let yOffset = isPlaceholderSmall ? -Constants.topPlaceholderPadding : placeholderSize / 2
+        let placeholderColor: UIColor = isPlaceholderSmall ? currentColor : currentColor == .red ? .red : .lightGray
+        let transform = CGAffineTransform(translationX: 0, y: yOffset)
+        
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            self?.placeholderLayer.setAffineTransform(transform)
+            self?.placeholderLayer.fontSize = placeholderSize
+            self?.placeholderLayer.foregroundColor = placeholderColor.cgColor
+            self?.lineView.backgroundColor = placeholderColor
+        })
     }
     
-    func setupTextField(text: String, hint: String?, styling: CardPaymentTokenViewStyle) {
-        textField.textColor = styling.tintColor
-        textField.borderStyle = .roundedRect
-        textField.layer.borderColor = styling.tintColor.cgColor
-        textField.layer.borderWidth = 1.0
-        textField.layer.cornerRadius = 4.0
-        textField.tintColor = styling.tintColor
-        textField.font = styling.font
-        textField.backgroundColor = styling.backgroundColor
-        textField.attributedPlaceholder = NSAttributedString(string: hint ?? text, attributes: [.foregroundColor:styling.placeholderColor])
-        textField.keyboardType = .numberPad
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.delegate = model
-        textField.isSecureTextEntry = model.isSecure
-        NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-        ])
-        textField.addTarget(model, action: #selector(LabeledTextFieldViewModel.editingDidChange(_:)), for: UIControl.Event.editingChanged)
+    @objc func stateDidChange() {
+        animatePlaceholder()
     }
-    
 }

@@ -61,7 +61,7 @@ public enum CardPaymentTokenViewStyle {
     }
     
     var font: UIFont {
-        let defaultFont = UIFont.systemFont(ofSize: 14)
+        let defaultFont = UIFont.systemFont(ofSize: 16)
         switch self {
         case .light(let font, _):
             return font ?? defaultFont

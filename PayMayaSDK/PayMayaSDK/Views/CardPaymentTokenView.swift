@@ -46,9 +46,9 @@ class CardPaymentTokenView: UIView {
 
     init(with model: CardPaymentTokenViewModel) {
         self.model = model
-        self.cardNumber = LabeledTextField(with: model.cardNumberModel)
-        self.cvv = LabeledTextField(with: model.cvvModel)
-        self.validityDate = LabeledTextField(with: model.expirationDateModel)
+        self.cardNumber = LabeledTextField(model: model.cardNumberModel)
+        self.cvv = LabeledTextField(model: model.cvvModel)
+        self.validityDate = LabeledTextField(model: model.expirationDateModel)
         super.init(frame: .zero)
         model.setContract(self)
         model.setOnEditingChanged(onEditingChanged(_:))
@@ -115,8 +115,8 @@ private extension CardPaymentTokenView {
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
+            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
             imageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16)
         ])
@@ -125,12 +125,12 @@ private extension CardPaymentTokenView {
     func setupMainStack() {
         mainStack.axis = .vertical
         mainStack.distribution = .fillEqually
-        mainStack.spacing = 8
+        mainStack.spacing = 12
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
-            mainStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            mainStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
+            mainStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            mainStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
     }
 
