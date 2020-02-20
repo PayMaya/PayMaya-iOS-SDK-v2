@@ -88,12 +88,11 @@ extension LabeledTextFieldViewModel: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard !string.isEmpty else { return true }
+        guard !string.isEmpty else { return extraDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true }
         let isCharAcceptable = validator.isCharAcceptable(char: Character(string))
         let characterReplace = extraDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true
         Log.verbose("TextFieldDelegate: checking character validation returned \(isCharAcceptable)")
         return  isCharAcceptable && characterReplace
-            
     }
 
     

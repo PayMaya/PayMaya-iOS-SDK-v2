@@ -19,31 +19,11 @@
 
 import Foundation
 
-class CardNumberValidator: FieldValidator {
-   
-    func validate(string: String) -> Bool {
-        let trimmed = string.replacingOccurrences(of: " ", with: "")
-        guard Int(trimmed) != nil else {return false}
-        guard 16...19 ~= trimmed.count else {return false}
-        return luhnValidation(string: trimmed)
-    }
-    
-    func isCharAcceptable(char: Character) -> Bool {
-        let tempSet = CharacterSet(charactersIn: String(char))
-        return tempSet.isSubset(of: .decimalDigits)
-    }
-    
-    private func luhnValidation(string: String) -> Bool {
-        var sum = 0
-        let reversedCharacters = string.reversed().map { String($0) }
-        for (idx, element) in reversedCharacters.enumerated() {
-            guard let digit = Int(element) else { return false }
-            switch ((idx % 2 == 1), digit) {
-            case (true, 9): sum += 9
-            case (true, 0...8): sum += (digit * 2) % 9
-            default: sum += digit
-            }
-        }
-        return sum % 10 == 0
+extension String {
+    func grouping(every groupSize: String.IndexDistance, with separator: Character) -> String {
+        let cleanedUpCopy = replacingOccurrences(of: String(separator), with: "")
+        return String(cleanedUpCopy.enumerated().map() {
+            $0.offset % groupSize == 0 ? [separator, $0.element] : [$0.element]
+        }.joined().dropFirst())
     }
 }

@@ -83,6 +83,7 @@ private extension CardPaymentTokenViewModel {
     
     func setupModels() {
         expirationDateModel.setExtraDelegate(ExpirationDateFieldDelegate())
+        cardNumberModel.setExtraDelegate(CardNumberFieldDelegate())
         [cardNumberModel, cvvModel, expirationDateModel].forEach({ $0.setOnEditingChanged(self.onEditingChanged(_:)) })
     }
 

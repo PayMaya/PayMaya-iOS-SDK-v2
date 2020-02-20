@@ -55,7 +55,7 @@ class PayMayaSDKTests: XCTestCase {
 
             vc.onDismiss?()
             XCTAssertEqual(session?.makeRequestCalled, 2)
-            XCTAssertEqual(session?.lastRequestUrl, PayMayaSDK.environment.baseURL + "/v1/payments/\(testCheckoutId)/status")
+            XCTAssertEqual(session?.lastRequestUrl, PayMayaSDK.environment.baseURL + "/payments/v1/payments/\(testCheckoutId)/status")
         }
 
         session.mockResponseData = """

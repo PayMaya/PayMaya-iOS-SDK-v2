@@ -32,7 +32,7 @@ class GetStatusRequest: Request {
     var headers: HTTPHeaders = [:]
     
     init(id: String, authenticationKey: String) {
-        url = PayMayaSDK.environment.baseURL + "/v1/payments/\(id)/status"
+        url = PayMayaSDK.environment.baseURL + "/payments/v1/payments/\(id)/status"
         headers.addContentType(.json)
         headers.addHTTPBasicAuthentication(credentials: authenticationKey)
     }

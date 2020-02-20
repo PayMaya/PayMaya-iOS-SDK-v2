@@ -17,33 +17,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-class CardNumberValidator: FieldValidator {
-   
-    func validate(string: String) -> Bool {
-        let trimmed = string.replacingOccurrences(of: " ", with: "")
-        guard Int(trimmed) != nil else {return false}
-        guard 16...19 ~= trimmed.count else {return false}
-        return luhnValidation(string: trimmed)
-    }
-    
-    func isCharAcceptable(char: Character) -> Bool {
-        let tempSet = CharacterSet(charactersIn: String(char))
-        return tempSet.isSubset(of: .decimalDigits)
-    }
-    
-    private func luhnValidation(string: String) -> Bool {
-        var sum = 0
-        let reversedCharacters = string.reversed().map { String($0) }
-        for (idx, element) in reversedCharacters.enumerated() {
-            guard let digit = Int(element) else { return false }
-            switch ((idx % 2 == 1), digit) {
-            case (true, 9): sum += 9
-            case (true, 0...8): sum += (digit * 2) % 9
-            default: sum += digit
+extension UITextField {
+    func setText(to newText: String, preservingCursor: Bool) {
+        if preservingCursor {
+            let cursorPosition = offset(from: beginningOfDocument, to: selectedTextRange!.start) + newText.count - (text?.count ?? 0)
+            text = newText
+            if let newPosition = self.position(from: beginningOfDocument, offset: cursorPosition) {
+                selectedTextRange = textRange(from: newPosition, to: newPosition)
             }
         }
-        return sum % 10 == 0
+        else {
+            text = newText
+        }
     }
 }
