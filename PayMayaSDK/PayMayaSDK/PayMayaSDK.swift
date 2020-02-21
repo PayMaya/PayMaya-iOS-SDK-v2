@@ -124,7 +124,7 @@ public class PayMayaSDK {
     /// This method will present a view controller where the customer can complete the card payment process.
     /// - Parameters:
     ///   - context: The context on which the view controller will present itself
-    ///   - styling: Customize styling of the card inputs. Refer to CardPaymentTokenViewStyling for the styling elements that can be changed.
+    ///   - styling: Customize styling of the card inputs. Refer to CardPaymentTokenViewStyle for the styling elements that can be changed.
     ///   - callback: The result block for the card payment process
     public static func cardPayment(_ context: UIViewController,
                                    styling: CardPaymentTokenViewStyle = CardPaymentTokenViewStyle.defaultStyle,
