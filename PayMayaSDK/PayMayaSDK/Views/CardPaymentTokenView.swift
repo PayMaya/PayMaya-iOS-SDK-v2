@@ -30,7 +30,7 @@ protocol CardPaymentTokenViewContract: class {
 
 class CardPaymentTokenView: UIView {
     private let cardNumber: LabeledTextField
-    private let cvv: LabeledTextField
+    private let cvv: CVVLabeledTextField
     private let validityDate: LabeledTextField
 
     private let imageView = UIImageView()
@@ -46,8 +46,8 @@ class CardPaymentTokenView: UIView {
 
     init(with model: CardPaymentTokenViewModel) {
         self.model = model
-        self.cardNumber = LabeledTextField(model: model.cardNumberModel)
-        self.cvv = LabeledTextField(model: model.cvvModel)
+        self.cardNumber = CardLabeledTextField(model: model.cardNumberModel)
+        self.cvv = CVVLabeledTextField(model: model.cvvModel)
         self.validityDate = LabeledTextField(model: model.expirationDateModel)
         super.init(frame: .zero)
         model.setContract(self)

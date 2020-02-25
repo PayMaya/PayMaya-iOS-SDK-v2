@@ -30,8 +30,8 @@ struct CardPaymentTokenInitialData {
 }
 
 class CardPaymentTokenViewModel {
-    let cardNumberModel: LabeledTextFieldViewModel
-    let cvvModel: LabeledTextFieldViewModel
+    let cardNumberModel: CardTextFieldViewModel
+    let cvvModel: CVVTextFieldViewModel
     let expirationDateModel: LabeledTextFieldViewModel
     
     private let initialData: CardPaymentTokenInitialData
@@ -46,10 +46,10 @@ class CardPaymentTokenViewModel {
         
     init(data: CardPaymentTokenInitialData, onHintTapped: @escaping OnHintTapped) {
         self.initialData = data
-        self.cardNumberModel = LabeledTextFieldViewModel(validator: CardNumberValidator(),
+        self.cardNumberModel = CardTextFieldViewModel(validator: CardNumberValidator(),
                                                          data: LabeledTextFieldInitData(labelText: "Card Number", styling: data.styling))
-        self.cvvModel = LabeledTextFieldViewModel(validator: CVCValidator(),
-                                                  data: LabeledTextFieldInitData(labelText: "CVV", isSecure: true, hintAction: onHintTapped, styling: data.styling))
+        self.cvvModel = CVVTextFieldViewModel(validator: CVCValidator(),
+                                                  data: LabeledTextFieldInitData(labelText: "CVV", styling: data.styling), onHintTapped: onHintTapped)
         self.expirationDateModel = LabeledTextFieldViewModel(validator: ExpirationDateValidator(),
                                                              data: LabeledTextFieldInitData(labelText: "Expiry Date",
                                                                                                hint: "MM/YY",

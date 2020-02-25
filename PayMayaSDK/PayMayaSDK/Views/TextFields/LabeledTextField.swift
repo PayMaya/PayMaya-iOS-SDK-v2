@@ -26,8 +26,6 @@ protocol LabeledTextFieldContract: class {
     func textSet(text: String)
 }
 
-typealias OnHintTapped = (UIView) -> Void
-
 class LabeledTextField: UITextField {
     
     private enum Constants {
@@ -39,7 +37,6 @@ class LabeledTextField: UITextField {
     
     private let placeholderLayer = CATextLayer()
     private let hintLayer = CATextLayer()
-    private let hintButton = UIButton(type: .system)
     private let lineView = UIView()
     private let errorLabel = UILabel()
     
@@ -62,9 +59,7 @@ class LabeledTextField: UITextField {
         get { hintLayer.string as? String }
         set { hintLayer.string = newValue }
     }
-    
-    private var hintTapped: OnHintTapped?
-    
+        
     init(model: LabeledTextFieldViewModel) {
         self.model = model
         super.init(frame: .zero)
@@ -122,11 +117,6 @@ extension LabeledTextField: LabeledTextFieldContract {
         currentColor = data.styling.tintColor
         textColor = data.styling.inputTextColor
         tintColor = data.styling.tintColor
-        isSecureTextEntry = data.isSecure
-        if let action = data.hintAction {
-            self.hintTapped = action
-            setupHintButton()
-        }
         updateFonts()
         animatePlaceholder()
     }
@@ -151,15 +141,6 @@ private extension LabeledTextField {
             heightConstraint
         ])
     }
-    
-      func setupHintButton() {
-        let icon = UIImage(named: "info", in: Bundle(for: CardPaymentTokenView.self), compatibleWith: nil) ?? UIImage()
-        hintButton.setImage(icon, for: .normal)
-        hintButton.tintColor = .lightGray
-        hintButton.addTarget(self, action: #selector(handleHintTapped), for: .touchUpInside)
-        rightViewMode = .always
-        rightView = hintButton
-      }
     
     func setupPlaceholder() {
         placeholderLayer.contentsScale = UIScreen.main.scale
@@ -218,15 +199,11 @@ private extension LabeledTextField {
         addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
-    @objc func handleHintTapped() {
-        hintTapped?(hintButton)
-    }
-    
 }
 
 private extension LabeledTextField {
     func calculateRect(forBounds bounds: CGRect) -> CGRect {
-        let widthPadding: CGFloat = hintButton.frame.width
+        let widthPadding: CGFloat = rightView?.frame.width ?? 0
         let placeholderExpanded = isEditing || text?.isEmpty == false
         let placeholderExpandedYBounds = bounds.origin.y + Constants.spaceBetweenPlaceholderAndText
         let placeholderHiddenYBounds = bounds.origin.y + Constants.topPadding

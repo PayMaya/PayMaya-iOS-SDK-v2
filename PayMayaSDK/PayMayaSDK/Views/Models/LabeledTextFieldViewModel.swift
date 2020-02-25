@@ -26,15 +26,11 @@ struct LabeledTextFieldInitData {
     let labelText: String
     let hintText: String?
     let styling: CardPaymentTokenViewStyle
-    let isSecure: Bool
-    let hintAction: OnHintTapped?
 
-    init(labelText: String, hint: String? = nil, isSecure: Bool = false, hintAction: OnHintTapped? = nil, styling: CardPaymentTokenViewStyle) {
+    init(labelText: String, hint: String? = nil, styling: CardPaymentTokenViewStyle) {
         self.labelText = labelText
         self.hintText = hint
         self.styling = styling
-        self.isSecure = isSecure
-        self.hintAction = hintAction
     }
 }
 

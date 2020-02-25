@@ -21,6 +21,12 @@
 		BF2E698623FEE69F0046EE46 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E698523FEE69F0046EE46 /* RoundButton.swift */; };
 		BF4CE5C224052F350076C1C6 /* HintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4CE5C124052F350076C1C6 /* HintViewController.swift */; };
 		BF4CE5C424052FCA0076C1C6 /* HintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4CE5C324052FCA0076C1C6 /* HintView.swift */; };
+		BF76BD9B240569C400E12AE2 /* CardLabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BD9A240569C400E12AE2 /* CardLabeledTextField.swift */; };
+		BF76BD9D24056A3100E12AE2 /* CardTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BD9C24056A3100E12AE2 /* CardTextFieldViewModel.swift */; };
+		BF76BDA124056B0200E12AE2 /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BDA024056B0200E12AE2 /* CardType.swift */; };
+		BF76BDA324056C0F00E12AE2 /* CardTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BDA224056C0F00E12AE2 /* CardTypeTests.swift */; };
+		BF76BDA52405709B00E12AE2 /* CVVLabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BDA42405709B00E12AE2 /* CVVLabeledTextField.swift */; };
+		BF76BDA7240571B900E12AE2 /* CVVTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BDA6240571B900E12AE2 /* CVVTextFieldViewModel.swift */; };
 		BF89B00A23E425D0008D9AD5 /* SinglePaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */; };
 		BF89B00C23E425EE008D9AD5 /* SinglePaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */; };
 		BF89B00E23E4260C008D9AD5 /* SinglePaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */; };
@@ -134,6 +140,12 @@
 		BF2E698523FEE69F0046EE46 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		BF4CE5C124052F350076C1C6 /* HintViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintViewController.swift; sourceTree = "<group>"; };
 		BF4CE5C324052FCA0076C1C6 /* HintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintView.swift; sourceTree = "<group>"; };
+		BF76BD9A240569C400E12AE2 /* CardLabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLabeledTextField.swift; sourceTree = "<group>"; };
+		BF76BD9C24056A3100E12AE2 /* CardTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTextFieldViewModel.swift; sourceTree = "<group>"; };
+		BF76BDA024056B0200E12AE2 /* CardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
+		BF76BDA224056C0F00E12AE2 /* CardTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTypeTests.swift; sourceTree = "<group>"; };
+		BF76BDA42405709B00E12AE2 /* CVVLabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVVLabeledTextField.swift; sourceTree = "<group>"; };
+		BF76BDA6240571B900E12AE2 /* CVVTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVVTextFieldViewModel.swift; sourceTree = "<group>"; };
 		BF89B00923E425D0008D9AD5 /* SinglePaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentRequest.swift; sourceTree = "<group>"; };
 		BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentResponse.swift; sourceTree = "<group>"; };
 		BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentInfo.swift; sourceTree = "<group>"; };
@@ -261,6 +273,16 @@
 			path = Delegate;
 			sourceTree = "<group>";
 		};
+		BF76BDA8240572CA00E12AE2 /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				EB093F7623E85E4B00DC98A5 /* LabeledTextField.swift */,
+				BF76BD9A240569C400E12AE2 /* CardLabeledTextField.swift */,
+				BF76BDA42405709B00E12AE2 /* CVVLabeledTextField.swift */,
+			);
+			path = TextFields;
+			sourceTree = "<group>";
+		};
 		BFA908F023D9EF81001A277F = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +337,7 @@
 				EBA442C923F2CE1F00E85DAB /* CardPaymentTokenViewsTests.swift */,
 				BFB7653623F1681F000D1AC0 /* DataExtensionTests.swift */,
 				BFB7653423F1650A000D1AC0 /* GetStatusUseCaseTests.swift */,
+				BF76BDA224056C0F00E12AE2 /* CardTypeTests.swift */,
 				BFB7658F23F2E183000D1AC0 /* Info.plist */,
 				BFD5326F23DB3B6700DBCC6F /* PMWebViewControllerTests.swift */,
 				BFA9095023D9F228001A277F /* PayMayaSDKTests.swift */,
@@ -502,6 +525,7 @@
 				EB7B4A1823EDD9BB00090EC7 /* CVCValidator.swift */,
 				EB7B49DF23EB116000090EC7 /* CardDetailsInfo.swift */,
 				EB7B4A1C23EDE35900090EC7 /* CardNumberValidator.swift */,
+				BF76BDA024056B0200E12AE2 /* CardType.swift */,
 				EB7B4A1A23EDDBE900090EC7 /* ExpirationDateValidator.swift */,
 				EB093F7823E860F400DC98A5 /* FieldValidator.swift */,
 				EBC6509A23F59884009A6DC9 /* CardPaymentTokenViewStyling.swift */,
@@ -523,8 +547,8 @@
 			isa = PBXGroup;
 			children = (
 				EBA442D023F2E6C800E85DAB /* Models */,
+				BF76BDA8240572CA00E12AE2 /* TextFields */,
 				EB093F7223E858E900DC98A5 /* CardPaymentTokenView.swift */,
-				EB093F7623E85E4B00DC98A5 /* LabeledTextField.swift */,
 				BFA9096223DB04F0001A277F /* PMWebView.swift */,
 				BF2E698523FEE69F0046EE46 /* RoundButton.swift */,
 				BF4CE5C324052FCA0076C1C6 /* HintView.swift */,
@@ -548,6 +572,8 @@
 			children = (
 				EBA442D323F4083700E85DAB /* CardPaymentTokenViewModel.swift */,
 				EBA442D123F2E70000E85DAB /* LabeledTextFieldViewModel.swift */,
+				BF76BD9C24056A3100E12AE2 /* CardTextFieldViewModel.swift */,
+				BF76BDA6240571B900E12AE2 /* CVVTextFieldViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -666,12 +692,14 @@
 				BF2E698623FEE69F0046EE46 /* RoundButton.swift in Sources */,
 				BFB7659323F2EA61000D1AC0 /* CardPaymentTokenResponse.swift in Sources */,
 				BFB7659223F2EA49000D1AC0 /* GetStatusUseCase.swift in Sources */,
+				BF76BDA124056B0200E12AE2 /* CardType.swift in Sources */,
 				BFB7659123F2EA36000D1AC0 /* CardPaymentTokenUseCase.swift in Sources */,
 				BF2E697323F6B6FB0046EE46 /* SinglePaymentTotalAmount.swift in Sources */,
 				EB093F7123E8585E00DC98A5 /* CardPaymentTokenViewController.swift in Sources */,
 				BFA9094623D9F122001A277F /* CheckoutTotalAmount.swift in Sources */,
 				BFA9096023DAFBE3001A277F /* String+Encoding.swift in Sources */,
 				BFB7656423F2DBF1000D1AC0 /* Request.swift in Sources */,
+				BF76BD9B240569C400E12AE2 /* CardLabeledTextField.swift in Sources */,
 				EB7B4A1B23EDDBE900090EC7 /* ExpirationDateValidator.swift in Sources */,
 				BFAB772323E82BA500AEB11D /* CreateWalletLinkRequest.swift in Sources */,
 				EB093F6D23E84EA700DC98A5 /* WalletLinkInfo.swift in Sources */,
@@ -703,8 +731,10 @@
 				BFB7656823F2DBFB000D1AC0 /* URLRequest+Request.swift in Sources */,
 				BFA9093523D9F10E001A277F /* PayMayaSDK.swift in Sources */,
 				EB7B49DE23EB0F9000090EC7 /* CardPaymentTokenRequest.swift in Sources */,
+				BF76BDA7240571B900E12AE2 /* CVVTextFieldViewModel.swift in Sources */,
 				BFB7656C23F2DBFF000D1AC0 /* HTTPHeaders.swift in Sources */,
 				BF89B00E23E4260C008D9AD5 /* SinglePaymentInfo.swift in Sources */,
+				BF76BD9D24056A3100E12AE2 /* CardTextFieldViewModel.swift in Sources */,
 				BF2E692923F6A4780046EE46 /* CheckoutItemAmount.swift in Sources */,
 				BF4CE5C224052F350076C1C6 /* HintViewController.swift in Sources */,
 				EBA442D423F4083700E85DAB /* CardPaymentTokenViewModel.swift in Sources */,
@@ -718,6 +748,7 @@
 				EB7B4A1923EDD9BB00090EC7 /* CVCValidator.swift in Sources */,
 				BFA9094223D9F122001A277F /* CheckoutItem.swift in Sources */,
 				EBA442C823F2ADE200E85DAB /* ExpiratonDateFieldDelegate.swift in Sources */,
+				BF76BDA52405709B00E12AE2 /* CVVLabeledTextField.swift in Sources */,
 				BF2E697723FE83DB0046EE46 /* Logger.swift in Sources */,
 				EB093F7923E860F400DC98A5 /* FieldValidator.swift in Sources */,
 				BFD5DADB23EB1046004E504A /* Log.swift in Sources */,
@@ -767,6 +798,7 @@
 				EBA442CA23F2CE1F00E85DAB /* CardPaymentTokenViewsTests.swift in Sources */,
 				EB7E036A23EDF2CB005BB363 /* CardNumberValidatorTests.swift in Sources */,
 				EBA442DA23F4429A00E85DAB /* CardPaymentTokenViewModelsTests.swift in Sources */,
+				BF76BDA324056C0F00E12AE2 /* CardTypeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
