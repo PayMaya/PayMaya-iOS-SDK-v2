@@ -45,6 +45,7 @@ class LabeledTextField: UITextField {
     private var heightConstraint: NSLayoutConstraint!
     
     private var currentColor: UIColor = .black
+    private(set) var isFirstEdit = true
     
     override var text: String? {
         didSet { animatePlaceholder() }
@@ -196,8 +197,8 @@ private extension LabeledTextField {
     }
     
     func setupListeners() {
-        addTarget(self, action: #selector(stateDidChange), for: .editingDidEnd)
-        addTarget(self, action: #selector(stateDidChange), for: .editingDidBegin)
+        addTarget(self, action: #selector(editingDidEnd), for: .editingDidEnd)
+        addTarget(self, action: #selector(editingDidBegin), for: .editingDidBegin)
         addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
@@ -237,7 +238,16 @@ private extension LabeledTextField {
         })
     }
     
-    @objc func stateDidChange() {
+    @objc func editingDidEnd() {
+        stateDidChange()
+        isFirstEdit = false
+    }
+    
+    @objc func editingDidBegin() {
+        stateDidChange()
+    }
+    
+    func stateDidChange() {
         toggleHint()
         animatePlaceholder()
     }

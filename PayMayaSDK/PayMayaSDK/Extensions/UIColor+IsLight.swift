@@ -19,13 +19,10 @@
 
 import UIKit
 
-typealias OnCardTypeChange = (CardType?) -> Void
-
-class CardTextFieldViewModel: LabeledTextFieldViewModel {
-    var onCardTypeChange: OnCardTypeChange?
-    
-    override func editingDidChange(_ textField: LabeledTextField) {
-        super.editingDidChange(textField)
-        onCardTypeChange?(CardType.getType(from: textField.text ?? ""))
+extension UIColor {
+    var isLight: Bool {
+        var white: CGFloat = 0
+        getWhite(&white, alpha: nil)
+        return white > 0.7
     }
 }

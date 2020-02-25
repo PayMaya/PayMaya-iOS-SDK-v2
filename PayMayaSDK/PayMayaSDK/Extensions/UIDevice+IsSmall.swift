@@ -19,13 +19,9 @@
 
 import UIKit
 
-typealias OnCardTypeChange = (CardType?) -> Void
-
-class CardTextFieldViewModel: LabeledTextFieldViewModel {
-    var onCardTypeChange: OnCardTypeChange?
-    
-    override func editingDidChange(_ textField: LabeledTextField) {
-        super.editingDidChange(textField)
-        onCardTypeChange?(CardType.getType(from: textField.text ?? ""))
+extension UIDevice {
+    var isSmall: Bool {
+        // iPhones 5 5s 5c SE native bounds
+        return UIScreen.main.nativeBounds.height == 1136
     }
 }

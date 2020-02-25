@@ -237,12 +237,13 @@ PayMayaSDK.cardPayment(self) { result in
 }
 ```
 ### Optional styling
-Call the method and choose between .dark / .light with your custom font and logo.
+Call the method and choose between .dark / .light with your custom font, logo and tint color that will be used across the screen. All parameters are optional, so you can change only the ones you want.
 ```
+let tintColor = UIColor.green
 let font = UIFont.systemFont(ofSize: 18)
 let logo = UIImage(named: "myLogo")
 
-PayMayaSDK.cardPayment(self, styling: .dark(font: font, logo: logo) { result in
+PayMayaSDK.cardPayment(self, styling: .dark(tintColor: tintColor, font: font, logo: logo) { result in
     ...
 }
 ```

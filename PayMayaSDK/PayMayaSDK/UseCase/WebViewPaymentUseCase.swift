@@ -132,7 +132,7 @@ private extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectR
                 switch status {
                 case .paymentSuccess:
                     self.callback(.processed(status: .success(redirectURL.success)))
-                case .authFailed, .paymentFailed, .paymentExpired:
+                case .authFailed, .paymentFailed:
                     self.callback(.processed(status: .failure(redirectURL.failure)))
                 default:
                     self.callback(.interrupted(paymentStatus: status))

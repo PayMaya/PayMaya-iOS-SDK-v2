@@ -115,9 +115,9 @@ private extension CardPaymentTokenView {
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
+            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
+            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
+            imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 80),
             imageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16)
         ])
     }
@@ -125,10 +125,10 @@ private extension CardPaymentTokenView {
     func setupMainStack() {
         mainStack.axis = .vertical
         mainStack.distribution = .fillEqually
-        mainStack.spacing = 12
+        mainStack.spacing = 16
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainStack.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            mainStack.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: UIDevice.current.isSmall ? 8 : 16),
             mainStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             mainStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
@@ -138,21 +138,20 @@ private extension CardPaymentTokenView {
         minorStack.axis = .horizontal
         minorStack.distribution = .fillEqually
         minorStack.spacing = 16
-        
     }
     
     func setupButton(with styling: CardPaymentTokenViewStyle) {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         actionButton.backgroundColor = styling.tintColor
-        actionButton.setTitleColor(.white, for: .normal)
+        actionButton.setTitleColor(styling.tintColor.isLight ? .black : .white, for: .normal)
         actionButton.titleLabel?.font = styling.font
         actionButton.setTitle("Pay with card", for: .normal)
         addSubview(actionButton)
         self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: Constants.buttonDefaultConstraint)
         NSLayoutConstraint.activate([
-            actionButton.heightAnchor.constraint(equalToConstant: 50),
+            actionButton.heightAnchor.constraint(equalToConstant: UIDevice.current.isSmall ? 44 : 50),
             actionButton.widthAnchor.constraint(equalToConstant: 140),
-            actionButton.topAnchor.constraint(greaterThanOrEqualTo: minorStack.bottomAnchor, constant: 16),
+            actionButton.topAnchor.constraint(greaterThanOrEqualTo: minorStack.bottomAnchor, constant: 32),
             buttonConstraint!,
             actionButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
@@ -179,7 +178,7 @@ private extension CardPaymentTokenView {
     @objc func keyboardWillShow(_ notification: NSNotification) {
         guard let size = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {return}
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.buttonConstraint?.constant = Constants.buttonDefaultConstraint - size.height
+            self?.buttonConstraint?.constant = Constants.buttonDefaultConstraint - size.height + (UIDevice.current.isSmall ? 8 : 0)
             self?.layoutIfNeeded()
         }
     }

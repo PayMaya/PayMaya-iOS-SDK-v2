@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF05FA9623E4590400D43D24 /* RedirectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF05FA9523E4590400D43D24 /* RedirectResponse.swift */; };
+		BF0F00762405158100EB920E /* UIDevice+IsSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0F00752405158100EB920E /* UIDevice+IsSmall.swift */; };
 		BF29AB5023DB472D00212ADE /* RedirectURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */; };
 		BF2E692923F6A4780046EE46 /* CheckoutItemAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E692823F6A4780046EE46 /* CheckoutItemAmount.swift */; };
 		BF2E697323F6B6FB0046EE46 /* SinglePaymentTotalAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697223F6B6FB0046EE46 /* SinglePaymentTotalAmount.swift */; };
@@ -19,6 +20,7 @@
 		BF2E697F23FE9DD50046EE46 /* CVCFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */; };
 		BF2E698423FEBE040046EE46 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E698323FEBE040046EE46 /* String+Substring.swift */; };
 		BF2E698623FEE69F0046EE46 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E698523FEE69F0046EE46 /* RoundButton.swift */; };
+		BF5F447524001CCE00E7EF6A /* UIColor+IsLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F447424001CCE00E7EF6A /* UIColor+IsLight.swift */; };
 		BF4CE5C224052F350076C1C6 /* HintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4CE5C124052F350076C1C6 /* HintViewController.swift */; };
 		BF4CE5C424052FCA0076C1C6 /* HintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4CE5C324052FCA0076C1C6 /* HintView.swift */; };
 		BF76BD9B240569C400E12AE2 /* CardLabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BD9A240569C400E12AE2 /* CardLabeledTextField.swift */; };
@@ -127,6 +129,7 @@
 
 /* Begin PBXFileReference section */
 		BF05FA9523E4590400D43D24 /* RedirectResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResponse.swift; sourceTree = "<group>"; };
+		BF0F00752405158100EB920E /* UIDevice+IsSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+IsSmall.swift"; sourceTree = "<group>"; };
 		BF1205F523DF0F530097693A /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectURLTests.swift; sourceTree = "<group>"; };
 		BF2E692823F6A4780046EE46 /* CheckoutItemAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutItemAmount.swift; sourceTree = "<group>"; };
@@ -139,6 +142,7 @@
 		BF2E697E23FE9DD50046EE46 /* CVCFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCFieldDelegate.swift; sourceTree = "<group>"; };
 		BF2E698323FEBE040046EE46 /* String+Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Substring.swift"; sourceTree = "<group>"; };
 		BF2E698523FEE69F0046EE46 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
+		BF5F447424001CCE00E7EF6A /* UIColor+IsLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+IsLight.swift"; sourceTree = "<group>"; };
 		BF4CE5C124052F350076C1C6 /* HintViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintViewController.swift; sourceTree = "<group>"; };
 		BF4CE5C324052FCA0076C1C6 /* HintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintView.swift; sourceTree = "<group>"; };
 		BF76BD9A240569C400E12AE2 /* CardLabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLabeledTextField.swift; sourceTree = "<group>"; };
@@ -408,6 +412,8 @@
 				BF2E697823FE8B450046EE46 /* String+Grouping.swift */,
 				BF2E698323FEBE040046EE46 /* String+Substring.swift */,
 				BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */,
+				BF5F447424001CCE00E7EF6A /* UIColor+IsLight.swift */,
+				BF0F00752405158100EB920E /* UIDevice+IsSmall.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -752,6 +758,7 @@
 				BFA9094323D9F122001A277F /* Contact.swift in Sources */,
 				BFA9094523D9F122001A277F /* BillingAddress.swift in Sources */,
 				BFD5DACD23E9808D004E504A /* PaymentStatus.swift in Sources */,
+				BF5F447524001CCE00E7EF6A /* UIColor+IsLight.swift in Sources */,
 				BF05FA9623E4590400D43D24 /* RedirectResponse.swift in Sources */,
 				BFA9094923D9F130001A277F /* CheckoutRequest.swift in Sources */,
 				BFA9094023D9F122001A277F /* CheckoutBuyer.swift in Sources */,
@@ -772,6 +779,7 @@
 				BF2E697923FE8B450046EE46 /* String+Grouping.swift in Sources */,
 				BFB7656523F2DBF1000D1AC0 /* VoidResponse.swift in Sources */,
 				EB093F7723E85E4B00DC98A5 /* LabeledTextField.swift in Sources */,
+				BF0F00762405158100EB920E /* UIDevice+IsSmall.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

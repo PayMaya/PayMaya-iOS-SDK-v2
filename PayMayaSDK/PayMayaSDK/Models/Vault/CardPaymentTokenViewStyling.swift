@@ -22,26 +22,33 @@ import UIKit
 
 /// Customization for the card payment process.
 public enum CardPaymentTokenViewStyle {
-    
+
     /// Light mode
     /// - Parameters:
+    ///   - tintColor: Color for the buttons background and textfield accents.
     ///   - font: Font for all texts
     ///   - logo: Optional merchant's logo
-    case light(font: UIFont?, logo: UIImage?)
-    
+    case light(tintColor: UIColor? = nil, font: UIFont? = nil, logo: UIImage? = nil)
+
     /// Dark mode
     /// - Parameters:
+    ///   - tintColor: Color for the buttons background and textfield accents.
     ///   - font: Font for all texts
     ///   - logo: Optional merchant's logo
-    case dark(font: UIFont?, logo: UIImage?)
+    case dark(tintColor: UIColor? = nil, font: UIFont? = nil, logo: UIImage? = nil)
+    
+    /// Default light mode styling with PayMaya's logo and color
+    public static var defaultStyle: CardPaymentTokenViewStyle {
+        return .light()
+    }
     
     var tintColor: UIColor {
-        #warning("to be changed when button styling")
+        let defaultColor: UIColor = .pmDefault
         switch self {
-        case .light:
-            return .pmDefault
-        case .dark:
-            return .pmDefault
+        case .light(let tintColor, _, _):
+            return tintColor ?? defaultColor
+        case .dark(let tintColor, _, _):
+            return tintColor ?? defaultColor
         }
     }
     
@@ -84,9 +91,9 @@ public enum CardPaymentTokenViewStyle {
     var font: UIFont {
         let defaultFont = UIFont.systemFont(ofSize: 16)
         switch self {
-        case .light(let font, _):
+        case .light(_, let font, _):
             return font ?? defaultFont
-        case .dark(let font, _):
+        case .dark(_, let font, _):
             return font ?? defaultFont
         }
     }
@@ -94,16 +101,11 @@ public enum CardPaymentTokenViewStyle {
     var image: UIImage {
         let defaultImage = UIImage(named: "PMDefaultLogo", in: Bundle(for: CardPaymentTokenView.self), compatibleWith: nil) ?? UIImage()
         switch self {
-        case .light(_, let image):
+        case .light(_, _, let image):
             return image ?? defaultImage
-        case .dark(_, let image):
+        case .dark(_, _, let image):
             return image ?? defaultImage
         }
-    }
-    
-    /// Default light mode styling with PayMaya's logo
-    public static var defaultStyle: CardPaymentTokenViewStyle {
-        return .light(font: nil, logo: nil)
     }
     
 }

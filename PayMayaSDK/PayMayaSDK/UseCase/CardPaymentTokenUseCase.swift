@@ -35,7 +35,7 @@ class CardPaymentTokenUseCase {
     private let session: Networking
     
     private var callback: ((CreateCardResult) -> Void)?
-    private weak var executionContext: UIViewController?
+    private weak var executionContext: CardPaymentTokenViewController?
     
     init(session: Networking, authenticationKey: String) {
         self.authenticationKey = authenticationKey
@@ -92,6 +92,7 @@ private extension CardPaymentTokenUseCase {
         DispatchQueue.main.async { [weak self] in
             let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
             alert.addAction(.init(title: "OK", style: .default))
+            self?.executionContext?.hideActivityIndicator()
             self?.executionContext?.present(alert, animated: true) {
                 self?.callback?(result)
             }

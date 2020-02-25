@@ -33,7 +33,7 @@ class CardPaymentTokenViewsTests: XCTestCase {
     }
         
     func testView_whenCalledEndEditingOnAnySubview_shouldCallEndEditingOnView() {
-        let dummyTextField = UITextField()
+        let dummyTextField = LabeledTextField(model: LabeledTextFieldViewModel())
         dummyTextField.text = "test"
         let model = CardPaymentTokenViewModel()
         let spy = CardPaymentViewTokenSpy(with: model)
@@ -53,7 +53,7 @@ class CardPaymentTokenViewsTests: XCTestCase {
     func testLabeledView_whenCalledEndEditing_shouldSetTextOnContract() {
         let model = LabeledTextFieldViewModel()
         let contract = LabeledTextFieldContractSpy()
-        let dummyTextField = UITextField()
+        let dummyTextField = LabeledTextField(model: model)
         dummyTextField.text = "test"
         model.setContract(contract)
         model.editingDidChange(dummyTextField)
