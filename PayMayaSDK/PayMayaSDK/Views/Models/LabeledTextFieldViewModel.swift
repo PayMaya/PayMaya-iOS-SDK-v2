@@ -27,14 +27,14 @@ struct LabeledTextFieldInitData {
     let hintText: String?
     let styling: CardPaymentTokenViewStyle
     let isSecure: Bool
-    let hasHintButton: Bool
+    let hintAction: OnHintTapped?
 
-    init(labelText: String, hint: String? = nil, isSecure: Bool = false, hasHintButton: Bool = false, styling: CardPaymentTokenViewStyle) {
+    init(labelText: String, hint: String? = nil, isSecure: Bool = false, hintAction: OnHintTapped? = nil, styling: CardPaymentTokenViewStyle) {
         self.labelText = labelText
         self.hintText = hint
         self.styling = styling
         self.isSecure = isSecure
-        self.hasHintButton = hasHintButton
+        self.hintAction = hintAction
     }
 }
 
@@ -101,10 +101,10 @@ extension LabeledTextFieldViewModel: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard !string.isEmpty else { return extraDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true }
-        let isCharAcceptable = validator.isCharAcceptable(char: Character(string))
-        let characterReplace = extraDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true
+        let isCharAcceptable = !(string.map { validator.isCharAcceptable(char: $0) }.contains(false))
         Log.verbose("TextFieldDelegate: checking character validation returned \(isCharAcceptable)")
-        return  isCharAcceptable && characterReplace
+        guard isCharAcceptable else { return false }
+        return extraDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true
     }
 
     @objc func editingDidChange(_ textField: UITextField) {

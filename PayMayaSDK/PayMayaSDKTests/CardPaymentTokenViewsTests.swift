@@ -70,7 +70,7 @@ class CardPaymentTokenViewsTests: XCTestCase {
 
 private extension CardPaymentTokenViewModel {
     convenience init() {
-        self.init(data: CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyle.defaultStyle))
+        self.init(data: CardPaymentTokenInitialData(action: {_ in}, styling: CardPaymentTokenViewStyle.defaultStyle), onHintTapped: {_ in})
     }
 }
 

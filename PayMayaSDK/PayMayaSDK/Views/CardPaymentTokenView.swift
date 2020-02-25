@@ -51,7 +51,7 @@ class CardPaymentTokenView: UIView {
         self.validityDate = LabeledTextField(model: model.expirationDateModel)
         super.init(frame: .zero)
         model.setContract(self)
-        model.setOnEditingChanged(onEditingChanged(_:))
+        model.setOnEditingChanged({ [weak self] in self?.onEditingChanged($0) })
         setupNotifications()
     }
     

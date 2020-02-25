@@ -46,7 +46,7 @@ class CardPaymentTokenUseCase {
                styling: CardPaymentTokenViewStyle,
                callback: @escaping (CreateCardResult) -> Void) {
         Log.info("Starting CardPaymentTokenUseCase process")
-        let initData = CardPaymentTokenInitialData(action: cardDataReceived(_:), styling: styling)
+        let initData = CardPaymentTokenInitialData(action: cardDataReceived, styling: styling)
         let addCardVC = CardPaymentTokenViewController(with: initData)
         let navVC = UINavigationController(rootViewController: addCardVC)
         

@@ -26,6 +26,8 @@ protocol LabeledTextFieldContract: class {
     func textSet(text: String)
 }
 
+typealias OnHintTapped = (UIView) -> Void
+
 class LabeledTextField: UITextField {
     
     private enum Constants {
@@ -60,6 +62,8 @@ class LabeledTextField: UITextField {
         get { hintLayer.string as? String }
         set { hintLayer.string = newValue }
     }
+    
+    private var hintTapped: OnHintTapped?
     
     init(model: LabeledTextFieldViewModel) {
         self.model = model
@@ -119,7 +123,10 @@ extension LabeledTextField: LabeledTextFieldContract {
         textColor = data.styling.inputTextColor
         tintColor = data.styling.tintColor
         isSecureTextEntry = data.isSecure
-        if data.hasHintButton { setupHintButton() }
+        if let action = data.hintAction {
+            self.hintTapped = action
+            setupHintButton()
+        }
         updateFonts()
         animatePlaceholder()
     }
@@ -212,7 +219,7 @@ private extension LabeledTextField {
     }
     
     @objc func handleHintTapped() {
-        #warning("TODO in another task")
+        hintTapped?(hintButton)
     }
     
 }

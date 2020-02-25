@@ -35,7 +35,8 @@ class CardPaymentTokenViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = CardPaymentTokenView(with: CardPaymentTokenViewModel(data: initialData))
+        self.view = CardPaymentTokenView(with: CardPaymentTokenViewModel(data: initialData,
+                                                                         onHintTapped: { [weak self] in self?.showHint(from: $0) }))
     }
     
     override func viewDidLoad() {
@@ -60,5 +61,17 @@ private extension CardPaymentTokenViewController {
     
     @objc func cancel() {
         dismiss(animated: true)
+    }
+    
+    func showHint(from view: UIView) {
+        let hintViewController = HintViewController(sourceView: view)
+        hintViewController.popoverPresentationController?.delegate = self
+        present(hintViewController, animated: true)
+    }
+}
+
+extension CardPaymentTokenViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

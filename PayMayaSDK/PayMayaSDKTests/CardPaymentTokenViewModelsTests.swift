@@ -28,7 +28,7 @@ class CardPaymentTokenViewModelsTests: XCTestCase {
         let exp = expectation(description: "Should call callback and return proper values")
         let mock = CallbackMock(exp: exp)
         let initData = CardPaymentTokenInitialData(action: mock.callback(_:), styling: CardPaymentTokenViewStyle.defaultStyle)
-        _ = CardTokenViewModelMock(data: initData)
+        _ = CardTokenViewModelMock(data: initData, onHintTapped: { _ in })
         waitForExpectations(timeout: 0.01, handler: { error in
             XCTAssertNil(error)
         })
@@ -54,8 +54,8 @@ private class CallbackMock {
 
 private class CardTokenViewModelMock: CardPaymentTokenViewModel {
     
-    override init(data: CardPaymentTokenInitialData) {
-        super.init(data: data)
+    override init(data: CardPaymentTokenInitialData, onHintTapped: @escaping OnHintTapped) {
+        super.init(data: data, onHintTapped: onHintTapped)
         cardNumberModel.setText("123123123")
         cvvModel.setText("111")
         expirationDateModel.setText("12/22")

@@ -44,12 +44,12 @@ class CardPaymentTokenViewModel {
         }
     }
         
-    init(data: CardPaymentTokenInitialData) {
+    init(data: CardPaymentTokenInitialData, onHintTapped: @escaping OnHintTapped) {
         self.initialData = data
         self.cardNumberModel = LabeledTextFieldViewModel(validator: CardNumberValidator(),
                                                          data: LabeledTextFieldInitData(labelText: "Card Number", styling: data.styling))
         self.cvvModel = LabeledTextFieldViewModel(validator: CVCValidator(),
-                                                  data: LabeledTextFieldInitData(labelText: "CVV", isSecure: true, hasHintButton: true, styling: data.styling))
+                                                  data: LabeledTextFieldInitData(labelText: "CVV", isSecure: true, hintAction: onHintTapped, styling: data.styling))
         self.expirationDateModel = LabeledTextFieldViewModel(validator: ExpirationDateValidator(),
                                                              data: LabeledTextFieldInitData(labelText: "Expiry Date",
                                                                                                hint: "MM/YY",
@@ -85,7 +85,7 @@ private extension CardPaymentTokenViewModel {
         expirationDateModel.setExtraDelegate(ExpirationDateFieldDelegate())
         cardNumberModel.setExtraDelegate(CardNumberFieldDelegate())
         cvvModel.setExtraDelegate(CVCFieldDelegate())
-        [cardNumberModel, cvvModel, expirationDateModel].forEach({ $0.setOnEditingChanged(self.onEditingChanged(_:)) })
+        [cardNumberModel, cvvModel, expirationDateModel].forEach({ $0.setOnEditingChanged({ [weak self] in self?.onEditingChanged($0) }) })
     }
 
     func onEditingChanged(_ valid: Bool) {
