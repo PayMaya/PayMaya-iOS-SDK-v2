@@ -20,6 +20,11 @@
 import UIKit
 
 class CardLabeledTextField: LabeledTextField {
+    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.rightViewRect(forBounds: bounds)
+        return .init(x: rect.origin.x - 8, y: rect.origin.y, width: rect.width * 1.2, height: rect.height * 1.2)
+    }
+    
     init(model: CardTextFieldViewModel) {
         super.init(model: model)
         setupCardImageView()
