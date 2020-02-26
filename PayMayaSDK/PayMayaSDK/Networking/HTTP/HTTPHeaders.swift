@@ -30,9 +30,16 @@ public extension HTTPHeaders {
         self["Content-Type"] = contentType.rawValue
     }
     
+    mutating func addSDKVersion() {
+        if let sdkVersion = Bundle(for: PayMayaSDK.self).infoDictionary?["CFBundleShortVersionString"] as? String {
+            self["x-paymaya-sdk"] = "ios-v\(sdkVersion)"
+        }
+    }
+    
     static func defaultHeaders(using authKey: String) -> HTTPHeaders {
         var headers = HTTPHeaders()
         headers.addContentType(.json)
+        headers.addSDKVersion()
         headers.addHTTPBasicAuthentication(credentials: authKey)
         return headers
     }
