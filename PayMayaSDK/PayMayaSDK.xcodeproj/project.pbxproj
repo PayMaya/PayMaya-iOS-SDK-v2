@@ -85,6 +85,7 @@
 		BFD5DAD423E9B770004E504A /* ViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5DAD323E9B770004E504A /* ViewControllerSpy.swift */; };
 		BFD5DAD623E9B788004E504A /* NetworkingSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5DAD523E9B788004E504A /* NetworkingSpy.swift */; };
 		BFD5DADB23EB1046004E504A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5DADA23EB1046004E504A /* Log.swift */; };
+		BFE493C3240679440033B8D4 /* XCTAssertValid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE493C2240679440033B8D4 /* XCTAssertValid.swift */; };
 		EB093F6D23E84EA700DC98A5 /* WalletLinkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F6B23E84EA700DC98A5 /* WalletLinkInfo.swift */; };
 		EB093F7123E8585E00DC98A5 /* CardPaymentTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F7023E8585E00DC98A5 /* CardPaymentTokenViewController.swift */; };
 		EB093F7323E858E900DC98A5 /* CardPaymentTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB093F7223E858E900DC98A5 /* CardPaymentTokenView.swift */; };
@@ -205,6 +206,7 @@
 		BFD5DAD323E9B770004E504A /* ViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSpy.swift; sourceTree = "<group>"; };
 		BFD5DAD523E9B788004E504A /* NetworkingSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingSpy.swift; sourceTree = "<group>"; };
 		BFD5DADA23EB1046004E504A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		BFE493C2240679440033B8D4 /* XCTAssertValid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTAssertValid.swift; sourceTree = "<group>"; };
 		EB093F6323E826D300DC98A5 /* CardPaymentTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentTokenUseCase.swift; sourceTree = "<group>"; };
 		EB093F6723E828E700DC98A5 /* CardPaymentTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentTokenResponse.swift; sourceTree = "<group>"; };
 		EB093F6B23E84EA700DC98A5 /* WalletLinkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletLinkInfo.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				BFB7657D23F2DE9B000D1AC0 /* Networking */,
 				BFD5DAD223E9B6FF004E504A /* Spies */,
 				EB7B4A1E23EDE6FD00090EC7 /* Validators */,
+				BFE493C42406795C0033B8D4 /* Helpers */,
 				EBA442E123F4550000E85DAB /* CardPaymentTokenUseCaseTest.swift */,
 				EBA442D923F4429A00E85DAB /* CardPaymentTokenViewModelsTests.swift */,
 				EBA442CB23F2D08A00E85DAB /* CardPaymentTokenViewStylingTests.swift */,
@@ -490,6 +493,14 @@
 				BF2E697623FE83DB0046EE46 /* Logger.swift */,
 			);
 			path = Logging;
+			sourceTree = "<group>";
+		};
+		BFE493C42406795C0033B8D4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BFE493C2240679440033B8D4 /* XCTAssertValid.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		EB093F6223E8267300DC98A5 /* UseCase */ = {
@@ -768,6 +779,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFE493C3240679440033B8D4 /* XCTAssertValid.swift in Sources */,
 				EBA442DE23F44FCE00E85DAB /* ContractSpies.swift in Sources */,
 				EBC6509D23F69D1B009A6DC9 /* PayMayaErrorTests.swift in Sources */,
 				BFD5DAD623E9B788004E504A /* NetworkingSpy.swift in Sources */,

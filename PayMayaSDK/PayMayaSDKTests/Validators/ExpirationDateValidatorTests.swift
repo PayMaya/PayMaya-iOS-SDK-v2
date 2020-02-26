@@ -25,28 +25,28 @@ class ExpirationDateValidatorTest: XCTestCase {
     let validator = ExpirationDateValidator()
 
     func test_givenString_whenNotDate_shouldFail() {
-        XCTAssertFalse(validator.validate(string: "test"))
-        XCTAssertFalse(validator.validate(string: "MAR/2020"))
-        XCTAssertFalse(validator.validate(string: "current"))
-        XCTAssertFalse(validator.validate(string: "!!!"))
-        XCTAssertFalse(validator.validate(string: "test"))
+        XCTAssertInvalid(validator.validate(string: "test"))
+        XCTAssertInvalid(validator.validate(string: "MAR/2020"))
+        XCTAssertInvalid(validator.validate(string: "current"))
+        XCTAssertInvalid(validator.validate(string: "!!!"))
+        XCTAssertInvalid(validator.validate(string: "test"))
     }
     
     func test_givenDate_whenWrongDate_shouldFail() {
-        XCTAssertFalse(validator.validate(string: "18/2020"))
-        XCTAssertFalse(validator.validate(string: "00/00"))
+        XCTAssertInvalid(validator.validate(string: "18/2020"))
+        XCTAssertInvalid(validator.validate(string: "00/00"))
     }
     
     func test_givenDate_whenDateHasPassed_shouldFail() {
-        XCTAssertFalse(validator.validate(string: "1/2020"))
-        XCTAssertFalse(validator.validate(string: "7/1990"))
+        XCTAssertInvalid(validator.validate(string: "1/2020"))
+        XCTAssertInvalid(validator.validate(string: "7/1990"))
     }
     
     func test_givenDate_whenCorrect_shouldPass() {
-        XCTAssertTrue(validator.validate(string: "12/2022"))
-        XCTAssertTrue(validator.validate(string: currentDateFormattedAdding(months: 0)))
-        XCTAssertTrue(validator.validate(string: currentDateFormattedAdding(months: 5)))
-        XCTAssertTrue(validator.validate(string: "1/2025"))
+        XCTAssertValid(validator.validate(string: "12/2022"))
+        XCTAssertValid(validator.validate(string: currentDateFormattedAdding(months: 0)))
+        XCTAssertValid(validator.validate(string: currentDateFormattedAdding(months: 5)))
+        XCTAssertValid(validator.validate(string: "1/2025"))
     }
     
     func test_givenInputChar_whenWrong_shouldFail() {

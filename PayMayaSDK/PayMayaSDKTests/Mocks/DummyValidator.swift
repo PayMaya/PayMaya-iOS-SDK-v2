@@ -22,7 +22,6 @@ import Foundation
 @testable import PayMayaSDK
 
 class DummyValidator: FieldValidator {
-    func validate(string: String) -> Bool { return true }
+    func validate(string: String) -> ValidationState { return .valid }
     func isCharAcceptable(char: Character) -> Bool { return true }
-    var errorReason: String { return "" }
 }

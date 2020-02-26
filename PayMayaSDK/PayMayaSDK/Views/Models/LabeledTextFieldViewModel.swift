@@ -50,16 +50,16 @@ class LabeledTextFieldViewModel: NSObject {
     private var onEditingChange: OnEditingChange?
 
     
-    var isValid: Bool {
+    var validationState: ValidationState {
         return validator.validate(string: text)
+    }
+    
+    var isValid: Bool {
+        return validationState == .valid
     }
     
     var inputText: String {
         return text.replacingOccurrences(of: " ", with: "")
-    }
-    
-    var defaultErrorReason: String {
-        return validator.errorReason
     }
     
     var styling: CardPaymentTokenViewStyle {
@@ -92,7 +92,7 @@ class LabeledTextFieldViewModel: NSObject {
 extension LabeledTextFieldViewModel: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         Log.verbose("TextFieldDelegate: editingEnded. Current validation state: \(isValid)")
-        contract?.changeValidationState(valid: isValid)
+        contract?.changeValidationState(validationState)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

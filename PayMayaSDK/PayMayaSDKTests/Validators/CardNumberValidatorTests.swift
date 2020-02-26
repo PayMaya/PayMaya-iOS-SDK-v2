@@ -26,31 +26,31 @@ class CardNumberValidatorTests: XCTestCase {
     let validator = CardNumberValidator()
     
     func test_givenCardNumber_whenWrongLength_shouldFail() {
-        XCTAssertFalse(validator.validate(string: "12"))
-        XCTAssertFalse(validator.validate(string: "123451234512345"))
-        XCTAssertFalse(validator.validate(string: "12345123451234512345"))
+        XCTAssertInvalid(validator.validate(string: "12"))
+        XCTAssertInvalid(validator.validate(string: "123451234512345"))
+        XCTAssertInvalid(validator.validate(string: "12345123451234512345"))
     }
     
     func test_givenCardNumber_whenWrongChars_shouldFail() {
-        XCTAssertFalse(validator.validate(string: "123451234512345a"))
-        XCTAssertFalse(validator.validate(string: "123451234512345👎"))
-        XCTAssertFalse(validator.validate(string: "123451234512345!"))
+        XCTAssertInvalid(validator.validate(string: "123451234512345a"))
+        XCTAssertInvalid(validator.validate(string: "123451234512345👎"))
+        XCTAssertInvalid(validator.validate(string: "123451234512345!"))
     }
     
     func test_givenCardNumber_whenCorrectLength_whenWrongNumber_luhnValidationShouldFail() {
-        XCTAssertFalse(validator.validate(string: "1234512345123451"))
-        XCTAssertFalse(validator.validate(string: "12345123451234512"))
-        XCTAssertFalse(validator.validate(string: "123451234512345123"))
-        XCTAssertFalse(validator.validate(string: "1234512345123451234"))
+        XCTAssertInvalid(validator.validate(string: "1234512345123451"))
+        XCTAssertInvalid(validator.validate(string: "12345123451234512"))
+        XCTAssertInvalid(validator.validate(string: "123451234512345123"))
+        XCTAssertInvalid(validator.validate(string: "1234512345123451234"))
     }
     
     func test_givenCardNumber_whenCorrectNumber_shouldPass() {
-        XCTAssertTrue(validator.validate(string: "5123456789012346"))
-        XCTAssertTrue(validator.validate(string: "5453010000064154"))
-        XCTAssertTrue(validator.validate(string: "4123450131001381"))
-        XCTAssertTrue(validator.validate(string: "4123450131001522"))
-        XCTAssertTrue(validator.validate(string: "4123450131004443"))
-        XCTAssertTrue(validator.validate(string: "4123450131000508"))
+        XCTAssertValid(validator.validate(string: "5123456789012346"))
+        XCTAssertValid(validator.validate(string: "5453010000064154"))
+        XCTAssertValid(validator.validate(string: "4123450131001381"))
+        XCTAssertValid(validator.validate(string: "4123450131001522"))
+        XCTAssertValid(validator.validate(string: "4123450131004443"))
+        XCTAssertValid(validator.validate(string: "4123450131000508"))
     }
     
     func test_givenInputChar_whenWrong_shouldFail() {

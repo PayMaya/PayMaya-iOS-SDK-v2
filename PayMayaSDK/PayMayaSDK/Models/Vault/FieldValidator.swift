@@ -20,7 +20,10 @@
 import Foundation
 
 protocol FieldValidator {
-    func validate(string: String) -> Bool
+    func validate(string: String) -> ValidationState
     func isCharAcceptable(char: Character) -> Bool
-    var errorReason: String { get }
+}
+
+enum ValidationState: Equatable {
+    case valid, invalid(reason: String)
 }

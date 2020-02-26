@@ -17,18 +17,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import PayMayaSDK
 
-class CVCValidator: FieldValidator {
-    func isCharAcceptable(char: Character) -> Bool {
-        let tempSet = CharacterSet(charactersIn: String(char))
-        return tempSet.isSubset(of: .decimalDigits)
-    }
-    
-    func validate(string: String) -> ValidationState {
-        guard !string.isEmpty else { return .invalid(reason: "CVV is required") }
-        guard Int(string) != nil else { return .invalid(reason: "Invalid CVV format") }
-        guard 3...4 ~= string.count else { return .invalid(reason: "Insufficient CVV characters") }
-        return .valid
-    }
+public func XCTAssertValid(_ expression: @autoclosure () throws -> ValidationState,
+                           _ message: @autoclosure () -> String = "",
+                           file: StaticString = #file,
+                           line: UInt = #line) {
+    let value: ValidationState = (try? expression()) ?? .invalid(reason: "")
+    XCTAssert(value == ValidationState.valid, "Validation State is invalid, but should be valid", file: file, line: line)
+}
+
+public func XCTAssertInvalid(_ expression: @autoclosure () throws -> ValidationState,
+                             _ message: @autoclosure () -> String = "",
+                             file: StaticString = #file,
+                             line: UInt = #line) {
+    let value: ValidationState = (try? expression()) ?? .invalid(reason: "")
+    XCTAssert(value != ValidationState.valid, "Validation State is valid, but should be invalid", file: file, line: line)
 }

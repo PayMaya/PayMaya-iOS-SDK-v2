@@ -20,15 +20,11 @@
 import Foundation
 
 class CardNumberValidator: FieldValidator {
-    var errorReason: String {
-        return "Invalid credit card format"
-    }
-    
-    func validate(string: String) -> Bool {
+    func validate(string: String) -> ValidationState {
+        guard !string.isEmpty else { return .invalid(reason: "Card Number is required") }
         let trimmed = string.replacingOccurrences(of: " ", with: "")
-        guard Int(trimmed) != nil else {return false}
-        guard 13...19 ~= trimmed.count else {return false}
-        return luhnValidation(string: trimmed)
+        guard Int(trimmed) != nil, 13...19 ~= trimmed.count, luhnValidation(string: trimmed) else { return .invalid(reason: "Invalid credit card format") }
+        return .valid
     }
     
     func isCharAcceptable(char: Character) -> Bool {

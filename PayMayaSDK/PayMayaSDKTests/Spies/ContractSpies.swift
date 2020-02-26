@@ -35,7 +35,7 @@ class LabeledTextFieldContractSpy: LabeledTextFieldContract {
     var setupCalled: Int = 0
     var textSetCalled: Int = 0
     
-    func changeValidationState(valid: Bool) {
+    func changeValidationState(_ state: ValidationState) {
         changeValidationStateCalled += 1
     }
     

@@ -20,22 +20,19 @@
 import Foundation
 
 class ExpirationDateValidator: FieldValidator {
-    var errorReason: String {
-        return "Invalid expiry date format"
-    }
-    
     func isCharAcceptable(char: Character) -> Bool {
         let customSet = CharacterSet(charactersIn: "1234567890")
         let tempSet = CharacterSet(charactersIn: String(char))
         return tempSet.isSubset(of: customSet)
     }
     
-    func validate(string: String) -> Bool {
+    func validate(string: String) -> ValidationState {
+        guard !string.isEmpty else { return .invalid(reason: "Expiry Date is required") }
         let tempSet = CharacterSet(charactersIn: "1234567890/")
-        guard CharacterSet(charactersIn: string).isSubset(of: tempSet) else {return false}
-        guard let date = date(from: string) else {return false}
+        guard CharacterSet(charactersIn: string).isSubset(of: tempSet), let date = date(from: string) else { return .invalid(reason: "Invalid expiry date format") }
         let comparison = Calendar.current.compare(date, to: Date(), toGranularity: .month)
-        return comparison == .orderedDescending || comparison == .orderedSame
+        guard comparison == .orderedDescending || comparison == .orderedSame else { return .invalid(reason: "Card is already expired") }
+        return .valid
     }
     
     private func date(from string: String) -> Date? {

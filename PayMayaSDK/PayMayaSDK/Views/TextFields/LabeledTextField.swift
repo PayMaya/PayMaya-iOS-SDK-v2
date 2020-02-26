@@ -21,7 +21,7 @@ import Foundation
 import UIKit
 
 protocol LabeledTextFieldContract: class {
-    func changeValidationState(valid: Bool)
+    func changeValidationState(_ state: ValidationState)
     func initialSetup(data: LabeledTextFieldInitData)
     func textSet(text: String)
 }
@@ -73,7 +73,6 @@ class LabeledTextField: UITextField {
     
     private func configure(using model: LabeledTextFieldViewModel) {
         model.setContract(self)
-        errorLabel.text = model.defaultErrorReason
         delegate = model
         addTarget(model, action: #selector(LabeledTextFieldViewModel.editingDidChange), for: .editingChanged)
     }
@@ -105,9 +104,12 @@ class LabeledTextField: UITextField {
 }
 
 extension LabeledTextField: LabeledTextFieldContract {
-    func changeValidationState(valid: Bool) {
-        currentColor = valid ? tintColor : .red
-        errorLabel.isHidden = valid
+    func changeValidationState(_ state: ValidationState) {
+        currentColor = state == .valid ? tintColor : .red
+        errorLabel.isHidden = state == .valid
+        if case let .invalid(reason) = state {
+            errorLabel.text = reason
+        }
         animatePlaceholder()
     }
     
