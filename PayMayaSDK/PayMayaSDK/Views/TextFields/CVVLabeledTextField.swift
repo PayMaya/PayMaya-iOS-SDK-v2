@@ -34,6 +34,7 @@ private extension CVVLabeledTextField {
     func setupHintButton() {
         let hintButton = UIButton(type: .system)
         let icon = UIImage(named: "info", in: Bundle(for: CardPaymentTokenView.self), compatibleWith: nil) ?? UIImage()
+        hintButton.frame = .init(x: 0, y: 0, width: icon.size.width, height: icon.size.height)
         hintButton.setImage(icon, for: .normal)
         hintButton.tintColor = .lightGray
         hintButton.addTarget(self, action: #selector(handleHintTapped), for: .touchUpInside)

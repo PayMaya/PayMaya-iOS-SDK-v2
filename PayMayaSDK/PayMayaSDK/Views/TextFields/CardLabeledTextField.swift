@@ -20,9 +20,28 @@
 import UIKit
 
 class CardLabeledTextField: LabeledTextField {
+    
+    private enum Constants {
+        enum iOS13 {
+            static let iconSizeMultiplier: CGFloat = 1.3
+            static let iconXAdjustment: CGFloat = 8
+            static let iconYAdjustment: CGFloat = 2
+        }
+        enum iOS12 {
+            static let iconSize: CGSize = .init(width: 35, height: 30)
+        }
+    }
+    
     override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.rightViewRect(forBounds: bounds)
-        return .init(x: rect.origin.x - 8, y: rect.origin.y, width: rect.width * 1.2, height: rect.height * 1.2)
+        var rect = super.rightViewRect(forBounds: bounds)
+        if #available(iOS 13, *) {
+            // for iOS 13 only, because of some differences in displaying the view between systems
+            rect = .init(x: rect.origin.x - Constants.iOS13.iconXAdjustment,
+                         y: rect.origin.y - Constants.iOS13.iconYAdjustment,
+                         width: rect.width * Constants.iOS13.iconSizeMultiplier,
+                         height: rect.height * Constants.iOS13.iconSizeMultiplier)
+        }
+        return rect
     }
     
     init(model: CardTextFieldViewModel) {
@@ -44,6 +63,8 @@ private extension CardLabeledTextField {
     
     func setupCardImageView() {
         rightViewMode = .always
-        rightView = UIImageView()
+        let imageView = UIImageView(frame: .init(origin: .zero, size: Constants.iOS12.iconSize))
+        imageView.contentMode = .scaleAspectFit
+        rightView = imageView
     }
 }
