@@ -20,19 +20,12 @@
 import Foundation
 import UIKit
 
-enum CardType: String {
+enum CardType: String, CaseIterable {
     case visa, mastercard, discover, jcb, amex
     
     static func getType(from string: String) -> CardType? {
         guard !string.isEmpty else { return nil }
-        switch string {
-        case _ where string.containsPrefixes(visa.prefixes): return .visa
-        case _ where string.containsPrefixes(mastercard.prefixes): return .mastercard
-        case _ where string.containsPrefixes(discover.prefixes): return .discover
-        case _ where string.containsPrefixes(jcb.prefixes): return .jcb
-        case _ where string.containsPrefixes(amex.prefixes): return .amex
-        default: return nil
-        }
+        return allCases.compactMap { string.containsPrefixes($0.prefixes) ? $0 : nil }.first
     }
     
     private var prefixes: [PrefixContaining] {

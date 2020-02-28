@@ -47,7 +47,7 @@ private extension PayWithCardViewController {
     }
     
     @objc func addCard() {
-        PayMayaSDK.cardPayment(self) { [weak self] result in
+        PayMayaSDK.presentCardPayment(from: self) { [weak self] result in
             switch result {
             case .success(let token):
                 self?.showAlert("Your payment token: \(token.paymentTokenId)")

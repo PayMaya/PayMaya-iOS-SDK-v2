@@ -34,7 +34,7 @@ public struct CheckoutInfo: Encodable {
     /// List of redirect URLs depending on checkout completion status.
     public let redirectUrl: RedirectURL
     
-    /// A unique identifier to a transaction for tracking purposes.
+    /// Your unique identifier to a transaction for tracking purposes. By default it will be auto-generated.
     public let requestReferenceNumber: String
     
     /// Merchant provided additional cart information. Optional.
@@ -46,13 +46,13 @@ public struct CheckoutInfo: Encodable {
     ///   - buyer: Customer profile information.
     ///   - items: List of bought items for the transaction.
     ///   - redirectUrl: List of redirect URLs depending on checkout completion status.
-    ///   - requestReferenceNumber: A unique identifier to a transaction for tracking purposes.
+    ///   - requestReferenceNumber: Your unique identifier to a transaction for tracking purposes. By default it will be auto-generated.
     ///   - metadata: Merchant provided additional cart information. Optional.
     public init(totalAmount: CheckoutTotalAmount,
                 buyer: CheckoutBuyer? = nil,
                 items: [CheckoutItem],
                 redirectUrl: RedirectURL,
-                requestReferenceNumber: String,
+                requestReferenceNumber: String = UUID().uuidString,
                 metadata: [String: String] = [:]) {
         self.totalAmount = totalAmount
         self.buyer = buyer

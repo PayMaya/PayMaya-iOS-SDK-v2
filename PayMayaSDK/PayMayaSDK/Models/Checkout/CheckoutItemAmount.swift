@@ -38,3 +38,21 @@ public struct CheckoutItemAmount: Encodable {
         self.details = details
     }
 }
+
+extension CheckoutItemAmount: ExpressibleByFloatLiteral {
+    public typealias FloatLiteralType = Double
+
+    public init(floatLiteral value: Double) {
+        self.value = value
+        self.details = nil
+    }
+}
+
+extension CheckoutItemAmount: ExpressibleByIntegerLiteral {
+    public typealias IntegerLiteralType = Int
+
+    public init(integerLiteral value: Int) {
+        self.value = Double(value)
+        self.details = nil
+    }
+}

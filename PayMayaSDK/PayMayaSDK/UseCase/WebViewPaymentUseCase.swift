@@ -36,7 +36,8 @@ public enum PaymentResult {
     case error(Error)
 }
 
-/// Payment result completion block.
+/// Payment result callback.
+/// It can be called multiple times.
 public typealias PaymentCallback = (PaymentResult) -> Void
 
 class WebViewPaymentUseCase<NetworkRequest: Request> {

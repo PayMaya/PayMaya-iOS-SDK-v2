@@ -25,7 +25,7 @@ public struct WalletLinkInfo: Encodable {
     /// List of redirect URLs depending on creation completion status.
     public let redirectUrl: RedirectURL
     
-    /// A unique identifier for tracking purposes.
+    /// A unique identifier for tracking purposes. By default it will be auto-generated.
     public let requestReferenceNumber: String
     
     /// Merchant provided additional wallet link information. Optional.
@@ -34,10 +34,10 @@ public struct WalletLinkInfo: Encodable {
     /// Details about the wallet link creation process
     /// - Parameters:
     ///   - redirectUrl: List of redirect URLs depending on creation completion status.
-    ///   - requestReferenceNumber: A unique identifier for tracking purposes.
+    ///   - requestReferenceNumber: A unique identifier for tracking purposes. By default it will be auto-generated.
     ///   - metadata: Merchant provided additional wallet link information. Optional.
     public init(redirectUrl: RedirectURL,
-                requestReferenceNumber: String,
+                requestReferenceNumber: String = UUID().uuidString,
                 metadata: [String : String] = [:]) {
         self.redirectUrl = redirectUrl
         self.requestReferenceNumber = requestReferenceNumber

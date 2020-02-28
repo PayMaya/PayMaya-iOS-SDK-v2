@@ -44,15 +44,21 @@ class Log {
     static var logger: Logger = PrintLogger()
     
     static func error(_ message: String, fileName: String = #file, line: Int = #line, funcName: String = #function) {
+        #if DEBUG
         Log.log(message, type: .error, fileName: fileName, line: line, funcName: funcName)
+        #endif
     }
     
     static func info(_ message: String, fileName: String = #file, line: Int = #line, funcName: String = #function) {
+        #if DEBUG
         Log.log(message, type: .info, fileName: fileName, line: line, funcName: funcName)
+        #endif
     }
     
     static func verbose(_ message: String, fileName: String = #file, line: Int = #line, funcName: String = #function) {
+        #if DEBUG
         Log.log(message, type: .verbose, fileName: fileName, line: line, funcName: funcName)
+        #endif
     }
 }
 

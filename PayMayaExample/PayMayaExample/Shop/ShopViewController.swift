@@ -44,7 +44,7 @@ private extension ShopViewController {
     func checkout() {
         let checkoutInfo = viewModel.getCheckoutInfo()
         
-        PayMayaSDK.checkout(checkoutInfo, context: self) { result in
+        PayMayaSDK.presentCheckout(from: self, checkoutInfo: checkoutInfo) { result in
             switch result {
             case .prepared(let checkoutId):
                 print("### \(checkoutId)")

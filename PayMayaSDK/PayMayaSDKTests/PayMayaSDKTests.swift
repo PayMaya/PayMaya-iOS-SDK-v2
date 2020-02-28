@@ -25,19 +25,20 @@ class PayMayaSDKTests: XCTestCase {
     private var session: NetworkingSpy!
 
     func setupSDK(withKey: Bool = true) {
-        PayMayaSDK.setup(environment: .sandbox)
-        if withKey {
-            PayMayaSDK.add(authenticationKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", for: .checkout)
-            PayMayaSDK.add(authenticationKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", for: .payments)
-            PayMayaSDK.add(authenticationKey: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah", for: .cardToken)
-        }
+        let authKeys: [AuthenticationMethod: String] = [
+            .checkout: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah",
+            .payments: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah",
+            .cardToken: "pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah"
+        ]
+        
+        PayMayaSDK.setup(environment: .sandbox, authenticationKeys: withKey ? authKeys : [:])
         session = NetworkingSpy()
         PayMayaSDK.session = session
     }
 
     func test_givenPublicKey_whenCreatesCheckoutPayment_thenSessionGetsEncodedKey() {
         setupSDK()
-        PayMayaSDK.checkout(CheckoutInfo.mock, context: ViewControllerSpy()) { result in }
+        PayMayaSDK.presentCheckout(from: ViewControllerSpy(), checkoutInfo: CheckoutInfo.mock) { _ in }
         XCTAssertEqual(session.makeRequestCalled, 1)
         XCTAssertEqual(session.credentials, "Basic cGstWjBPU3pMdkljT0kyVUl2RGhkVEdWVmZSU1NlaUdTdG5jZXF3VUU3bjBBaDo=")
     }
@@ -66,7 +67,7 @@ class PayMayaSDKTests: XCTestCase {
             """.data(using: .utf8)
 
         let preparedExp = expectation(description: "should get the checkoutId")
-        PayMayaSDK.checkout(CheckoutInfo.mock, context: vc) { result in
+        PayMayaSDK.presentCheckout(from: vc, checkoutInfo: CheckoutInfo.mock) { result in
             switch result {
             case .prepared(let id):
                 XCTAssertEqual(id, testCheckoutId)
@@ -92,7 +93,7 @@ class PayMayaSDKTests: XCTestCase {
             XCTAssertEqual(session?.lastRequestUrl, PayMayaSDK.environment.baseURL + "/checkout/v1/checkouts")
         }
 
-        PayMayaSDK.checkout(CheckoutInfo.mock, context: vc) { _ in
+        PayMayaSDK.presentCheckout(from: vc, checkoutInfo: CheckoutInfo.mock) { _ in
             XCTFail("the closure shouldn't get called")
         }
     }
@@ -106,16 +107,16 @@ class PayMayaSDKTests: XCTestCase {
                 exp.fulfill()
             }
         }
-        PayMayaSDK.cardPayment(vc, callback: { _ in })
+        PayMayaSDK.presentCardPayment(from: vc) { _ in }
         waitForExpectations(timeout: 0.05, handler: { error in
             XCTAssertNil(error)
         })
     }
 
     func test_setupEnvironment() {
-        PayMayaSDK.setup(environment: .sandbox)
+        PayMayaSDK.setup(environment: .sandbox, authenticationKeys: [:])
         XCTAssertEqual(PayMayaSDK.environment, .sandbox)
-        PayMayaSDK.setup(environment: .production)
+        PayMayaSDK.setup(environment: .production, authenticationKeys: [:])
         XCTAssertEqual(PayMayaSDK.environment, .production)
     }
 
@@ -129,7 +130,7 @@ class PayMayaSDKTests: XCTestCase {
     
     func test_checkoutCalledWithoutAuthKey_returnsErrorInCallback() {
         setupSDK(withKey: false)
-        PayMayaSDK.checkout(CheckoutInfo.mock, context: UIViewController()) { result in
+        PayMayaSDK.presentCheckout(from: UIViewController(), checkoutInfo: CheckoutInfo.mock) { result in
             switch result {
             case .error(let error):
                 XCTAssertEqual(error.localizedDescription, AuthenticationError.missingCheckoutKey.localizedDescription)
@@ -141,7 +142,7 @@ class PayMayaSDKTests: XCTestCase {
 
     func test_singlePaymentCalledWithoutAuthKey_returnsErrorInCallback() {
         setupSDK(withKey: false)
-        PayMayaSDK.singlePayment(SinglePaymentInfo.mock, context: UIViewController()) { result in
+        PayMayaSDK.presentSinglePayment(from: UIViewController(), singlePaymentInfo: SinglePaymentInfo.mock) { result in
             switch result {
             case .error(let error):
                 XCTAssertEqual(error.localizedDescription, AuthenticationError.missingPaymentsKey.localizedDescription)
@@ -153,7 +154,7 @@ class PayMayaSDKTests: XCTestCase {
     
     func test_createWalletCalledWithoutAuthKey_returnsErrorInCallback() {
         setupSDK(withKey: false)
-        PayMayaSDK.createWallet(WalletLinkInfo.mock, context: UIViewController()) { result in
+        PayMayaSDK.presentCreateWalletLink(from: UIViewController(), walletLinkInfo: WalletLinkInfo.mock) { result in
             switch result {
             case .error(let error):
                 XCTAssertEqual(error.localizedDescription, AuthenticationError.missingPaymentsKey.localizedDescription)
@@ -165,7 +166,7 @@ class PayMayaSDKTests: XCTestCase {
 
     func test_addCardCalledWithoutAuthKey_returnsErrorInCallback() {
         setupSDK(withKey: false)
-        PayMayaSDK.cardPayment(UIViewController()) { result in
+        PayMayaSDK.presentCardPayment(from: UIViewController()) { result in
             switch result {
             case .error(let error):
                 XCTAssertEqual(error.localizedDescription, AuthenticationError.missingCardTokenKey.localizedDescription)

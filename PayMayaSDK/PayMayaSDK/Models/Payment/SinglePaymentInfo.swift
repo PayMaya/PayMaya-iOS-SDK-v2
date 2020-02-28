@@ -28,7 +28,7 @@ public struct SinglePaymentInfo: Encodable {
     /// List of redirect URLs depending on payment completion status.
     public let redirectUrl: RedirectURL
     
-    /// A unique transaction identifier for tracking purposes.
+    /// A unique transaction identifier for tracking purposes. By default it will be auto-generated.
     public let requestReferenceNumber: String
     
     /// Merchant provided additional cart information. Optional.
@@ -38,11 +38,11 @@ public struct SinglePaymentInfo: Encodable {
     /// - Parameters:
     ///   - totalAmount: Total amount details for the transaction.
     ///   - redirectUrl: List of redirect URLs depending on payment completion status.
-    ///   - requestReferenceNumber: A unique transaction identifier for tracking purposes.
+    ///   - requestReferenceNumber: A unique transaction identifier for tracking purposes. By default it will be auto-generated.
     ///   - metadata: Merchant provided additional cart information. Optional.
     public init(totalAmount: SinglePaymentTotalAmount,
                 redirectUrl: RedirectURL,
-                requestReferenceNumber: String,
+                requestReferenceNumber: String = UUID().uuidString,
                 metadata: [String : String] = [:]) {
         self.totalAmount = totalAmount
         self.redirectUrl = redirectUrl

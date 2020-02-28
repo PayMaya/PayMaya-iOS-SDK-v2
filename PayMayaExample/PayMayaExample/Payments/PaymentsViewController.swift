@@ -50,7 +50,7 @@ private extension PaymentsViewController {
     
     func createSinglePayment() {
         let paymentInfo = viewModel.getSinglePaymentInfo()
-        PayMayaSDK.singlePayment(paymentInfo, context: self) { result in
+        PayMayaSDK.presentSinglePayment(from: self, singlePaymentInfo: paymentInfo) { [weak self] result in
             switch result {
             case .prepared(let paymentId):
                 print("### \(paymentId)")
@@ -58,25 +58,25 @@ private extension PaymentsViewController {
             case .processed(let status):
                 switch status {
                 case .success(let url):
-                    self.showAlert("SUCCESS: \(url)")
+                    self?.showAlert("SUCCESS: \(url)")
                 case .failure(let url):
-                    self.showAlert("FAILED: \(url)")
+                    self?.showAlert("FAILED: \(url)")
                 case .cancel(let url):
-                    self.showAlert("CANCELLED: \(url)")
+                    self?.showAlert("CANCELLED: \(url)")
                 }
                 
             case .interrupted(let paymentStatus):
-                self.showAlert("INTERRUPTED: \(paymentStatus.rawValue)")
+                print("INTERRUPTED: \(paymentStatus.rawValue)")
                 
             case .error(let error):
-                self.showAlert("ERROR: \(error.localizedDescription)")
+                self?.showAlert("ERROR: \(error.localizedDescription)")
             }
         }
     }
     
     func createWallet() {
         let walletLink = viewModel.getWalletLinkInfo()
-        PayMayaSDK.createWallet(walletLink, context: self) { result in
+        PayMayaSDK.presentCreateWalletLink(from: self, walletLinkInfo: walletLink) { [weak self] result in
             switch result {
             case .prepared(let linkId):
                 print("### \(linkId)")
@@ -84,18 +84,18 @@ private extension PaymentsViewController {
             case .processed(let status):
                 switch status {
                 case .success(let url):
-                    self.showAlert("Wallet created:\n \(url)")
+                    self?.showAlert("Wallet created:\n \(url)")
                 case .failure(let url):
-                    self.showAlert("FAILED: \(url)")
+                    self?.showAlert("FAILED: \(url)")
                 case .cancel(let url):
-                    self.showAlert("CANCELLED: \(url)")
+                    self?.showAlert("CANCELLED: \(url)")
                 }
                 
             case .interrupted(let paymentStatus):
-                self.showAlert("INTERRUPTED: \(paymentStatus.rawValue)")
+                print("INTERRUPTED: \(paymentStatus.rawValue)")
                 
             case .error(let error):
-                self.showAlert("ERROR: \(error.localizedDescription)")
+                self?.showAlert("ERROR: \(error.localizedDescription)")
             }
         }
     }
