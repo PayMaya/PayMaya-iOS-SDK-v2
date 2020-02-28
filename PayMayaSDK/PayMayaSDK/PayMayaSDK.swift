@@ -126,6 +126,7 @@ public class PayMayaSDK {
                               request: request,
                               redirectURL: walletLinkInfo.redirectUrl,
                               navigationTitle: "Create Wallet",
+                              withStatusCheck: false,
                               callback: callback)
             .showWebView(context: viewController)
     }
@@ -148,7 +149,7 @@ public class PayMayaSDK {
     
     /// This method will check for the current checkout status of the given id
     /// - Parameters:
-    ///   - id: Identifier for the checkout process given in the checkout(_:, context:, callback:) method
+    ///   - id: Identifier for the checkout process given in the presentCheckout(from:, checkoutInfo:, callback:) method
     ///   - callback: The result block for the status information
     public static func getCheckoutStatus(id: String, callback: @escaping StatusCallback) {
         guard let authKey = authKeys[.checkout] else {
@@ -160,7 +161,7 @@ public class PayMayaSDK {
     
     /// This method will check for the current payment status of the given id
     /// - Parameters:
-    ///   - id: Identifier for the Pay with Paymaya process given in the singlePayment(_:, context:, callback:) method
+    ///   - id: Identifier for the Pay with Paymaya process given in the presentSinglePayment(from:, singlePaymentInfo:, callback:) method
     ///   - callback: The result block for the status information
     public static func getPaymentStatus(id: String, callback: @escaping StatusCallback) {
         guard let authKey = authKeys[.payments] else {

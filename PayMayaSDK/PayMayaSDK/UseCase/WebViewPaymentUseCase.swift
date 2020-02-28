@@ -30,14 +30,14 @@ public enum PaymentResult {
     case processed(status: RedirectStatus)
     
     /// Called when the process was interrupted by the user.
-    case interrupted(paymentStatus: PaymentStatus)
+    case interrupted(paymentStatus: PaymentStatus?)
     
     /// Called when got an error.
     case error(Error)
 }
 
 /// Payment result callback.
-/// It can be called multiple times.
+/// It can be called multiple times during payment process with different values.
 public typealias PaymentCallback = (PaymentResult) -> Void
 
 class WebViewPaymentUseCase<NetworkRequest: Request> {
@@ -47,6 +47,7 @@ class WebViewPaymentUseCase<NetworkRequest: Request> {
     private let redirectURL: RedirectURL
     private let navigationTitle: String
     private let callback: PaymentCallback
+    private let withStatusCheck: Bool
 
     private var id: String?
     private var dismissAction: (() -> Void)?
@@ -56,12 +57,14 @@ class WebViewPaymentUseCase<NetworkRequest: Request> {
          request: NetworkRequest,
          redirectURL: RedirectURL,
          navigationTitle: String,
+         withStatusCheck: Bool = true,
          callback: @escaping PaymentCallback) {
         self.session = session
         self.authenticationKey = authenticationKey
         self.request = request
         self.redirectURL = redirectURL
         self.navigationTitle = navigationTitle
+        self.withStatusCheck = withStatusCheck
         self.callback = callback
     }
 }
@@ -124,7 +127,10 @@ private extension WebViewPaymentUseCase where NetworkRequest.Response: RedirectR
     }
 
     func getStatus() {
-        guard let id = self.id else { return }
+        guard withStatusCheck, let id = self.id else {
+            self.callback(.interrupted(paymentStatus: nil))
+            return
+        }
         let redirectURL = self.redirectURL
 
         GetStatusUseCase(session: session).getStatus(for: id, authenticationKey: authenticationKey) { result in

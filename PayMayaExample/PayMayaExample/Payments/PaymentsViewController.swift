@@ -66,7 +66,7 @@ private extension PaymentsViewController {
                 }
                 
             case .interrupted(let paymentStatus):
-                print("INTERRUPTED: \(paymentStatus.rawValue)")
+                print("INTERRUPTED: \(paymentStatus?.rawValue ?? "")")
                 
             case .error(let error):
                 self?.showAlert("ERROR: \(error.localizedDescription)")
@@ -91,8 +91,8 @@ private extension PaymentsViewController {
                     self?.showAlert("CANCELLED: \(url)")
                 }
                 
-            case .interrupted(let paymentStatus):
-                print("INTERRUPTED: \(paymentStatus.rawValue)")
+            case .interrupted:
+                print("INTERRUPTED")
                 
             case .error(let error):
                 self?.showAlert("ERROR: \(error.localizedDescription)")

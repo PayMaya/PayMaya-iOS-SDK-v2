@@ -93,8 +93,13 @@ class PayMayaSDKTests: XCTestCase {
             XCTAssertEqual(session?.lastRequestUrl, PayMayaSDK.environment.baseURL + "/checkout/v1/checkouts")
         }
 
-        PayMayaSDK.presentCheckout(from: vc, checkoutInfo: CheckoutInfo.mock) { _ in
-            XCTFail("the closure shouldn't get called")
+        PayMayaSDK.presentCheckout(from: vc, checkoutInfo: CheckoutInfo.mock) { result in
+            switch result {
+            case .interrupted(let status):
+                XCTAssertNil(status)
+            default:
+                XCTFail("the closure shouldn't get called")
+            }
         }
     }
     

@@ -214,8 +214,8 @@ class SomeViewController: UIViewController {
                     
                 }
                 
-            // Called when user dismisses the payment controller, passes the last known status.
-            case .interrupted(let status):
+            // Called when user dismisses the controller.
+            case .interrupted:
             
             // For error handling
             case .error(let error):
