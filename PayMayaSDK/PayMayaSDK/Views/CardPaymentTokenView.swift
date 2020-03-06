@@ -117,7 +117,7 @@ private extension CardPaymentTokenView {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
             imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
-            imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 80),
+            imageView.heightAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.height / 5),
             imageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16)
         ])
     }
@@ -152,7 +152,7 @@ private extension CardPaymentTokenView {
             actionButton.heightAnchor.constraint(equalToConstant: UIDevice.current.isSmall ? 44 : 50),
             actionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
-            actionButton.topAnchor.constraint(greaterThanOrEqualTo: minorStack.bottomAnchor, constant: 32),
+            actionButton.topAnchor.constraint(greaterThanOrEqualTo: minorStack.bottomAnchor, constant: UIDevice.current.isSmall ? 32 : 48),
             buttonConstraint!,
             actionButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
