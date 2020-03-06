@@ -21,7 +21,6 @@
 		BF2E698623FEE69F0046EE46 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2E698523FEE69F0046EE46 /* RoundButton.swift */; };
 		BF4CE5C224052F350076C1C6 /* HintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4CE5C124052F350076C1C6 /* HintViewController.swift */; };
 		BF4CE5C424052FCA0076C1C6 /* HintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4CE5C324052FCA0076C1C6 /* HintView.swift */; };
-		BF5F447524001CCE00E7EF6A /* UIColor+IsLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F447424001CCE00E7EF6A /* UIColor+IsLight.swift */; };
 		BF76BD9B240569C400E12AE2 /* CardLabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BD9A240569C400E12AE2 /* CardLabeledTextField.swift */; };
 		BF76BD9D24056A3100E12AE2 /* CardTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BD9C24056A3100E12AE2 /* CardTextFieldViewModel.swift */; };
 		BF76BDA124056B0200E12AE2 /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76BDA024056B0200E12AE2 /* CardType.swift */; };
@@ -32,6 +31,8 @@
 		BF89B00C23E425EE008D9AD5 /* SinglePaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */; };
 		BF89B00E23E4260C008D9AD5 /* SinglePaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */; };
 		BF89B01023E42AAA008D9AD5 /* WebViewPaymentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89B00F23E42AAA008D9AD5 /* WebViewPaymentUseCase.swift */; };
+		BF8ACB592412344500A09F74 /* UIColor+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8ACB582412344500A09F74 /* UIColor+Defaults.swift */; };
+		BF8ACB5C2412394100A09F74 /* PayButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8ACB5B2412394000A09F74 /* PayButtonStyling.swift */; };
 		BF8DCE6123DF420200BD875F /* PayMayaEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DCE6023DF420200BD875F /* PayMayaEnvironment.swift */; };
 		BF98116E23E1CC9E005E0765 /* PayMayaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98116D23E1CC9E005E0765 /* PayMayaError.swift */; };
 		BFA9090423D9EF81001A277F /* PayMayaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA908FA23D9EF81001A277F /* PayMayaSDK.framework */; };
@@ -142,7 +143,6 @@
 		BF2E698523FEE69F0046EE46 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		BF4CE5C124052F350076C1C6 /* HintViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintViewController.swift; sourceTree = "<group>"; };
 		BF4CE5C324052FCA0076C1C6 /* HintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintView.swift; sourceTree = "<group>"; };
-		BF5F447424001CCE00E7EF6A /* UIColor+IsLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+IsLight.swift"; sourceTree = "<group>"; };
 		BF76BD9A240569C400E12AE2 /* CardLabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLabeledTextField.swift; sourceTree = "<group>"; };
 		BF76BD9C24056A3100E12AE2 /* CardTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTextFieldViewModel.swift; sourceTree = "<group>"; };
 		BF76BDA024056B0200E12AE2 /* CardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
@@ -153,6 +153,8 @@
 		BF89B00B23E425EE008D9AD5 /* SinglePaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentResponse.swift; sourceTree = "<group>"; };
 		BF89B00D23E4260C008D9AD5 /* SinglePaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentInfo.swift; sourceTree = "<group>"; };
 		BF89B00F23E42AAA008D9AD5 /* WebViewPaymentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPaymentUseCase.swift; sourceTree = "<group>"; };
+		BF8ACB582412344500A09F74 /* UIColor+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Defaults.swift"; sourceTree = "<group>"; };
+		BF8ACB5B2412394000A09F74 /* PayButtonStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayButtonStyling.swift; sourceTree = "<group>"; };
 		BF8DCE6023DF420200BD875F /* PayMayaEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayMayaEnvironment.swift; sourceTree = "<group>"; };
 		BF98116D23E1CC9E005E0765 /* PayMayaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayMayaError.swift; sourceTree = "<group>"; };
 		BFA908FA23D9EF81001A277F /* PayMayaSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PayMayaSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,6 +289,15 @@
 			path = TextFields;
 			sourceTree = "<group>";
 		};
+		BF8ACB5A2412393400A09F74 /* Styling */ = {
+			isa = PBXGroup;
+			children = (
+				EBC6509A23F59884009A6DC9 /* CardPaymentTokenViewStyling.swift */,
+				BF8ACB5B2412394000A09F74 /* PayButtonStyling.swift */,
+			);
+			path = Styling;
+			sourceTree = "<group>";
+		};
 		BFA908F023D9EF81001A277F = {
 			isa = PBXGroup;
 			children = (
@@ -409,8 +420,8 @@
 				BFA9095F23DAFBE3001A277F /* String+Encoding.swift */,
 				BF2E697823FE8B450046EE46 /* String+Grouping.swift */,
 				BF2E697C23FE8BFE0046EE46 /* UITextField+SetTextPreservingCursor.swift */,
-				BF5F447424001CCE00E7EF6A /* UIColor+IsLight.swift */,
 				BF0F00752405158100EB920E /* UIDevice+IsSmall.swift */,
+				BF8ACB582412344500A09F74 /* UIColor+Defaults.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -536,13 +547,13 @@
 			isa = PBXGroup;
 			children = (
 				BF2E698023FEA02D0046EE46 /* Delegate */,
+				BF8ACB5A2412393400A09F74 /* Styling */,
 				EB7B4A1823EDD9BB00090EC7 /* CVCValidator.swift */,
 				EB7B49DF23EB116000090EC7 /* CardDetailsInfo.swift */,
 				EB7B4A1C23EDE35900090EC7 /* CardNumberValidator.swift */,
 				BF76BDA024056B0200E12AE2 /* CardType.swift */,
 				EB7B4A1A23EDDBE900090EC7 /* ExpirationDateValidator.swift */,
 				EB093F7823E860F400DC98A5 /* FieldValidator.swift */,
-				EBC6509A23F59884009A6DC9 /* CardPaymentTokenViewStyling.swift */,
 			);
 			path = Vault;
 			sourceTree = "<group>";
@@ -728,6 +739,7 @@
 				BF89B00C23E425EE008D9AD5 /* SinglePaymentResponse.swift in Sources */,
 				BF98116E23E1CC9E005E0765 /* PayMayaError.swift in Sources */,
 				BFD5DAC923E97CD0004E504A /* GetStatusRequest.swift in Sources */,
+				BF8ACB592412344500A09F74 /* UIColor+Defaults.swift in Sources */,
 				BFD5326823DB1B4C00DBCC6F /* RedirectURL.swift in Sources */,
 				EBC6509B23F59884009A6DC9 /* CardPaymentTokenViewStyling.swift in Sources */,
 				BF8DCE6123DF420200BD875F /* PayMayaEnvironment.swift in Sources */,
@@ -755,7 +767,7 @@
 				BFA9094323D9F122001A277F /* Contact.swift in Sources */,
 				BFA9094523D9F122001A277F /* BillingAddress.swift in Sources */,
 				BFD5DACD23E9808D004E504A /* PaymentStatus.swift in Sources */,
-				BF5F447524001CCE00E7EF6A /* UIColor+IsLight.swift in Sources */,
+				BF8ACB5C2412394100A09F74 /* PayButtonStyling.swift in Sources */,
 				BF05FA9623E4590400D43D24 /* RedirectResponse.swift in Sources */,
 				BFA9094923D9F130001A277F /* CheckoutRequest.swift in Sources */,
 				BFA9094023D9F122001A277F /* CheckoutBuyer.swift in Sources */,

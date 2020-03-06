@@ -117,9 +117,7 @@ extension LabeledTextField: LabeledTextFieldContract {
     func initialSetup(data: LabeledTextFieldInitData) {
         placeholder = data.labelText
         hint = data.hintText
-        currentColor = data.styling.tintColor
         textColor = data.styling.inputTextColor
-        tintColor = data.styling.tintColor
         updateFonts()
         animatePlaceholder()
     }
@@ -151,6 +149,7 @@ private extension LabeledTextField {
         placeholderLayer.anchorPoint = CGPoint(x: 0, y: 0)
         placeholderLayer.position = CGPoint(x: 0, y: 20)
         placeholderLayer.bounds = placeholderRect(forBounds: bounds)
+        currentColor = .pmDefault
         animatePlaceholder()
     }
     

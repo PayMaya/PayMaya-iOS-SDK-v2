@@ -25,30 +25,33 @@ public enum CardPaymentTokenViewStyle {
 
     /// Light mode
     /// - Parameters:
-    ///   - tintColor: Color for the buttons background and textfield accents.
+    ///   - buttonStyling: Customization for the pay button
     ///   - font: Font for all texts
     ///   - logo: Optional merchant's logo
-    case light(tintColor: UIColor? = nil, font: UIFont? = nil, logo: UIImage? = nil)
+    case light(buttonStyling: PayButtonStyling? = nil, font: UIFont? = nil, logo: UIImage? = nil)
 
     /// Dark mode
     /// - Parameters:
-    ///   - tintColor: Color for the buttons background and textfield accents.
+    ///   - buttonStyling: Customization for the pay button
     ///   - font: Font for all texts
     ///   - logo: Optional merchant's logo
-    case dark(tintColor: UIColor? = nil, font: UIFont? = nil, logo: UIImage? = nil)
+    case dark(buttonStyling: PayButtonStyling? = nil, font: UIFont? = nil, logo: UIImage? = nil)
     
     /// Default light mode styling with PayMaya's logo and color
     public static var defaultStyle: CardPaymentTokenViewStyle {
         return .light()
     }
     
-    var tintColor: UIColor {
-        let defaultColor: UIColor = .pmDefault
+    private static var buttonDefaultStyle: PayButtonStyling {
+        return PayButtonStyling(title: "Pay Now", backgroundColor: .pmDefault, textColor: .white)
+    }
+    
+    var buttonStyling: PayButtonStyling {
         switch self {
-        case .light(let tintColor, _, _):
-            return tintColor ?? defaultColor
-        case .dark(let tintColor, _, _):
-            return tintColor ?? defaultColor
+        case .light(let buttonStyling, _, _):
+            return buttonStyling ?? Self.buttonDefaultStyle
+        case .dark(let buttonStyling, _, _):
+            return buttonStyling ?? Self.buttonDefaultStyle
         }
     }
     
@@ -107,25 +110,4 @@ public enum CardPaymentTokenViewStyle {
             return image ?? defaultImage
         }
     }
-    
-}
-
-private extension UIColor {
-    
-    static var pmGrey: UIColor {
-        return UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
-    }
-    
-    static var pmDefault: UIColor {
-        return UIColor(red: 0.19, green: 0.50, blue: 1.00, alpha: 1.00)
-    }
-    
-    static var pmBlackNavBar: UIColor {
-        return UIColor(red: 42/255, green: 42/255, blue: 42/255, alpha: 1.0)
-    }
-    
-    static var pmBlackBackground: UIColor {
-        return UIColor(red: 49/255, green: 49/255, blue: 49/255, alpha: 1.0)
-    }
-    
 }

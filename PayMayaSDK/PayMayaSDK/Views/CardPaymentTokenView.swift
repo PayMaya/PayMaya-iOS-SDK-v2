@@ -142,10 +142,10 @@ private extension CardPaymentTokenView {
     
     func setupButton(with styling: CardPaymentTokenViewStyle) {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.backgroundColor = styling.tintColor
-        actionButton.setTitleColor(styling.tintColor.isLight ? .black : .white, for: .normal)
+        actionButton.backgroundColor = styling.buttonStyling.backgroundColor
+        actionButton.setTitleColor(styling.buttonStyling.textColor, for: .normal)
         actionButton.titleLabel?.font = styling.font
-        actionButton.setTitle("Pay with card", for: .normal)
+        actionButton.setTitle(styling.buttonStyling.title, for: .normal)
         addSubview(actionButton)
         self.buttonConstraint = actionButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: Constants.buttonDefaultConstraint)
         NSLayoutConstraint.activate([

@@ -20,9 +20,19 @@
 import UIKit
 
 extension UIColor {
-    var isLight: Bool {
-        var white: CGFloat = 0
-        getWhite(&white, alpha: nil)
-        return white > 0.7
+    static var pmGrey: UIColor {
+        return UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
+    }
+    
+    static var pmDefault: UIColor {
+        return UIColor(red: 0.19, green: 0.50, blue: 1.00, alpha: 1.00)
+    }
+    
+    static var pmBlackNavBar: UIColor {
+        return UIColor(red: 42/255, green: 42/255, blue: 42/255, alpha: 1.0)
+    }
+    
+    static var pmBlackBackground: UIColor {
+        return UIColor(red: 49/255, green: 49/255, blue: 49/255, alpha: 1.0)
     }
 }
