@@ -150,6 +150,7 @@ private extension LabeledTextField {
         placeholderLayer.position = CGPoint(x: 0, y: 20)
         placeholderLayer.bounds = placeholderRect(forBounds: bounds)
         currentColor = .pmDefault
+        tintColor = .pmDefault
         animatePlaceholder()
     }
     

@@ -23,7 +23,7 @@ class CardNumberValidator: FieldValidator {
     func validate(string: String) -> ValidationState {
         guard !string.isEmpty else { return .invalid(reason: "Card Number is required") }
         let trimmed = string.replacingOccurrences(of: " ", with: "")
-        guard Int(trimmed) != nil, 13...19 ~= trimmed.count, luhnValidation(string: trimmed) else { return .invalid(reason: "Invalid credit card format") }
+        guard Int(trimmed) != nil, 12...19 ~= trimmed.count, luhnValidation(string: trimmed) else { return .invalid(reason: "Invalid credit card format") }
         return .valid
     }
     
