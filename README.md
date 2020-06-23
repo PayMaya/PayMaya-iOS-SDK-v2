@@ -14,7 +14,7 @@ pod 'PayMayaSDK'
 
 ##### via Swift Package Manager
 ```
-.package(url: "https://github.com/PayMaya/PayMaya-iOS-SDK.git")
+.package(url: "https://github.com/PayMaya/PayMaya-iOS-SDK-v2.git")
 ```
 
 ## Initialization
