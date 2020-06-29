@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PayMayaSDK'
-  s.version          = '2.0.0'
+  s.version          = '2.0.1'
   s.summary          = 'Easily enable your iOS app to accept credit and debit card payments'
   s.description      = <<-DESC
 The PayMaya iOS SDK is a library that allows you to easily add credit and debit card as payment options to your mobile application.
@@ -16,5 +16,5 @@ The PayMaya iOS SDK is a library that allows you to easily add credit and debit 
   s.swift_versions = ['5.0', '5.1']
   s.source_files = 'PayMayaSDK/PayMayaSDK/**/*.swift'
 
-  s.frameworks = 'UIKit', 'XCTest', 'Foundation'
+  s.frameworks = 'UIKit', 'Foundation'
 end
