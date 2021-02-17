@@ -44,7 +44,7 @@ let itemsToBuy = [
                  totalAmount: CheckoutItemAmount(value: 79)),
 ]
 
-let totalAmount = CheckoutTotalAmount(value: itemsToBuy.map { $0.totalAmount.value }.reduce(0, +), currency: "PHP")
+let totalAmount = CheckoutTotalAmount(value: itemsToBuy.map { $0.totalAmount.value }.reduce(0, +), currency: "PHP", details: AmountDetails(shippingFee:150))
 
 let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success", 
                               failure: "https://www.merchantsite.com/failure", 
