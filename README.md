@@ -19,7 +19,7 @@ pod 'PayMayaSDK'
 
 ## Initialization
 Initialize the SDK by specifying intended environment either sandbox or production, an optional level of console logging (off by default) and your API key for a specific payment method you want to use (it can be more than one). We recommend you to do this in your app delegate's didFinishLaunchingWithOptions: method
-```
+```swift
 import PayMayaSDK
 
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -34,7 +34,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ## Using Checkout
 1. Create a CheckoutInfo object with total amount, items, redirection urls, an optional buyer information and optional request reference number (by default it will be auto-generated).
-```
+```swift
 let itemsToBuy = [
     CheckoutItem(name: "Shoes",
                  quantity: 1,
@@ -54,7 +54,7 @@ let checkoutInfo = CheckoutInfo(totalAmount: totalAmount, items: itemsToBuy, red
 ```
 2. Call PayMayaSDK.presentCheckout method passing the controller on which the checkout process will present itself and the CheckoutInfo object with the transaction details.
 **NOTE: The callback will be called first when id is created and second time once the process is finished, error occured or the user dismisses the controller.**
-```
+```swift
 import PayMayaSDK
 
 class SomeViewController: UIViewController {
@@ -92,7 +92,7 @@ class SomeViewController: UIViewController {
 }
 ```
 * (if needed) Checking status for a checkout id
-```
+```swift
 import PayMayaSDK
 
 func getStatus() {
@@ -112,7 +112,7 @@ func getStatus() {
 ## Using Pay with PayMaya
 ### Single Payment
 1. Create a SinglePaymentInfo object with total amount, redirection urls and an optional request reference number (by default it will be auto-generated).
-```
+```swift
 let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success",
                               failure: "https://www.merchantsite.com/failure",
                               cancel: "https://www.merchantsite.com/cancel")!
@@ -123,7 +123,7 @@ let singlePaymentInfo = SinglePaymentInfo(totalAmount: totalAmount, redirectUrl:
 ```
 2. Call PayMayaSDK.presentSinglePayment method passing the controller on which the payment process will present itself and the SinglePaymentInfo object with the transaction details.
 **NOTE: The callback will be called first when id is created and second time once the process is finished, error occured or the user dismisses the controller.**
-```
+```swift
 import PayMayaSDK
 
 class SomeViewController: UIViewController {
@@ -161,7 +161,7 @@ class SomeViewController: UIViewController {
 }
 ```
 * (if needed) Checking status for a payment id
-```
+```swift
 import PayMayaSDK
 
 func getStatus() {
@@ -180,7 +180,7 @@ func getStatus() {
 ```
 ### Creating a Wallet Link
 1. Create a WalletLinkInfo object with redirection urls and an optional request reference number (by default it will be auto-generated).
-```
+```swift
 let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success",
                               failure: "https://www.merchantsite.com/failure",
                               cancel: "https://www.merchantsite.com/cancel")!
@@ -189,7 +189,7 @@ let walletLinkInfo = WalletLinkInfo(redirectUrl: redirectUrl, requestReferenceNu
 ```
 2. Call PayMayaSDK.presentCreateWalletLink method passing the controller on which the wallet link creation process will present itself and the WalletLinkInfo object.
 **NOTE: The callback will be called first when id is created and second time once the process is finished, error occured or the user dismisses the controller.**
-```
+```swift
 import PayMayaSDK
 
 class SomeViewController: UIViewController {
@@ -231,7 +231,7 @@ Payment Vault provides merchants the ability to store their customer's card deta
 
 ### Create Payment Token
 Call PayMayaSDK.presentCardPayment method passing the controller on which the card payment process will present itself.
-```
+```swift
 import PayMayaSDK
 
 class SomeViewController: UIViewController {
@@ -255,7 +255,7 @@ class SomeViewController: UIViewController {
 ```
 ### Optional styling
 Call the method and choose between .dark / .light with your custom font, logo and the Pay Now button styling. All parameters are optional, so you can change only the ones you want.
-```
+```swift
 let tintColor = UIColor.green
 let font = UIFont.systemFont(ofSize: 18)
 let logo = UIImage(named: "myLogo")
