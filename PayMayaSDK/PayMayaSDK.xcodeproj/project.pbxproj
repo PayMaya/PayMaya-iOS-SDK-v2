@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5944D0A22634827700595597 /* AuthorizationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5944D0A12634827700595597 /* AuthorizationType.swift */; };
 		BF05FA9623E4590400D43D24 /* RedirectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF05FA9523E4590400D43D24 /* RedirectResponse.swift */; };
 		BF0F00762405158100EB920E /* UIDevice+IsSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0F00752405158100EB920E /* UIDevice+IsSmall.swift */; };
 		BF29AB5023DB472D00212ADE /* RedirectURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF29AB4F23DB472D00212ADE /* RedirectURLTests.swift */; };
@@ -128,6 +129,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5944D0A12634827700595597 /* AuthorizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationType.swift; sourceTree = "<group>"; };
 		BF05FA9523E4590400D43D24 /* RedirectResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResponse.swift; sourceTree = "<group>"; };
 		BF0F00752405158100EB920E /* UIDevice+IsSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+IsSmall.swift"; sourceTree = "<group>"; };
 		BF1205F523DF0F530097693A /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -539,6 +541,7 @@
 				BFA9093D23D9F122001A277F /* CheckoutTotalAmount.swift */,
 				BFA9093A23D9F122001A277F /* Contact.swift */,
 				BFA9093823D9F122001A277F /* ShippingAddress.swift */,
+				5944D0A12634827700595597 /* AuthorizationType.swift */,
 			);
 			path = Checkout;
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 				EBA442D223F2E70000E85DAB /* LabeledTextFieldViewModel.swift in Sources */,
 				BFD5DACF23E996A8004E504A /* Data+Error.swift in Sources */,
 				BFA9095523DAE877001A277F /* PMWebViewController.swift in Sources */,
+				5944D0A22634827700595597 /* AuthorizationType.swift in Sources */,
 				BFA9094123D9F122001A277F /* ShippingAddress.swift in Sources */,
 				BFB7656A23F2DBFB000D1AC0 /* Data+JSON.swift in Sources */,
 				BFB7656923F2DBFB000D1AC0 /* URLSession+Networking.swift in Sources */,

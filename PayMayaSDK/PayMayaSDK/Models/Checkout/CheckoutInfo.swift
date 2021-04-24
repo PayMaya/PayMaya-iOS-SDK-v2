@@ -22,6 +22,9 @@ import Foundation
 /// Contains information about the buyer, the items inside the cart, transaction amount, status of payment and other details.
 public struct CheckoutInfo: Encodable {
     
+    
+    public let authorizationType: AuthorizationType?
+    
     /// Transaction amount details.
     public let totalAmount: CheckoutTotalAmount
     
@@ -48,12 +51,15 @@ public struct CheckoutInfo: Encodable {
     ///   - redirectUrl: List of redirect URLs depending on checkout completion status.
     ///   - requestReferenceNumber: Your unique identifier to a transaction for tracking purposes. By default it will be auto-generated.
     ///   - metadata: Merchant provided additional cart information. Optional.
-    public init(totalAmount: CheckoutTotalAmount,
+    public init(
+        authorizationType:AuthorizationType? = nil,
+        totalAmount: CheckoutTotalAmount,
                 buyer: CheckoutBuyer? = nil,
                 items: [CheckoutItem],
                 redirectUrl: RedirectURL,
                 requestReferenceNumber: String = UUID().uuidString,
                 metadata: [String: String] = [:]) {
+        self.authorizationType = authorizationType
         self.totalAmount = totalAmount
         self.buyer = buyer
         self.items = items
