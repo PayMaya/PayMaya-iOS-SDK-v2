@@ -35,14 +35,25 @@ class DataExtensionTests: XCTestCase {
     }
     
     func test_parseUnknownDataResponse_getsGenericError() {
-        let data = """
+        let payload = """
         {
             "something": "test"
         }
-        """.data(using: .utf8)
+        """
+        let data = payload.data(using: .utf8)
         
         let parsed = data?.parseError()
-        XCTAssertEqual(parsed?.localizedDescription, NetworkError.incorrectData.localizedDescription)
+        XCTAssertEqual(parsed?.localizedDescription, NetworkError.incorrectData(rawData: payload).localizedDescription)
+    }
+    
+    func test_parseUnknownDataResponse_getsGenericErrorTruncated() {
+        let payload = """
+        <html><head>Non-Standard Error</head><body>403 Forbidden</body></html>
+        """
+        let data = payload.data(using: .utf8)
+        
+        let parsed = data?.parseError()
+        XCTAssertEqual(parsed?.localizedDescription, "The operation couldn’t be completed. Got incorrect data: [\(payload.prefix(64))...]")
     }
 
 }

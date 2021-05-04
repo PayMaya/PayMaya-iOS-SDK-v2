@@ -21,15 +21,17 @@ import Foundation
 
 public enum NetworkError: LocalizedError {
     case invalidURL(url: String)
-    case incorrectData
+    case incorrectData(rawData: String = "unknown", snippetLen: UInt = 64)
     case unknown
     
     public var errorDescription: String? {
         switch self {
         case .invalidURL(let url):
             return "Invalid URL: \(url)"
-        case .incorrectData:
-            return "The operation couldn’t be completed. Got incorrect data"
+        case .incorrectData(let rawData, let snippetLen):
+            let truncatable = rawData.count > snippetLen
+            let description = "\(rawData.prefix(Int(snippetLen)))\(truncatable ? "..." : "")"
+            return "The operation couldn’t be completed. Got incorrect data: [\(description)]"
         case .unknown:
             return "The operation couldn’t be completed. Unknown reason"
         }

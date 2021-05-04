@@ -22,7 +22,7 @@ import Foundation
 extension Data {
     func parseError() -> Error {
         guard let error: PayMayaError = parseJSON() else {
-            return NetworkError.incorrectData
+            return NetworkError.incorrectData(rawData: String(decoding: self, as: UTF8.self))
         }
         return error
     }
