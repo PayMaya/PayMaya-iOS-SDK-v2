@@ -44,6 +44,7 @@ extension Networking where Self: FoundationNetworking {
                     Log.error("Networking: failed parsing response for API request: \(response?.url?.absoluteString ?? "empty")")
                     callback(.failure(data))
                 }
+                Log.info("Networking: raw response payload: \(String(decoding: data, as: UTF8.self))")
                 return
             }
             

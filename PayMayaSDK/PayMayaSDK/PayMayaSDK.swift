@@ -51,7 +51,7 @@ public class PayMayaSDK {
         Log.info("Setting environment: \(environment)")
         authKeys = authenticationKeys.mapValues { $0.convertToAuthenticationKey() }
         authenticationKeys.forEach { key, value in
-            Log.info("Adding authentication key: \(value) for method: \(key)")
+            Log.verbose("Adding authentication key: \(value) for method: \(key)")
         }
     }
 
