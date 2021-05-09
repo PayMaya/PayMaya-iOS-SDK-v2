@@ -22,7 +22,7 @@ import Foundation
 /// Contains information about the buyer, the items inside the cart, transaction amount, status of payment and other details.
 public struct CheckoutInfo: Encodable {
     
-    
+    /// Authorization Type for capturing payment status
     public let authorizationType: AuthorizationType?
     
     /// Transaction amount details.
@@ -45,15 +45,15 @@ public struct CheckoutInfo: Encodable {
     
     /// Contains information about the buyer, the items inside the cart, transaction amount, status of payment and other details.
     /// - Parameters:
+    ///   - authorizationType: Authorization Type for capturing payment status
     ///   - totalAmount: Transaction amount details.
     ///   - buyer: Customer profile information.
     ///   - items: List of bought items for the transaction.
     ///   - redirectUrl: List of redirect URLs depending on checkout completion status.
     ///   - requestReferenceNumber: Your unique identifier to a transaction for tracking purposes. By default it will be auto-generated.
     ///   - metadata: Merchant provided additional cart information. Optional.
-    public init(
-        authorizationType:AuthorizationType? = nil,
-        totalAmount: CheckoutTotalAmount,
+    public init(authorizationType: AuthorizationType? = nil,
+                totalAmount: CheckoutTotalAmount,
                 buyer: CheckoutBuyer? = nil,
                 items: [CheckoutItem],
                 redirectUrl: RedirectURL,
