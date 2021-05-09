@@ -67,7 +67,7 @@ class ShopViewModel: NSObject {
         let amountDetails = AmountDetails(discount: 0, serviceCharge: 0, shippingFee: 0, tax: 0, subtotal: totalValue)
         let totalAmount = CheckoutTotalAmount(value: totalValue, currency: "PHP", details: amountDetails)
         let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success", failure: "https://www.merchantsite.com/failure", cancel: "https://www.merchantsite.com/cancel")!
-        return CheckoutInfo(totalAmount: totalAmount, buyer: buyer, items: cart, redirectUrl: redirectUrl, requestReferenceNumber: "1551191039")
+        return CheckoutInfo(authorizationType:AuthorizationType.normal ,totalAmount: totalAmount, buyer: buyer, items: cart, redirectUrl: redirectUrl, requestReferenceNumber: "1551191039")
     }
 }
 
