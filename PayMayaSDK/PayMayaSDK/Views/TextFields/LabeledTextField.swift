@@ -20,7 +20,7 @@
 import Foundation
 import UIKit
 
-protocol LabeledTextFieldContract: class {
+protocol LabeledTextFieldContract: AnyObject {
     func changeValidationState(_ state: ValidationState)
     func initialSetup(data: LabeledTextFieldInitData)
     func textSet(text: String)
