@@ -24,7 +24,7 @@ private struct Constants {
     static let buttonDefaultConstraint: CGFloat = -16
 }
 
-protocol CardPaymentTokenViewContract: class {
+protocol CardPaymentTokenViewContract: AnyObject {
     func initialSetup(data: CardPaymentTokenInitialData)
 }
 
